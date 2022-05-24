@@ -4629,4 +4629,3 @@ fof(ax,axiom, vS110__U_INHIBIT_FL__2 <=> ((~ vS110__U_INHIBIT_FL__1 & vS110__MU_
 fof(ax,axiom, vIL822_1__DUM_2 <=> (vIL822_1__DUM_1 & (vPB822_1__BFAIL_1 & (vPB822_1__BLIFE_1 & (vPB822_1__BLOW_1 & vPB822_1__MFAIL_1))))).
 fof(ax,axiom, vIL822_10__DUM_2 <=> (vIL822_10__DUM_1 & (vPB822_10__BFAIL_1 & (vPB822_10__BLIFE_1 & (vPB822_10__BLOW_1 & vPB822_10__MFAIL_1))))).
 fof(ax,axiom, vGLOBALDUM_2 <=> vGLOBALDUM_1).
-
