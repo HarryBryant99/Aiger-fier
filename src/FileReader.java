@@ -39,19 +39,15 @@ public class FileReader {
     private Ladder readLadder(Scanner lineIn) {
         Ladder newLadder = new Ladder();
 
-        lineIn.useDelimiter(" ");
+        lineIn.useDelimiter(" <=> ");
 
         String primeVar = "";
         String operand = "";
 
-        int counter = 0;
-
         // Loop runs until there are no more rows left to read, adding each rung to the ladder.
         while (lineIn.hasNext()) {
-            counter++;
-
             primeVar = lineIn.next();
-            primeVar = lineIn.next();
+            primeVar = primeVar.substring(14, primeVar.length());
 
             operand = lineIn.nextLine();
             operand = operand.substring(5, operand.length()-2);
