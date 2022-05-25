@@ -53,7 +53,7 @@ public class Formula {
         boolean isRightFormula = false;
 
         for (int i = pointer; i < formula.length(); i++) {
-            System.out.println(formula.charAt(i));
+            //System.out.println(formula.charAt(i));
             if (formula.charAt(i) == '~'){
                 negative(isRightFormula);
             } else if (formula.charAt(i) == '('){
@@ -66,7 +66,7 @@ public class Formula {
                     rightFormula = new Formula(formula.substring(i+1, pointer));
                 }
                 i = pointer;
-                setDepth(getDepth()-1);
+
             } else if (formula.charAt(i) == '&'){
                 setOperator('&');
             } else if (formula.charAt(i) == '|'){
@@ -119,10 +119,11 @@ public class Formula {
 
                 if (bracketsFound == getDepth()) {
                     position = i;
+                    break;
                 }
             }
         }
-
+        setDepth(0);
         return position;
     }
 
