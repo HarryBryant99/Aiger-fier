@@ -5,7 +5,7 @@ public class Main {
     private static Ladder ladder;
 
     public static void main(String[] args) {
-        ladder = fileReader.readFile("Ladder.tptp");
+        ladder = fileReader.readFile("Test.tptp");
 
         System.out.println(ladder.toString());
     }

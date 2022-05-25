@@ -23,7 +23,10 @@ public class Formula {
     public String toString() {
         String output = "";
         if (getLeftString() == null){
-            output = "(" + getLeftFormula().toString() + ")";
+            if (isLeftNegative){
+                output += "~ ";
+            }
+            output += "(" + getLeftFormula().toString() + ")";
         } else {
             if (isLeftNegative){
                 output = "~ ";
@@ -36,6 +39,9 @@ public class Formula {
         }
 
         if (getRightString() == null && getRightFormula() != null){
+            if (isRightNegative){
+                output = "~ ";
+            }
             output += "(" + getRightFormula().toString() + ")";
         } else if (getRightFormula() != null){
             if (isRightNegative){
@@ -82,11 +88,19 @@ public class Formula {
                     setRightString(formula.substring(i, pointer));
                 }
                 i = pointer;
+
+                if (getOperator() == '|'){
+                    andify();
+                }
             }
         }
     }
 
-    public int variableFound(String formula, int starting){
+    private void andify(){
+
+    }
+
+    private int variableFound(String formula, int starting){
         int position = formula.length();
         for (int i = starting; i < formula.length(); i++) {
             if (formula.charAt(i) == ' '){
@@ -98,7 +112,7 @@ public class Formula {
         return position;
     }
 
-    public void negative(boolean isRightFormula){
+    private void negative(boolean isRightFormula){
         if (isRightFormula){
             setRightNegative(true);
         } else {
