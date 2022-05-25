@@ -88,16 +88,24 @@ public class Formula {
                     setRightString(formula.substring(i, pointer));
                 }
                 i = pointer;
-
-                if (getOperator() == '|'){
-                    andify();
-                }
             }
+        }
+        if (getOperator() == '|'){
+            andify();
         }
     }
 
     private void andify(){
+        String and = "(~ " + getLeftString() + " & ~ " + getRightString() + ")";
 
+        Formula newFormula = new Formula(and);
+        setLeftNegative(true);
+        setLeftFormula(newFormula);
+        setLeftString(and);
+
+        setRightFormula(null);
+        setRightString("");
+        setOperator(' ');
     }
 
     private int variableFound(String formula, int starting){
