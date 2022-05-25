@@ -9,6 +9,8 @@ public class Formula {
     private String leftString;
     private String rightString;
 
+    private int depth = 0;
+
     public Formula(String formula) {
         processFormula(formula);
     }
@@ -51,10 +53,11 @@ public class Formula {
         boolean isRightFormula = false;
 
         for (int i = pointer; i < formula.length(); i++) {
+            System.out.println(formula.charAt(i));
             if (formula.charAt(i) == '~'){
                 negative(isRightFormula);
             } else if (formula.charAt(i) == '('){
-                pointer = findBracket(formula, i, depth+1);
+                pointer = findBracket(formula, i);
                 //Recurse on formula
                 if (!isRightFormula) {
                     leftFormula = new Formula(formula.substring(i+1, pointer));
@@ -63,6 +66,7 @@ public class Formula {
                     rightFormula = new Formula(formula.substring(i+1, pointer));
                 }
                 i = pointer;
+                setDepth(getDepth()-1);
             } else if (formula.charAt(i) == '&'){
                 setOperator('&');
             } else if (formula.charAt(i) == '|'){
@@ -102,15 +106,18 @@ public class Formula {
         }
     }
 
-    public int findBracket(String formula, int starting, int depth){
+    public int findBracket(String formula, int starting){
         int position = 0;
         int bracketsFound = 0;
 
         for (int i = starting; i < formula.length(); i++) {
-            if (formula.charAt(i) == ')'){
+            if (formula.charAt(i) == '(') {
+                setDepth(getDepth()+1);
+
+            } else if (formula.charAt(i) == ')'){
                 bracketsFound++;
 
-                if (bracketsFound <= depth) {
+                if (bracketsFound == getDepth()) {
                     position = i;
                 }
             }
@@ -173,5 +180,13 @@ public class Formula {
 
     public void setRightString(String rightString) {
         this.rightString = rightString;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 }
