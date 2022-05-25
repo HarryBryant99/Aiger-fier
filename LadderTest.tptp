@@ -1,0 +1,2 @@
+fof(ax,axiom, vIL822__EN_JS_1 <=> (~ vIL822__EN_CAN_0 & (~ vIL822__EN_JR_0 & (~ vIL822_ENABLED_0 & (vIL822__EN_SEL_0 |  vIL822__EN_JS_0))))).
+fof(ax,axiom, vIL822__EN_AK_1 <=> vIL822__EN_JS_1).

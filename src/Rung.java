@@ -3,9 +3,13 @@ public class Rung {
     private String primeVar;
     private String operand;
 
+    private Formula formula;
+
     public Rung(String primeVar, String operand) {
         this.primeVar = primeVar;
         this.operand = operand;
+
+        this.formula = new Formula(operand);
     }
 
     public String getPrimeVar() {
@@ -26,6 +30,6 @@ public class Rung {
 
     @Override
     public String toString() {
-        return (primeVar + " <=> " + operand);
+        return (primeVar + " <=> " + formula);
     }
 }
