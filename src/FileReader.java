@@ -44,7 +44,7 @@ public class FileReader {
         String primeVar = "";
         String operand = "";
 
-        int counter = 0;
+        //int counter = 0;
 
         // Loop runs until there are no more rows left to read, adding each rung to the ladder.
         while (lineIn.hasNext()) {
@@ -54,8 +54,8 @@ public class FileReader {
             operand = lineIn.nextLine();
             operand = operand.substring(5, operand.length()-2);
 
-            counter++;
-            System.out.println(counter);
+            //counter++;
+            //System.out.println(counter);
 
             Rung newRung = new Rung(primeVar, operand);
             newLadder.addRung(newRung);

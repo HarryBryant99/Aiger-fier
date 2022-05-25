@@ -96,7 +96,13 @@ public class Formula {
     }
 
     private void andify(){
-        String and = "(~ " + getLeftString() + " & ~ " + getRightString() + ")";
+        String and = null;
+        if (getLeftString() != null) {
+            and = "(~ " + getLeftString() + " & ~ " + getRightString() + ")";
+        } else {
+            and = "(~ " + getLeftFormula().toString() + " & ~ " + getRightString() + ")";
+        }
+        //System.out.println(getLeftString());
 
         Formula newFormula = new Formula(and);
         setLeftNegative(true);
@@ -106,6 +112,9 @@ public class Formula {
         setRightFormula(null);
         setRightString("");
         setOperator(' ');
+
+        //System.out.println(getLeftString());
+        //System.out.println(toString());
     }
 
     private int variableFound(String formula, int starting){
