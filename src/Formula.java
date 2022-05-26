@@ -29,7 +29,7 @@ public class Formula {
             output += "(" + getLeftFormula().toString() + ")";
         } else {
             if (isLeftNegative){
-                output = "~ ";
+                output += "~ ";
             }
             output += getLeftString();
         }
@@ -40,12 +40,12 @@ public class Formula {
 
         if (getRightString() == null && getRightFormula() != null){
             if (isRightNegative){
-                output = "~ ";
+                output += " ~ ";
             }
             output += "(" + getRightFormula().toString() + ")";
         } else if (getRightFormula() != null){
             if (isRightNegative){
-                output = "~ ";
+                output += " ~ ";
             }
             output += getRightString();
         }
@@ -97,12 +97,39 @@ public class Formula {
 
     private void andify(){
         String and = null;
-        if (getLeftString() != null) {
-            and = "(~ " + getLeftString() + " & ~ " + getRightString() + ")";
+//        if (getLeftString() != null) {
+//            and = "(~ " + getLeftString() + " & ~ " + getRightString() + ")";
+//        } else {
+//            and = "(~ " + getLeftFormula().toString() + " & ~ " + getRightString() + ")";
+//        }
+
+        and = "(";
+        if (getLeftString() == null){
+            if (!isLeftNegative){
+                and += "~ ";
+            }
+            and += "(" + getLeftFormula().toString() + ")";
         } else {
-            and = "(~ " + getLeftFormula().toString() + " & ~ " + getRightString() + ")";
+            if (!isLeftNegative){
+                and += "~ ";
+            }
+            and += getLeftString();
         }
-        //System.out.println(getLeftString());
+
+        and += " &";
+
+        if (getRightString() == null && getRightFormula() != null){
+            if (!isRightNegative){
+                and += " ~ ";
+            }
+            and += "(" + getRightFormula().toString() + ")";
+        } else if (getRightFormula() != null){
+            if (!isRightNegative){
+                and += " ~ ";
+            }
+            and += getRightString();
+        }
+        and += ")";
 
         Formula newFormula = new Formula(and);
         setLeftNegative(true);

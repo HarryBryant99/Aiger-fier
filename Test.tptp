@@ -1,1 +1,5 @@
+fof(ax,axiom, vA <=> vB | vE).
+fof(ax,axiom, vA <=> ~(vB | vE)).
 fof(ax,axiom, vA <=> (vB | vE) | vC).
+fof(ax,axiom, vA <=> vB | (vE | vC)).
+fof(ax,axiom, vA <=> (vB | vE) & (vF | vC)).
