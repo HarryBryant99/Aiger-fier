@@ -9,6 +9,8 @@ public class Formula {
     private String leftString;
     private String rightString;
 
+    private boolean andfied;
+
     private int depth = 0;
 
     public Formula(String formula) {
@@ -93,6 +95,32 @@ public class Formula {
         if (getOperator() == '|'){
             andify();
         }
+
+//        System.out.println(getLeftFormula().isAndfied());
+//        System.out.println(isLeftNegative());
+
+        if (isLeftNegative && getLeftFormula().getLeftString() == null && getLeftFormula().isLeftNegative){
+            //System.out.println("Double negation");
+            setLeftNegative(false);
+            getLeftFormula().setLeftNegative(false);
+        }
+
+        if (isRightNegative && getRightFormula().getLeftString() == null && getRightFormula().isLeftNegative){
+            System.out.println("Double negation");
+            setRightNegative(false);
+            getRightFormula().setLeftNegative(false);
+        }
+
+//        if (getLeftFormula().isAndfied() && isLeftNegative()){
+//            setLeftNegative(false);
+//            getLeftFormula().setLeftNegative(false);
+//            System.out.println("andfied2");
+//        }
+//
+//        if (getRightFormula() != null && getRightFormula().isAndfied() && isRightNegative()){
+//            setRightNegative(false);
+//            getRightFormula().setRightNegative(false);
+//        }
     }
 
     private void andify(){
@@ -131,10 +159,12 @@ public class Formula {
         }
         and += ")";
 
+        setAndfied(true);
+
         Formula newFormula = new Formula(and);
         setLeftNegative(true);
         setLeftFormula(newFormula);
-        setLeftString(and);
+        setLeftString(null);
 
         setRightFormula(null);
         setRightString("");
@@ -160,7 +190,11 @@ public class Formula {
         if (isRightFormula){
             setRightNegative(true);
         } else {
-            setLeftNegative(true);
+            if (!isLeftNegative) {
+                setLeftNegative(true);
+            } else {
+                setLeftNegative(false);
+            }
         }
     }
 
@@ -247,5 +281,13 @@ public class Formula {
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public boolean isAndfied() {
+        return andfied;
+    }
+
+    public void setAndfied(boolean andfied) {
+        this.andfied = andfied;
     }
 }
