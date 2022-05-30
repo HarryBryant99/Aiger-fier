@@ -10,6 +10,8 @@ public class Rung {
         this.operand = operand;
 
         this.formula = new Formula(operand);
+
+        //System.out.println(formula.listComponents(primeVar));
     }
 
     public String getPrimeVar() {
@@ -31,5 +33,9 @@ public class Rung {
     @Override
     public String toString() {
         return (primeVar + " <=> " + formula);
+    }
+
+    public String tseitin(){
+        return formula.listComponents(primeVar);
     }
 }

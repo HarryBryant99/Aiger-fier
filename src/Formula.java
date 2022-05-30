@@ -103,10 +103,10 @@ public class Formula {
             //System.out.println("Double negation");
             setLeftNegative(false);
             getLeftFormula().setLeftNegative(false);
+            removeBrackets();
         }
 
         if (isRightNegative && getRightFormula().getLeftString() == null && getRightFormula().isLeftNegative){
-            System.out.println("Double negation");
             setRightNegative(false);
             getRightFormula().setLeftNegative(false);
         }
@@ -172,6 +172,14 @@ public class Formula {
 
         //System.out.println(getLeftString());
         //System.out.println(toString());
+    }
+
+    private void removeBrackets(){
+        //System.out.println(getLeftFormula().toString());
+        if (getLeftFormula().toString().charAt(0) == '(' &&
+                getLeftFormula().toString().charAt(0) == '('){
+           //System.out.println(getLeftFormula().getLeftString());
+        }
     }
 
     private int variableFound(String formula, int starting){
@@ -289,5 +297,41 @@ public class Formula {
 
     public void setAndfied(boolean andfied) {
         this.andfied = andfied;
+    }
+
+    public String listComponents(String latchName){
+        String output = latchName + " <=> ";
+        if (getLeftString() == null){
+            if (isLeftNegative){
+                output += "~ ";
+            }
+            //output += "(" + getLeftFormula().listComponents(latchName) + ")";
+            output += "(" + latchName+1 + ")\n";
+            output += getLeftFormula().listComponents(latchName + 1);
+        } else {
+            if (isLeftNegative){
+                output += "~ ";
+            }
+            output += getLeftString();
+        }
+
+        if (getOperator() == '&' || getOperator() == '|') {
+            output += " " + getOperator() + " ";
+        }
+
+        if (getRightString() == null && getRightFormula() != null){
+            if (isRightNegative){
+                output += "~ ";
+            }
+            output += "(" + latchName+2 + ")\n";
+            output += getRightFormula().listComponents(latchName + 2);
+        } else if (getRightFormula() != null){
+            if (isRightNegative){
+                output += "~ ";
+            }
+            output += getRightString();
+        }
+
+        return output;
     }
 }

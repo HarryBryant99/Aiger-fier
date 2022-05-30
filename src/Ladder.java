@@ -28,4 +28,13 @@ public class Ladder {
         }
         return "Number of Rungs: " + getRungs().size() + "\n" + output;
     }
+
+    public String tseitin(){
+        String output = "";
+
+        for (int i = 0; i < getRungs().size(); i++) {
+            output += getRungs().get(i).tseitin() + "\n";
+        }
+        return "Number of Rungs: " + getRungs().size() + "\n" + output;
+    }
 }
