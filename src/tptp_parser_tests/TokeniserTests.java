@@ -24,7 +24,7 @@ public class TokeniserTests {
 
     @Test
     public void canParseTokens(){
-        Tokeniser t = new Tokeniser("  va |& <=>&vb ~vc ()");
+        Tokeniser t = new Tokeniser("  va |& <=>&vb~vc ()");
         assertEquals("va", t.peek());
         t.advance();
         assertEquals("|", t.peek());

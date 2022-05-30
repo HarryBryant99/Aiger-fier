@@ -49,13 +49,14 @@ public class Tokeniser {
             while (currentStart + len < data.length()){
                 char c2 = data.charAt(currentStart + len);
 
-                if (Character.isWhitespace(c2)){
+                //Check if ending symbol
+                if (!isCharAllowedInVariable(c2)){
                     if (len == 1){
                         throw new TokeniserException(currentStart, "Variable must contain a name");
                     } else {
                         return data.substring(currentStart, currentStart + len);
                     }
-                } else if (Character.isLetterOrDigit(c2)) {
+                } else if (isCharAllowedInVariable(c2)) {
                     len++;
                 } else {
                     throw new TokeniserException(currentStart + len + 1, "Variable cannot contain this '" + c2 + "'");
@@ -71,6 +72,10 @@ public class Tokeniser {
         }
 
         throw new TokeniserException(currentStart, "Unexpected character '" + c + "'");
+    }
+
+    private static boolean isCharAllowedInVariable(Character c){
+        return Character.isLetterOrDigit(c);
     }
 
     public boolean atEnd(){
