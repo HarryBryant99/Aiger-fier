@@ -42,4 +42,14 @@ public class Proposition extends Expression {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public Proposition cloneWithoutDisjunctions() {
+        return new Proposition(name);
+    }
+
+    @Override
+    public Proposition cloneRemovingDoubleNegation() {
+        return new Proposition(name);
+    }
 }

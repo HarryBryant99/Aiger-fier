@@ -5,29 +5,39 @@ import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic.Proposition;
 
+/**
+ * A rung has an expression of the form "a <=> F".
+ */
 public class Rung {
 
-    private Expression expression;
+    private Equivalence equivalence;
 
-    public Rung(Expression expression) {
-        assert expression != null;
+    public Rung(Equivalence equivalence) {
+        assert equivalence != null;
 
-        if (expression.getClass() != Equivalence.class){
-            throw new IllegalArgumentException("Root expression must be an equivalence");
-        }
-
-        Expression lhs = ((Equivalence) expression).getLhsOperand();
-        if (lhs.getClass() != Proposition.class){
+        if (equivalence.getLhsOperand().getClass() != Proposition.class){
             throw new IllegalArgumentException("Root equivalence must have a proposition on lhs");
         }
 
-        this.expression = expression;
+        this.equivalence = equivalence;
     }
 
     @Override
     public String toString() {
-        return "Rung{" + expression + "}";
+        return "Rung{" + equivalence + "}";
     }
+
+        public Equivalence getEquivalence(){
+        return equivalence;
+    }
+
+//    public Proposition getLhsProposition(){
+//        return (Proposition) equivalence.getLhsOperand();
+//    }
+//
+//    public Expression getRhsProposition(){
+//        return equivalence.getRhsOperand();
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -38,11 +48,11 @@ public class Rung {
             return false;
         }
         Rung rung = (Rung) o;
-        return expression.equals(rung.expression);
+        return equivalence.equals(rung.equivalence);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(expression);
+        return Objects.hash(equivalence);
     }
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic_parser.Parser;
 
@@ -28,8 +29,8 @@ public class LadderParser {
                 assert line.endsWith(postfix);
                 String lineBody = line.substring(prefix.length(), line.length() - postfix.length());
 
-                Expression exp = Parser.parse(lineBody);
-                l.addRung(new Rung(exp));
+                Equivalence equiv = (Equivalence) Parser.parse(lineBody);
+                l.addRung(new Rung(equiv));
             }
         }
 

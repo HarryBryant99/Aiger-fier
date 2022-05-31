@@ -1,6 +1,8 @@
 package tptp;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import javax.jws.Oneway;
 import tptp.Rung;
@@ -15,6 +17,10 @@ public class Ladder {
     public void addRung(Rung newRung){
         Objects.nonNull(newRung);
         rungs.add(newRung);
+    }
+
+    public List<Rung> getRungs(){
+        return Collections.unmodifiableList(rungs);
     }
 
     @Override

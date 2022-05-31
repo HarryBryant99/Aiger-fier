@@ -38,4 +38,18 @@ public class Negation extends Expression {
     public int hashCode() {
         return Objects.hash(operand);
     }
+
+    @Override
+    public Negation cloneWithoutDisjunctions() {
+        return new Negation(operand.cloneWithoutDisjunctions());
+    }
+
+    @Override
+    public Expression cloneRemovingDoubleNegation() {
+        if (operand.getClass() == Negation.class) {
+            return ((Negation) operand).getOperand().cloneRemovingDoubleNegation();
+        }
+
+        return new Negation(getOperand().cloneRemovingDoubleNegation());
+    }
 }
