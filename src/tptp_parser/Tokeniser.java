@@ -67,7 +67,7 @@ public class Tokeniser {
             if (len == 1){
                 throw new TokeniserException(currentStart, "Variable must contain a name");
             } else {
-                return data.substring(currentStart, len);
+                return data.substring(currentStart, currentStart + len);
             }
         }
 
@@ -86,5 +86,56 @@ public class Tokeniser {
     public void advance(){
         String token = peek();
         currentStart += token.length();
+    }
+
+    /**
+     * Test if the next token matches a given target.
+     * @param target the target to match.
+     * @return true if matched.
+     */
+    public boolean isMatch(String target){
+        if (atEnd()) {
+            return false;
+        }
+
+        String token = peek();
+        return token.equals(target);
+    }
+
+    /**
+     * Test if the next token matches a given target and advances if so.
+     * @param target the target to match.
+     * @return true if matched.
+     */
+    public boolean isMatchAndAdvance(String target){
+        boolean result = isMatch(target);
+
+        if (result){
+            advance();
+        }
+        return result;
+    }
+
+    /**
+     * Match a variable if possible, advances if a variable is matched. If a variable is not
+     * matched, the state of the tokeniser is unchanged.
+     * @return The variable if matched, null otherwise.
+     */
+    public String peekVariableAndAdvance(){
+        if (atEnd()) {
+            return null;
+        }
+
+        String token = peek();
+        if (token.startsWith("v")){
+            advance();
+            return token;
+        } else {
+            return null;
+        }
+    }
+
+    public int getPosition(){
+        return currentStart;
     }
 }

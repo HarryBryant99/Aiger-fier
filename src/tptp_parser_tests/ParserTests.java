@@ -62,5 +62,19 @@ public class ParserTests {
         assertEquals(expected, e);
     }
 
+    @Test
+    public void canParseDoubleNegation(){
+        Expression e = Parser.parse("~~va");
+        Expression expected = new Negation(new Negation(new Proposition("va")));
+        assertEquals(expected, e);
+    }
+
+    @Test
+    public void canParseAssociativeness(){
+        Expression e = Parser.parse("va & vb & vc");
+        Expression expected = new Conjunction(new Conjunction(new Proposition("va"), new Proposition("vb")), new Proposition("vc"));
+        assertEquals(expected, e);
+    }
+
 
 }

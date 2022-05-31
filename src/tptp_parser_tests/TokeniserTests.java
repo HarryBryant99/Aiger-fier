@@ -75,4 +75,13 @@ public class TokeniserTests {
         assertTrue(t.atEnd());
     }
 
+    @Test
+    public void canPassPropositionAtEndWhichIsNotFirst(){
+        Tokeniser t = new Tokeniser("~va");
+        assertEquals("~", t.peek());
+        t.advance();
+        assertEquals("va", t.peek());
+        t.advance();
+        assertTrue(t.atEnd());
+    }
 }
