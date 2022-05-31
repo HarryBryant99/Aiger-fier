@@ -1,4 +1,4 @@
-package tptp_parser;
+package prop_logic_parser;
 
 public class ParserException extends IllegalStateException {
     private int characterPos;

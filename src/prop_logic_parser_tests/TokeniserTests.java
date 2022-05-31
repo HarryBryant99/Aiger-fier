@@ -1,12 +1,12 @@
-package tptp_parser_tests;
+package prop_logic_parser_tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import tptp_parser.Tokeniser;
-import tptp_parser.TokeniserException;
+import prop_logic_parser.Tokeniser;
+import prop_logic_parser.TokeniserException;
 
 public class TokeniserTests {
 

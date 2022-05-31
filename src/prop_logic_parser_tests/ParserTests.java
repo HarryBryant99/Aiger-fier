@@ -1,4 +1,4 @@
-package tptp_parser_tests;
+package prop_logic_parser_tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,8 +9,7 @@ import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic.Negation;
 import prop_logic.Proposition;
-import tptp_parser.Parser;
-import tptp_parser.Tokeniser;
+import prop_logic_parser.Parser;
 
 public class ParserTests {
     @Test

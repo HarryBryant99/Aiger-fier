@@ -1,6 +1,5 @@
-package tptp_parser;
+package prop_logic_parser;
 
-import com.sun.org.apache.xpath.internal.operations.And;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
 import prop_logic.Equivalence;

@@ -1,4 +1,4 @@
-package tptp_parser;
+package prop_logic_parser;
 
 public class Tokeniser {
     private final String data;
