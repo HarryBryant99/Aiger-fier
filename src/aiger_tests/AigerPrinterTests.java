@@ -25,7 +25,7 @@ public class AigerPrinterTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedL, tt.convertLadder(sourceL));
+        assertEquals(expectedL, tt.convertLadder(sourceL).getComponents());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class AigerPrinterTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_0")))));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedL, tt.convertLadder(sourceL));
+        assertEquals(expectedL, tt.convertLadder(sourceL).getComponents());
     }
 
     @Test
@@ -61,6 +61,6 @@ public class AigerPrinterTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedL, tt.convertLadder(sourceL));
+        assertEquals(expectedL, tt.convertLadder(sourceL).getComponents());
     }
 }

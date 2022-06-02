@@ -21,33 +21,31 @@ public class AigerPrinter {
         currentIndex = 0;
     }
 
-    public Ladder convertLadder(Ladder sourceL) {
-        Ladder targetL = new Ladder();
+    public Aig convertLadder(Ladder sourceL) {
+        Aig targetAig = new Aig();
         for (Rung r : sourceL.getRungs()) {
-            for(Equivalence equ : splitEquivalence(r.getEquivalence())) {
-                targetL.addRung(new Rung(equ));
-            }
+            targetAig.addComponent(splitEquivalence(r.getEquivalence()));
         }
-        return targetL;
+        return targetAig;
     }
 
-    private List<Equivalence> splitEquivalence(Equivalence equiv){
-        Proposition lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(),false);
+    private String splitEquivalence(Equivalence equiv){
+        String lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(),false);
 
-        AigerPrinter.Result splitResult = splitExpression(equiv.getRhsOperand());
+        String splitResult = splitExpression(equiv.getRhsOperand());
 
-        ArrayList<Equivalence> result = new ArrayList<>();
-        result.addAll(splitResult.equivalences);
-        result.add(new Equivalence(lhsIndex, splitResult.finalExpression));
+        //ArrayList<String> result = new ArrayList<>();
+        //result.add(splitResult);
+        //result.add(lhsIndex + " " + splitResult);
 
-        return result;
+        return (lhsIndex + " " + splitResult);
     }
 
-    private AigerPrinter.Result splitExpression(Expression exp){
+    private String splitExpression(Expression exp){
         if (exp.getClass() == Proposition.class) {
-            return new AigerPrinter.Result(propositionReplacer(exp, false));
+            return propositionReplacer(exp, false);
         } else if (exp.getClass() == Negation.class) {
-            return new AigerPrinter.Result(propositionReplacer(((Negation) exp).getOperand(), true));
+            return propositionReplacer(((Negation) exp).getOperand(), true);
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
@@ -55,21 +53,21 @@ public class AigerPrinter {
 
 
 
-            AigerPrinter.Result splitResultLhs = splitExpression(con.getLhsOperand());
-            String newNameLhs = String.valueOf(genNewName("Test"));
-            Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs.finalExpression);
+            Proposition splitResultLhs = (Proposition) con.getLhsOperand();
+            String newNameLhs = String.valueOf(genNewName(splitResultLhs.getName()));
+            //Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs);
 
-            AigerPrinter.Result splitResultRhs = splitExpression(con.getRhsOperand());
-            String newNameRhs = String.valueOf(genNewName("Test"));
-            Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs.finalExpression);
+            Proposition splitResultRhs = (Proposition) con.getRhsOperand();
+            String newNameRhs = String.valueOf(genNewName(splitResultRhs.getName()));
+            //Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs);
 
-            ArrayList<Equivalence> resultEquivs = new ArrayList<>();
-            resultEquivs.addAll(splitResultLhs.equivalences);
-            resultEquivs.add(equivLhs);
-            resultEquivs.addAll(splitResultRhs.equivalences);
-            resultEquivs.add(equivRhs);
+            //ArrayList<String> resultEquivs = new ArrayList<>();
+            //resultEquivs.add(splitResultLhs);
+            //resultEquivs.add(equivLhs);
+            //resultEquivs.add(splitResultRhs);
+            //resultEquivs.add(equivRhs);
 
-            return new AigerPrinter.Result(resultEquivs, new Conjunction(new Proposition(newNameLhs), new Proposition(newNameRhs)));
+            return (newNameLhs + " " + newNameRhs);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }
@@ -115,13 +113,13 @@ public class AigerPrinter {
         }
     }
 
-    public Proposition propositionReplacer(Expression exp, Boolean isNegative){
+    public String propositionReplacer(Expression exp, Boolean isNegative){
         Proposition prop = (Proposition) exp;
         if (isNegative) {
-            Proposition index = new Proposition(String.valueOf(genNewName(prop.getName())+1));
+            String index = String.valueOf(genNewName(prop.getName())+1);
             return index;
         } else {
-            Proposition index = new Proposition(String.valueOf(genNewName(prop.getName())));
+            String index = String.valueOf(genNewName(prop.getName()));
             return index;
         }
     }
