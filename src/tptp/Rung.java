@@ -27,7 +27,7 @@ public class Rung {
         return "Rung{" + equivalence + "}";
     }
 
-        public Equivalence getEquivalence(){
+    public Equivalence getEquivalence(){
         return equivalence;
     }
 

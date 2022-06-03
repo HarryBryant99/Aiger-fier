@@ -1,5 +1,7 @@
 package main;
 
+import aiger.Aig;
+import aiger.AigerPrinter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,6 +17,7 @@ public class main {
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
         TseitinTransformation tt = new TseitinTransformation();
-        System.out.println(tt.transform(l));
+        AigerPrinter aig = new AigerPrinter();
+        System.out.println(aig.convertLadder(tt.transform(l)));
     }
 }

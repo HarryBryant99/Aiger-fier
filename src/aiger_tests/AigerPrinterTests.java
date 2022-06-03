@@ -25,7 +25,7 @@ public class AigerPrinterTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedL, tt.convertLadder(sourceL).getComponents());
+        assertEquals(expectedL, tt.convertLadder(sourceL));
     }
 
     @Test
@@ -40,6 +40,25 @@ public class AigerPrinterTests {
         Ladder expectedL = new Ladder();
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_0")))));
+
+        AigerPrinter tt = new AigerPrinter();
+        assertEquals(expectedL, tt.convertLadder(sourceL).getComponents());
+    }
+
+    @Test
+    public void test3(){
+        String data = "fof(ax,axiom, vA <=> vA & vB)";
+
+        Ladder sourceL = new Ladder();
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vA"))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vB"))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
+
+        // TODO: Calculate real expected result
+        Ladder expectedL = new Ladder();
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedL, tt.convertLadder(sourceL).getComponents());

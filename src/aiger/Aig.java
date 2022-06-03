@@ -10,24 +10,23 @@ import prop_logic.Equivalence;
 import tptp.Rung;
 
 public class Aig {
-    private ArrayList<String> aigerComponents = new ArrayList<>();
+    private ArrayList<AigerComponent> aigerComponents = new ArrayList<>();
 
     public Aig() {
     }
 
-    public void addComponent(String component){
+    public void addComponent(AigerComponent component){
         aigerComponents.add(component);
     }
 
-    public String toString(){
-        String result = "";
-        for (String r : Collections.unmodifiableList(aigerComponents)) {
-            result += r + "\n";
-        }
-        return result;
+    @Override
+    public String toString() {
+        return "Aig{" +
+                "aigerComponents=" + aigerComponents +
+                '}';
     }
 
-    public ArrayList<String> getComponents(){
+    public ArrayList<AigerComponent> getComponents(){
         return aigerComponents;
     }
 }

@@ -29,48 +29,54 @@ public class AigerPrinter {
         return targetAig;
     }
 
-    private String splitEquivalence(Equivalence equiv){
-        String lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(),false);
+    private AigerComponent splitEquivalence(Equivalence equiv){
+        Integer lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(),false);
 
         String splitResult = splitExpression(equiv.getRhsOperand());
 
-        //ArrayList<String> result = new ArrayList<>();
-        //result.add(splitResult);
-        //result.add(lhsIndex + " " + splitResult);
-
-        return (lhsIndex + " " + splitResult);
-    }
-
-    private String splitExpression(Expression exp){
+        Expression exp = equiv.getRhsOperand();
         if (exp.getClass() == Proposition.class) {
-            return propositionReplacer(exp, false);
+            return (new Latch(lhsIndex,propositionReplacer(exp, false),0));
         } else if (exp.getClass() == Negation.class) {
-            return propositionReplacer(((Negation) exp).getOperand(), true);
+            return (new Latch(lhsIndex,propositionReplacer(((Negation) exp).getOperand(), true),0));
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
             Conjunction con = (Conjunction) exp;
 
-
-
             Proposition splitResultLhs = (Proposition) con.getLhsOperand();
-            String newNameLhs = String.valueOf(genNewName(splitResultLhs.getName()));
-            //Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs);
+            Integer newNameLhs = (genNewName(splitResultLhs.getName()));
 
             Proposition splitResultRhs = (Proposition) con.getRhsOperand();
-            String newNameRhs = String.valueOf(genNewName(splitResultRhs.getName()));
-            //Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs);
+            Integer newNameRhs = (genNewName(splitResultRhs.getName()));
 
-            //ArrayList<String> resultEquivs = new ArrayList<>();
-            //resultEquivs.add(splitResultLhs);
-            //resultEquivs.add(equivLhs);
-            //resultEquivs.add(splitResultRhs);
-            //resultEquivs.add(equivRhs);
-
-            return (newNameLhs + " " + newNameRhs);
+            return new And(lhsIndex, newNameLhs, newNameRhs);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }
+    }
+
+    private String splitExpression(Expression exp){
+//        if (exp.getClass() == Proposition.class) {
+//            return propositionReplacer(exp, false);
+//        } else if (exp.getClass() == Negation.class) {
+//            return propositionReplacer(((Negation) exp).getOperand(), true);
+//        } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
+//            throw new IllegalStateException("How the hell did we get this");
+//        } else if (exp.getClass() == Conjunction.class) {
+//            Conjunction con = (Conjunction) exp;
+//
+//            Proposition splitResultLhs = (Proposition) con.getLhsOperand();
+//            String newNameLhs = String.valueOf(genNewName(splitResultLhs.getName()));
+//
+//            Proposition splitResultRhs = (Proposition) con.getRhsOperand();
+//            String newNameRhs = String.valueOf(genNewName(splitResultRhs.getName()));
+//
+//            return (newNameLhs + " " + newNameRhs);
+//        } else {
+//            throw new IllegalStateException("What is this sub type?");
+//        }
+        return null;
     }
 
     private Integer genNewName(String proposition){
@@ -113,13 +119,13 @@ public class AigerPrinter {
         }
     }
 
-    public String propositionReplacer(Expression exp, Boolean isNegative){
+    public Integer propositionReplacer(Expression exp, Boolean isNegative){
         Proposition prop = (Proposition) exp;
         if (isNegative) {
-            String index = String.valueOf(genNewName(prop.getName())+1);
+            Integer index = (genNewName(prop.getName())+1);
             return index;
         } else {
-            String index = String.valueOf(genNewName(prop.getName()));
+            Integer index = (genNewName(prop.getName()));
             return index;
         }
     }
