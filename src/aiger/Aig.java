@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import prop_logic.Equivalence;
 import tptp.Rung;
 
@@ -28,5 +29,22 @@ public class Aig {
 
     public ArrayList<AigerComponent> getComponents(){
         return aigerComponents;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Aig aig = (Aig) o;
+        return aigerComponents.equals(aig.aigerComponents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(aigerComponents);
     }
 }

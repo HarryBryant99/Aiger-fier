@@ -1,5 +1,7 @@
 package aiger;
 
+import java.util.Objects;
+
 public class Latch extends AigerComponent {
 
     private Integer id;
@@ -27,5 +29,23 @@ public class Latch extends AigerComponent {
     @Override
     public String toString() {
         return "Latch{" + id + " " + computed + " " + original + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Latch latch = (Latch) o;
+        return id.equals(latch.id) && computed.equals(latch.computed) &&
+                original.equals(latch.original);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, computed, original);
     }
 }
