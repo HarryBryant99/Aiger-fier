@@ -29,7 +29,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(2,4,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(6,3,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new And(4,2,6));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new And(10,2,6));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(16,15,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -130,7 +130,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(12,11,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new And(10,2,6));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -170,7 +170,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(12,11,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -193,7 +193,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new And(14,6,12));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -214,7 +214,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new And(12,2,10));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -243,7 +243,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new And(22,16,18));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -272,7 +272,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(22,21,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -303,7 +303,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(24,23,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -326,7 +326,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new And(16,10,12));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 
     @Test
@@ -364,6 +364,6 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(14,25,0));
 
         AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
+        assertEquals(expectedAig, tt.convertLadder(sourceL,null));
     }
 }

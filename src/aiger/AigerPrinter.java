@@ -15,13 +15,16 @@ import tptp.Rung;
 public class AigerPrinter {
 
     private HashMap<String, Integer> propositionKey = new HashMap<String, Integer>();
+    private HashMap<String, Integer> initalVariableValues;
     private static Integer currentIndex;
 
     public AigerPrinter() {
         currentIndex = 0;
     }
 
-    public Aig convertLadder(Ladder sourceL) {
+    public Aig convertLadder(Ladder sourceL, HashMap<String,Integer> initalVariableValues) {
+        this.initalVariableValues = initalVariableValues;
+
         Aig targetAig = new Aig();
         for (Rung r : sourceL.getRungs()) {
             targetAig.addComponent(splitEquivalence(r.getEquivalence()));
@@ -32,13 +35,14 @@ public class AigerPrinter {
     private AigerComponent splitEquivalence(Equivalence equiv){
         Integer lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(),false);
 
-        String splitResult = splitExpression(equiv.getRhsOperand());
-
         Expression exp = equiv.getRhsOperand();
+
         if (exp.getClass() == Proposition.class) {
-            return (new Latch(lhsIndex,propositionReplacer(exp, false),0));
+            String rhsName = ((Proposition) exp).getName();
+            return (new Latch(lhsIndex,propositionReplacer(exp, false),findInitialValue(rhsName)));
         } else if (exp.getClass() == Negation.class) {
-            return (new Latch(lhsIndex,propositionReplacer(((Negation) exp).getOperand(), true),0));
+            String rhsName = ((Proposition) ((Negation) exp).getOperand()).getName();
+            return (new Latch(lhsIndex,propositionReplacer(((Negation) exp).getOperand(), true),findInitialValue(rhsName)));
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
@@ -56,27 +60,13 @@ public class AigerPrinter {
         }
     }
 
-    private String splitExpression(Expression exp){
-//        if (exp.getClass() == Proposition.class) {
-//            return propositionReplacer(exp, false);
-//        } else if (exp.getClass() == Negation.class) {
-//            return propositionReplacer(((Negation) exp).getOperand(), true);
-//        } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
-//            throw new IllegalStateException("How the hell did we get this");
-//        } else if (exp.getClass() == Conjunction.class) {
-//            Conjunction con = (Conjunction) exp;
-//
-//            Proposition splitResultLhs = (Proposition) con.getLhsOperand();
-//            String newNameLhs = String.valueOf(genNewName(splitResultLhs.getName()));
-//
-//            Proposition splitResultRhs = (Proposition) con.getRhsOperand();
-//            String newNameRhs = String.valueOf(genNewName(splitResultRhs.getName()));
-//
-//            return (newNameLhs + " " + newNameRhs);
-//        } else {
-//            throw new IllegalStateException("What is this sub type?");
-//        }
-        return null;
+    private Integer findInitialValue(String proposition){
+        if (initalVariableValues != null) {
+            if (initalVariableValues.containsKey(proposition)) {
+                return initalVariableValues.get(proposition);
+            }
+        }
+        return 0;
     }
 
     private Integer genNewName(String proposition){
