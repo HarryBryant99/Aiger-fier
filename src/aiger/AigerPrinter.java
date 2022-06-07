@@ -39,10 +39,10 @@ public class AigerPrinter {
 
         if (exp.getClass() == Proposition.class) {
             String rhsName = ((Proposition) exp).getName();
-            return (new Latch(lhsIndex,propositionReplacer(exp, false),findInitialValue(rhsName)));
+            return (new Latch(lhsIndex,propositionReplacer(exp, false),findInitialValue(rhsName, false)));
         } else if (exp.getClass() == Negation.class) {
             String rhsName = ((Proposition) ((Negation) exp).getOperand()).getName();
-            return (new Latch(lhsIndex,propositionReplacer(((Negation) exp).getOperand(), true),findInitialValue(rhsName)));
+            return (new Latch(lhsIndex,propositionReplacer(((Negation) exp).getOperand(), true),findInitialValue(rhsName, true)));
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
@@ -60,13 +60,23 @@ public class AigerPrinter {
         }
     }
 
-    private Integer findInitialValue(String proposition){
+    private Integer findInitialValue(String proposition, boolean isNegative){
+        Integer initialValue = 0;
         if (initalVariableValues != null) {
             if (initalVariableValues.containsKey(proposition)) {
-                return initalVariableValues.get(proposition);
+                initialValue = initalVariableValues.get(proposition);
             }
         }
-        return 0;
+
+        if (isNegative) {
+            if (initialValue == 1) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            return initialValue;
+        }
     }
 
     private Integer genNewName(String proposition){

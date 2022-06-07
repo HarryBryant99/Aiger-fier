@@ -43,7 +43,7 @@ public class AigerPrinterTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(6,3,1));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedAig, tt.convertLadder(sourceL,null));
@@ -102,11 +102,11 @@ public class AigerPrinterTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(6,3,1));
         expectedAig.addComponent(new Latch(8,10,0));
-        expectedAig.addComponent(new Latch(12,9,0));
+        expectedAig.addComponent(new Latch(12,9,1));
         expectedAig.addComponent(new And(14,6,12));
-        expectedAig.addComponent(new Latch(16,15,0));
+        expectedAig.addComponent(new Latch(16,15,1));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedAig, tt.convertLadder(sourceL,null));
@@ -127,7 +127,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
-        expectedAig.addComponent(new Latch(12,11,0));
+        expectedAig.addComponent(new Latch(12,11,1));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedAig, tt.convertLadder(sourceL,null));
@@ -167,7 +167,7 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
-        expectedAig.addComponent(new Latch(12,11,0));
+        expectedAig.addComponent(new Latch(12,11,1));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedAig, tt.convertLadder(sourceL,null));
@@ -187,9 +187,9 @@ public class AigerPrinterTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(6,3,1));
         expectedAig.addComponent(new Latch(8,10,0));
-        expectedAig.addComponent(new Latch(12,9,0));
+        expectedAig.addComponent(new Latch(12,9,1));
         expectedAig.addComponent(new And(14,6,12));
 
         AigerPrinter tt = new AigerPrinter();
@@ -210,7 +210,7 @@ public class AigerPrinterTests {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,8,0));
-        expectedAig.addComponent(new Latch(10,7,0));
+        expectedAig.addComponent(new Latch(10,7,1));
         expectedAig.addComponent(new And(12,2,10));
 
         AigerPrinter tt = new AigerPrinter();
@@ -234,11 +234,11 @@ public class AigerPrinterTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(6,3,1));
         expectedAig.addComponent(new Latch(8,10,0));
-        expectedAig.addComponent(new Latch(12,9,0));
+        expectedAig.addComponent(new Latch(12,9,1));
         expectedAig.addComponent(new And(14,6,12));
-        expectedAig.addComponent(new Latch(16,15,0));
+        expectedAig.addComponent(new Latch(16,15,1));
         expectedAig.addComponent(new Latch(18,20,0));
         expectedAig.addComponent(new And(22,16,18));
 
@@ -265,11 +265,11 @@ public class AigerPrinterTests {
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
-        expectedAig.addComponent(new Latch(12,11,0));
+        expectedAig.addComponent(new Latch(12,11,1));
         expectedAig.addComponent(new Latch(14,16,0));
-        expectedAig.addComponent(new Latch(18,15,0));
+        expectedAig.addComponent(new Latch(18,15,1));
         expectedAig.addComponent(new And(20,12,18));
-        expectedAig.addComponent(new Latch(22,21,0));
+        expectedAig.addComponent(new Latch(22,21,1));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedAig, tt.convertLadder(sourceL,null));
@@ -293,14 +293,14 @@ public class AigerPrinterTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(6,3,1));
         expectedAig.addComponent(new Latch(8,10,0));
-        expectedAig.addComponent(new Latch(12,9,0));
+        expectedAig.addComponent(new Latch(12,9,1));
         expectedAig.addComponent(new And(14,6,12));
         expectedAig.addComponent(new Latch(16,18,0));
-        expectedAig.addComponent(new Latch(20,17,0));
+        expectedAig.addComponent(new Latch(20,17,1));
         expectedAig.addComponent(new And(22,14,20));
-        expectedAig.addComponent(new Latch(24,23,0));
+        expectedAig.addComponent(new Latch(24,23,1));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedAig, tt.convertLadder(sourceL,null));
@@ -351,17 +351,17 @@ public class AigerPrinterTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(6,3,1));
         expectedAig.addComponent(new Latch(8,10,0));
-        expectedAig.addComponent(new Latch(12,9,0));
+        expectedAig.addComponent(new Latch(12,9,1));
         expectedAig.addComponent(new And(14,6,12));
 
         expectedAig.addComponent(new Latch(16,4,0));
-        expectedAig.addComponent(new Latch(18,17,0));
+        expectedAig.addComponent(new Latch(18,17,1));
         expectedAig.addComponent(new Latch(20,10,0));
-        expectedAig.addComponent(new Latch(22,21,0));
+        expectedAig.addComponent(new Latch(22,21,1));
         expectedAig.addComponent(new And(24,18,22));
-        expectedAig.addComponent(new Latch(14,25,0));
+        expectedAig.addComponent(new Latch(14,25,1));
 
         AigerPrinter tt = new AigerPrinter();
         assertEquals(expectedAig, tt.convertLadder(sourceL,null));
