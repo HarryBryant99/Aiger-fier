@@ -3,7 +3,7 @@ package aiger_tests;
 import static org.junit.Assert.assertEquals;
 
 import aiger.Aig;
-import aiger.AigerPrinter;
+import aiger.AigerTransformation;
 import aiger.InputPropositions;
 import aiger.Latch;
 import java.io.File;
@@ -33,8 +33,8 @@ public class InputPropostionsTest {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,1));
 
-        AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL,iv.getHashMap()));
+        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
     @Test
@@ -52,8 +52,8 @@ public class InputPropostionsTest {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
 
-        AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL,iv.getHashMap()));
+        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
     @Test
@@ -70,10 +70,10 @@ public class InputPropostionsTest {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(2,4,1));
+        expectedAig.addComponent(new Latch(6,3,1));
 
-        AigerPrinter tt = new AigerPrinter();
-        assertEquals(expectedAig, tt.convertLadder(sourceL,iv.getHashMap()));
+        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 }

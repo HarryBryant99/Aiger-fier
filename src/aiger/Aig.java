@@ -20,6 +20,10 @@ public class Aig {
         aigerComponents.add(component);
     }
 
+    public void addAllComponents(List<AigerComponent> components){
+        aigerComponents.addAll(components);
+    }
+
     @Override
     public String toString() {
         return "Aig{" +

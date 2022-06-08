@@ -12,24 +12,34 @@ import prop_logic.Proposition;
 import tptp.Ladder;
 import tptp.Rung;
 
-public class AigerPrinter {
+public class AigerTransformation {
 
     private HashMap<String, Integer> propositionKey = new HashMap<String, Integer>();
     private HashMap<String, Integer> initalVariableValues;
     private static Integer currentIndex;
 
-    public AigerPrinter() {
+    public AigerTransformation(HashMap<String,Integer> initalVariableValues) {
         currentIndex = 0;
+        this.initalVariableValues = initalVariableValues;
     }
 
-    public Aig convertLadder(Ladder sourceL, HashMap<String,Integer> initalVariableValues) {
-        this.initalVariableValues = initalVariableValues;
-
+    public Aig convertLadder(Ladder sourceL) {
         Aig targetAig = new Aig();
         for (Rung r : sourceL.getRungs()) {
             targetAig.addComponent(splitEquivalence(r.getEquivalence()));
         }
         return targetAig;
+    }
+
+    public List<AigerComponent> addSafetyProperty(Ladder sourceL) {
+        Aig targetAig = new Aig();
+        for (Rung r : sourceL.getRungs()) {
+            targetAig.addComponent(splitEquivalence(r.getEquivalence()));
+        }
+
+        Output output = new Output((((Latch) targetAig.getComponents().get(targetAig.getComponents().size() - 1)).getId()) + 1);
+        targetAig.addComponent(output);
+        return targetAig.getComponents();
     }
 
     private AigerComponent splitEquivalence(Equivalence equiv){
