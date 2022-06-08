@@ -23,7 +23,7 @@ public class PrintAiger {
         ArrayList<AigerComponent> components = null;
         components.addAll(latches);
         components.add(output);
-        components.add((AigerComponent) ands);
+        components.addAll(ands);
 
         aig.setAigerComponents(components);
 
