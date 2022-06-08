@@ -2,6 +2,7 @@ package aiger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import prop_logic.Proposition;
 import tptp.Rung;
 
@@ -54,5 +55,23 @@ public class PrintAiger {
         for (AigerComponent a: ands) {
             System.out.println(a.toString());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PrintAiger that = (PrintAiger) o;
+        return aig.equals(that.aig) && latches.equals(that.latches) && output.equals(that.output) &&
+                ands.equals(that.ands);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(aig, latches, output, ands);
     }
 }
