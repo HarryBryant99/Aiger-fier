@@ -16,6 +16,10 @@ public class Aig {
     public Aig() {
     }
 
+    public void setAigerComponents(ArrayList<AigerComponent> aigerComponents) {
+        this.aigerComponents = aigerComponents;
+    }
+
     public void addComponent(AigerComponent component){
         aigerComponents.add(component);
     }
