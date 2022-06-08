@@ -31,6 +31,10 @@ public class Latch extends AigerComponent {
         return "Latch{" + id + " " + computed + " " + original + '}';
     }
 
+    public String print(){
+        return id + " " + computed + " " + original;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

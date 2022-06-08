@@ -8,9 +8,9 @@ import tptp.Rung;
 
 public class PrintAiger {
     private Aig aig;
-    private List<Latch> latches;
+    private ArrayList<Latch> latches = new ArrayList<>();
     private Output output;
-    private List<And> ands;
+    private ArrayList<And> ands = new ArrayList<>();
 
     public PrintAiger(Aig aig) {
         this.aig = aig;
@@ -21,7 +21,7 @@ public class PrintAiger {
             splitComponents(c);
         }
 
-        ArrayList<AigerComponent> components = null;
+        ArrayList<AigerComponent> components = new ArrayList<>();
         components.addAll(latches);
         components.add(output);
         components.addAll(ands);
@@ -43,17 +43,19 @@ public class PrintAiger {
         }
     }
 
-    private void printAig() {
+    public void printAig() {
+        sortAig();
+
         System.out.println("aag 0 " + latches.size() + " 0 " + ands.size() + " 1");
 
-        for (AigerComponent l: latches) {
-            System.out.println(l.toString());
+        for (Latch l: latches) {
+            System.out.println(l.print());
         }
 
-        System.out.println(output.toString());
+        System.out.println(output.print());
 
-        for (AigerComponent a: ands) {
-            System.out.println(a.toString());
+        for (And a: ands) {
+            System.out.println(a.print());
         }
     }
 

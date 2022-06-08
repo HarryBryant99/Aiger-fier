@@ -3,6 +3,7 @@ package main;
 import aiger.Aig;
 import aiger.AigerTransformation;
 import aiger.InputPropositions;
+import aiger.PrintAiger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,5 +35,8 @@ public class main {
         newAiger.addAllComponents(aig.addSafetyProperty(transformed));
 
         System.out.println(newAiger);
+
+        PrintAiger printer = new PrintAiger(newAiger);
+        printer.printAig();
     }
 }

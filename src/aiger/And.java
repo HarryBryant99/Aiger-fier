@@ -31,6 +31,10 @@ public class And extends AigerComponent {
         return "Latch{" + id + " " + getLhs() + " " + getRhs() + '}';
     }
 
+    public String print(){
+        return id + " " + lhs + " " + rhs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
