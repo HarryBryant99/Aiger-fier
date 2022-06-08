@@ -75,18 +75,16 @@ public class AigerTransformation {
         if (initalVariableValues != null) {
             if (initalVariableValues.containsKey(proposition)) {
                 initialValue = initalVariableValues.get(proposition);
+                if (isNegative) {
+                    if (initialValue == 1) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                }
             }
         }
-
-        if (isNegative) {
-            if (initialValue == 1) {
-                return 0;
-            } else {
-                return 1;
-            }
-        } else {
-            return initialValue;
-        }
+        return initialValue;
     }
 
     private Integer genNewName(String proposition){
