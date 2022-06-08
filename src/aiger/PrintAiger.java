@@ -41,4 +41,18 @@ public class PrintAiger {
             throw new IllegalStateException("What is this sub type?");
         }
     }
+
+    private void printAig() {
+        System.out.println("aag 0 " + latches.size() + " 0 " + ands.size() + " 1");
+
+        for (AigerComponent l: latches) {
+            System.out.println(l.toString());
+        }
+
+        System.out.println(output.toString());
+
+        for (AigerComponent a: ands) {
+            System.out.println(a.toString());
+        }
+    }
 }
