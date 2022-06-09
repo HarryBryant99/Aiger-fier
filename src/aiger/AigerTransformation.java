@@ -28,6 +28,8 @@ public class AigerTransformation {
         for (Rung r : sourceL.getRungs()) {
             targetAig.addComponent(splitEquivalence(r.getEquivalence()));
         }
+
+        System.out.println(propositionKey);
         return targetAig;
     }
 
@@ -37,7 +39,7 @@ public class AigerTransformation {
             targetAig.addComponent(splitEquivalence(r.getEquivalence()));
         }
 
-        Output output = new Output((((Latch) targetAig.getComponents().get(targetAig.getComponents().size() - 1)).getId()) + 1);
+        Output output = new Output((targetAig.getComponents().get(targetAig.getComponents().size() - 1).getId()) + 1);
         targetAig.addComponent(output);
         return targetAig.getComponents();
     }

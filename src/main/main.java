@@ -8,21 +8,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import org.omg.CORBA.StringHolder;
 import tptp.Ladder;
 import tptp.LadderParser;
 import tseitin_transformation.TseitinTransformation;
 
 public class main {
     public static void main(String[] args) throws IOException {
-        File f = new File("Test2.tptp");
+        //TODO argparse
+
+        File f = new File("Example1.tptp");
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
 
-        File safetyFile = new File("Safety.tptp");
+        File safetyFile = new File("Example1Safety.tptp");
         in = new FileInputStream(safetyFile);
         Ladder safety = LadderParser.parseLadder(in);
 
-        File input = new File("input.txt");
+        File input = new File("Example1Inputs.txt");
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 

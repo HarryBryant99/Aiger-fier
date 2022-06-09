@@ -36,12 +36,39 @@ public class SafetyTests {
 
         //TODO add expected
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(6,3,1));
+        expectedAig.addComponent(new Latch(6,3,0));
         expectedAig.addComponent(new Latch(8,10,0));
-        expectedAig.addComponent(new Latch(12,9,1));
+        expectedAig.addComponent(new Latch(12,9,0));
         expectedAig.addComponent(new And(14, 6, 12));
-        expectedAig.addComponent(new Latch(16, 15,1));
+        expectedAig.addComponent(new Latch(16, 15,0));
         expectedAig.addComponent(new Output(17));
+
+        assertEquals(expectedAig, newAiger);
+    }
+
+    @Test
+    public void test2() throws IOException {
+        File safetyFile = new File("SafetyNegation.tptp");
+        InputStream in = new FileInputStream(safetyFile);
+        Ladder safety = LadderParser.parseLadder(in);
+
+        TseitinTransformation tt = new TseitinTransformation();
+        AigerTransformation aig = new AigerTransformation(null);
+
+        Aig newAiger = new Aig();
+
+        Ladder transformed = tt.transform(safety);
+        newAiger.addAllComponents(aig.addSafetyProperty(transformed));
+
+        Aig expectedAig = new Aig();
+
+        //TODO add expected
+        expectedAig.addComponent(new Latch(2,4,0));
+        expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(8,10,0));
+        expectedAig.addComponent(new Latch(12,9,0));
+        expectedAig.addComponent(new And(14, 6, 12));
+        expectedAig.addComponent(new Output(15));
 
         assertEquals(expectedAig, newAiger);
     }

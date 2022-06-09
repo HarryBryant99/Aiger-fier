@@ -1,2 +1,2 @@
-fof(ax,axiom, vX1 <=> (~ vX & vY)).
-fof(ax,axiom, vY1 <=> vY).
+fof(ax,axiom, vX <=> (~ vX & vY)).
+fof(ax,axiom, vY <=> vY).
