@@ -46,7 +46,12 @@ public class PrintAiger {
     public void printAig() {
         sortAig();
 
-        int vars = (latches.get(latches.size()-1).getId()/2);
+        int vars;
+        if (latches.get(latches.size()-1).getId() > ands.get(ands.size()-1).getId()) {
+            vars = (latches.get(latches.size() - 1).getId() / 2);
+        } else {
+            vars = (ands.get(ands.size()-1).getId()/2);
+        }
         System.out.println("aag " + vars + " 0 " + latches.size() + " 0 " + ands.size() + " 1");
 
         for (Latch l: latches) {

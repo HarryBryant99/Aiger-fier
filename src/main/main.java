@@ -3,6 +3,7 @@ package main;
 import aiger.Aig;
 import aiger.AigerTransformation;
 import aiger.InputPropositions;
+import aiger.Output;
 import aiger.PrintAiger;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,15 +18,15 @@ public class main {
     public static void main(String[] args) throws IOException {
         //TODO argparse
 
-        File f = new File("Example1.tptp");
+        File f = new File("Example2.tptp");
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
 
-        File safetyFile = new File("Example1Safety.tptp");
+        File safetyFile = new File("Example2Safety.tptp");
         in = new FileInputStream(safetyFile);
         Ladder safety = LadderParser.parseLadder(in);
 
-        File input = new File("Example1Inputs.txt");
+        File input = new File("Example2Inputs.txt");
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 
@@ -34,8 +35,10 @@ public class main {
 
         Aig newAiger = aig.convertLadder(tt.transform(l));
 
-        Ladder transformed = tt.transform(safety);
-        newAiger.addAllComponents(aig.addSafetyProperty(transformed));
+//        Ladder transformed = tt.transform(safety);
+//        newAiger.addAllComponents(aig.addSafetyProperty(transformed));
+        Output output = new Output(-1);
+        newAiger.addComponent(output);
 
         System.out.println(newAiger);
 
