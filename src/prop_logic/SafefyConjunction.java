@@ -3,11 +3,15 @@ package prop_logic;
 import java.util.Objects;
 
 public class SafefyConjunction extends BinaryOperation {
-    private final String id;
+    private final Proposition id;
 
-    public SafefyConjunction(Expression lhs, Expression rhs, String id) {
+    public SafefyConjunction(Expression lhs, Expression rhs, Proposition id) {
         super(lhs, rhs);
         this.id = id;
+    }
+
+    public Proposition getId() {
+        return id;
     }
 
     @Override

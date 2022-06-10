@@ -9,6 +9,7 @@ import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic.Negation;
 import prop_logic.Proposition;
+import prop_logic.SafefyConjunction;
 import tptp.Ladder;
 import tptp.Rung;
 
@@ -67,6 +68,19 @@ public class AigerTransformation {
             Integer newNameRhs = (genNewName(splitResultRhs.getName()));
 
             return new And(lhsIndex, newNameLhs, newNameRhs);
+        } else if (exp.getClass() == SafefyConjunction.class) {
+            SafefyConjunction con = (SafefyConjunction) exp;
+
+            Proposition splitResultId = (Proposition) con.getId();
+            Integer newNameId = (genNewName(splitResultId.getName()));
+
+            Proposition splitResultLhs = (Proposition) con.getLhsOperand();
+            Integer newNameLhs = (genNewName(splitResultLhs.getName()));
+
+            Proposition splitResultRhs = (Proposition) con.getRhsOperand();
+            Integer newNameRhs = (genNewName(splitResultRhs.getName()));
+
+            return new And(newNameId, newNameLhs, newNameRhs);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }
