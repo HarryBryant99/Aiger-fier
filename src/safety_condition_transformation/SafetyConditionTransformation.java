@@ -8,6 +8,7 @@ import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic.Negation;
 import prop_logic.Proposition;
+import prop_logic.SafefyConjunction;
 import tptp.Ladder;
 import tptp.Rung;
 import tptp.SafetyCondition;
@@ -53,7 +54,7 @@ public class SafetyConditionTransformation {
             ArrayList<Expression> resultExpressions = new ArrayList<>();
 
             if (isChildConjunction(con.getLhsOperand()) && isChildConjunction(con.getRhsOperand())){
-                Conjunction newConjunction = new Conjunction(returnProposition(con.getLhsOperand()), returnProposition(con.getRhsOperand()));
+                SafefyConjunction newConjunction = new SafefyConjunction(returnProposition(con.getLhsOperand()), returnProposition(con.getRhsOperand()), genNewName());
                 Result splitResultLhs = splitExpression(con.getLhsOperand());
                 Result splitResultRhs = splitExpression(con.getRhsOperand());
 
@@ -64,7 +65,7 @@ public class SafetyConditionTransformation {
                 return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
 
             } else if (isChildConjunction(con.getLhsOperand()) && !isChildConjunction(con.getRhsOperand())){
-                Conjunction newConjunction = new Conjunction(returnProposition(con.getLhsOperand()), con.getRhsOperand());
+                SafefyConjunction newConjunction = new SafefyConjunction(returnProposition(con.getLhsOperand()), con.getRhsOperand(), genNewName());
                 Result splitResultLhs = splitExpression(con.getLhsOperand());
 
                 resultExpressions.add(splitResultLhs.finalExpression);
@@ -72,7 +73,7 @@ public class SafetyConditionTransformation {
                 return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
 
             } else if (!isChildConjunction(con.getLhsOperand()) && isChildConjunction(con.getRhsOperand())){
-                Conjunction newConjunction = new Conjunction(con.getLhsOperand(), returnProposition(con.getRhsOperand()));
+                SafefyConjunction newConjunction = new SafefyConjunction(con.getLhsOperand(), returnProposition(con.getRhsOperand()), genNewName());
                 Result splitResultRhs = splitExpression(con.getRhsOperand());
 
                 resultExpressions.add(splitResultRhs.finalExpression);
@@ -80,7 +81,8 @@ public class SafetyConditionTransformation {
                 return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
 
             } else if (!isChildConjunction(con.getLhsOperand()) && !isChildConjunction(con.getRhsOperand())){
-                return new SafetyConditionTransformation.Result(exp);
+                SafefyConjunction newConjunction = new SafefyConjunction(con.getLhsOperand(), con.getRhsOperand(), genNewName());
+                return new SafetyConditionTransformation.Result(newConjunction);
             } else {
                 throw new IllegalStateException("What is this sub type?");
             }
