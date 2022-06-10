@@ -23,10 +23,15 @@ public class SafetyConditionTransformation {
 
     public SafetyCondition transform(SafetyCondition sourceSC){
         SafetyCondition targetSC = new SafetyCondition();
+        Expression formattedSC = sourceSC.getExpression().get(0).cloneWithoutDisjunctions().cloneRemovingDoubleNegation();
 
-        SafetyConditionTransformation.Result splitResult = splitExpression(sourceSC.getExpression().get(0).cloneWithoutDisjunctions().cloneRemovingDoubleNegation());
+        SafetyConditionTransformation.Result splitResult = splitExpression(formattedSC);
 
-        targetSC.addExpression(splitResult.finalExpression);
+        if (formattedSC.getClass() == Negation.class){
+            targetSC.addExpression(new Negation(splitResult.finalExpression));
+        } else {
+            targetSC.addExpression(splitResult.finalExpression);
+        }
         targetSC.addAllExpressions(splitResult.expressions);
 
         return targetSC;
@@ -37,9 +42,15 @@ public class SafetyConditionTransformation {
             return new SafetyConditionTransformation.Result(exp);
         } else if (exp.getClass() == Negation.class){
             Negation neg = (Negation) exp;
-            SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
 
-            return new SafetyConditionTransformation.Result(splitResult.finalExpression);
+            //if (neg.getOperand().getClass() == Conjunction.class){
+                SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
+
+                //return new SafetyConditionTransformation.Result(splitResult.finalExpression);
+                return splitResult;
+            //} else {
+                //return new SafetyConditionTransformation.Result(exp);
+            //}
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {

@@ -181,4 +181,52 @@ public class SafetyConditionTransformationTests {
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
     }
+
+    @Test
+    public void test12(){
+        String data = "fof(ax,axiom, vA <=> (vB & vE) | vC)";
+
+        SafetyCondition sourceSC = new SafetyCondition();
+        sourceSC.addExpression(new Disjunction(new Conjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")));
+
+        // TODO: Calculate real expected result
+        SafetyCondition expectedSC = new SafetyCondition();
+        expectedSC.addExpression(new Negation(new Conjunction(new Negation(new Proposition("gen_0")),new Negation(new Proposition("vC")))));
+        expectedSC.addExpression(new Conjunction(new Proposition("vB"),new Proposition("vE")));
+
+        SafetyConditionTransformation sct = new SafetyConditionTransformation();
+        assertEquals(expectedSC, sct.transform(sourceSC));
+    }
+
+    @Test
+    public void test13(){
+        String data = "fof(ax,axiom, vA <=> (vB | vE) | vC)";
+
+        SafetyCondition sourceSC = new SafetyCondition();
+        sourceSC.addExpression(new Disjunction(new Disjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")));
+
+        // TODO: Calculate real expected result
+        SafetyCondition expectedSC = new SafetyCondition();
+        expectedSC.addExpression(new Negation(new Conjunction(new Proposition("gen_0"),new Negation(new Proposition("vC")))));
+        expectedSC.addExpression(new Conjunction(new Negation (new Proposition("vB")),new Negation(new Proposition("vE"))));
+
+        SafetyConditionTransformation sct = new SafetyConditionTransformation();
+        assertEquals(expectedSC, sct.transform(sourceSC));
+    }
+
+    @Test
+    public void test14(){
+        String data = "fof(ax,axiom, vA <=> (vB & vE) & vC)";
+
+        SafetyCondition sourceSC = new SafetyCondition();
+        sourceSC.addExpression(new Conjunction(new Conjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")));
+
+        // TODO: Calculate real expected result
+        SafetyCondition expectedSC = new SafetyCondition();
+        expectedSC.addExpression(new Conjunction(new Proposition("gen_0"),new Proposition("vC")));
+        expectedSC.addExpression(new Conjunction(new Proposition("vB"),new Proposition("vE")));
+
+        SafetyConditionTransformation sct = new SafetyConditionTransformation();
+        assertEquals(expectedSC, sct.transform(sourceSC));
+    }
 }
