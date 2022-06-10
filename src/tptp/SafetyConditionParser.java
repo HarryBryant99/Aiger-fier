@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 import prop_logic.Equivalence;
 import prop_logic.Expression;
+import prop_logic.Negation;
 import prop_logic_parser.Parser;
 
 public class SafetyConditionParser {
@@ -30,7 +31,8 @@ public class SafetyConditionParser {
                 String lineBody = line.substring(prefix.length(), line.length() - postfix.length());
 
                 Expression exp = Parser.parse(lineBody);
-                sc.addExpression(exp);
+                //Prove that the negation of the safety property is never reached
+                sc.addExpression(new Negation(exp));
             }
         }
 

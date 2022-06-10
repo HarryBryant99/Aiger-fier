@@ -43,14 +43,9 @@ public class SafetyConditionTransformation {
         } else if (exp.getClass() == Negation.class){
             Negation neg = (Negation) exp;
 
-            //if (neg.getOperand().getClass() == Conjunction.class){
-                SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
+            SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
 
-                //return new SafetyConditionTransformation.Result(splitResult.finalExpression);
-                return splitResult;
-            //} else {
-                //return new SafetyConditionTransformation.Result(exp);
-            //}
+            return splitResult;
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {

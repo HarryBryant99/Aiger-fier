@@ -25,7 +25,7 @@ public class SafetyConditionParserTests {
         String data = "fof(ax,axiom, vB).";
 
         SafetyCondition esc = new SafetyCondition();
-        esc.addExpression(new Proposition("vB"));
+        esc.addExpression(new Negation(new Proposition("vB")));
 
         ByteArrayInputStream in = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
@@ -38,7 +38,7 @@ public class SafetyConditionParserTests {
         String data = "fof(ax,axiom, ~vB).";
 
         SafetyCondition esc = new SafetyCondition();
-        esc.addExpression(new Negation(new Proposition("vB")));
+        esc.addExpression(new Negation(new Negation(new Proposition("vB"))));
 
         ByteArrayInputStream in = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
@@ -51,7 +51,7 @@ public class SafetyConditionParserTests {
         String data = "fof(ax,axiom, vB | vC).";
 
         SafetyCondition esc = new SafetyCondition();
-        esc.addExpression(new Disjunction(new Proposition("vB"), new Proposition("vC")));
+        esc.addExpression(new Negation(new Disjunction(new Proposition("vB"), new Proposition("vC"))));
 
         ByteArrayInputStream in = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
@@ -64,7 +64,7 @@ public class SafetyConditionParserTests {
         String data = "fof(ax,axiom, vB & vC).";
 
         SafetyCondition esc = new SafetyCondition();
-        esc.addExpression(new Conjunction(new Proposition("vB"), new Proposition("vC")));
+        esc.addExpression(new Negation(new Conjunction(new Proposition("vB"), new Proposition("vC"))));
 
         ByteArrayInputStream in = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
