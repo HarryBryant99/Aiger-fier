@@ -18,15 +18,15 @@ public class main {
     public static void main(String[] args) throws IOException {
         //TODO argparse
 
-        File f = new File("Example2.tptp");
+        File f = new File("ladder_logic_examples/Example1.tptp");
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
 
-        File safetyFile = new File("Example2Safety.tptp");
+        File safetyFile = new File("ladder_logic_examples/Example1Safety.tptp");
         in = new FileInputStream(safetyFile);
         Ladder safety = LadderParser.parseLadder(in);
 
-        File input = new File("Example2Inputs.txt");
+        File input = new File("ladder_logic_examples/Example1Inputs.txt");
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 

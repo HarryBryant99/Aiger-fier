@@ -1,0 +1,1 @@
+fof(ax,axiom, vS <=> ((vC & ~ vD) | (vB & ~ vD) | (vB & vC) | (vA & ~ vB) | (~ vA & ~ vC & vD))).

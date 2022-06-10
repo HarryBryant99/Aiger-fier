@@ -72,4 +72,26 @@ public class SafetyTests {
 
         assertEquals(expectedAig, newAiger);
     }
+
+    @Test
+    public void test3() throws IOException {
+        File safetyFile = new File("SafetyTest.tptp");
+        InputStream in = new FileInputStream(safetyFile);
+        Ladder safety = LadderParser.parseLadder(in);
+
+        TseitinTransformation tt = new TseitinTransformation();
+        AigerTransformation aig = new AigerTransformation(null);
+
+        Aig newAiger = new Aig();
+
+        Ladder transformed = tt.transform(safety);
+        newAiger.addAllComponents(aig.addSafetyProperty(transformed));
+
+        Aig expectedAig = new Aig();
+
+        //TODO add expected
+        expectedAig.addComponent(new Output(17));
+
+        assertEquals(expectedAig, newAiger);
+    }
 }
