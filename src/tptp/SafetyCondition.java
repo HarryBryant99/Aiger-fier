@@ -1,32 +1,37 @@
 package tptp;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import prop_logic.Expression;
 
 public class SafetyCondition {
 
-    private Expression condition;
+    private ArrayList<Expression> conditions = new ArrayList<>();
 
     public SafetyCondition() {
     }
 
     public void addExpression(Expression newExpression){
         Objects.nonNull(newExpression);
-        condition = newExpression;
+        conditions.add(newExpression);
     }
 
-    public Expression getExpression(){
-        return condition;
+    public void addAllExpressions(List<Expression> newExpressions){
+        Objects.nonNull(newExpressions);
+        conditions.addAll(newExpressions);
+    }
+
+
+    public ArrayList<Expression> getExpression(){
+        return conditions;
     }
 
 
     @Override
     public String toString() {
         return "SafetyCondition{" +
-                "condition=" + condition +
+                "conditions=" + conditions +
                 '}';
     }
 
@@ -39,11 +44,11 @@ public class SafetyCondition {
             return false;
         }
         SafetyCondition that = (SafetyCondition) o;
-        return condition.equals(that.condition);
+        return conditions.equals(that.conditions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(condition);
+        return Objects.hash(conditions);
     }
 }
