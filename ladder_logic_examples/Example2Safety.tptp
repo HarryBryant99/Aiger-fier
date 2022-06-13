@@ -1,1 +1,1 @@
-fof(ax,axiom, vS <=> (vA | ~vC)).
+fof(ax,axiom, (vA | ~vC)).
