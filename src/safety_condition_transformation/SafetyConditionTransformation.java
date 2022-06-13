@@ -44,48 +44,25 @@ public class SafetyConditionTransformation {
         } else if (exp.getClass() == Negation.class){
             Negation neg = (Negation) exp;
 
-            SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
+//            if (neg.getOperand().getClass() == Conjunction.class) {
+//                SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
+//                Proposition conjunctionName = ((SafefyConjunction) splitResult.finalExpression).getId();
+//                ArrayList<Expression> resultExpressions = new ArrayList<>();
+//                resultExpressions.add(splitResult.finalExpression);
+//                resultExpressions.addAll(splitResult.expressions);
+//                return new SafetyConditionTransformation.Result(resultExpressions, conjunctionName);
 
-            return splitResult;
+//                SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
+//                return splitResult;
+
+//            } else {
+                SafetyConditionTransformation.Result splitResult = splitExpression(neg.getOperand());
+                return splitResult;
+//            }
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
-            Conjunction con = (Conjunction) exp;
-            ArrayList<Expression> resultExpressions = new ArrayList<>();
-
-            if (isChildConjunction(con.getLhsOperand()) && isChildConjunction(con.getRhsOperand())){
-                SafefyConjunction newConjunction = new SafefyConjunction(returnProposition(con.getLhsOperand()), returnProposition(con.getRhsOperand()), new Proposition(genNewName()));
-                Result splitResultLhs = splitExpression(con.getLhsOperand());
-                Result splitResultRhs = splitExpression(con.getRhsOperand());
-
-                resultExpressions.add(splitResultLhs.finalExpression);
-                resultExpressions.addAll(splitResultLhs.expressions);
-                resultExpressions.add(splitResultRhs.finalExpression);
-                resultExpressions.addAll(splitResultRhs.expressions);
-                return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
-
-            } else if (isChildConjunction(con.getLhsOperand()) && !isChildConjunction(con.getRhsOperand())){
-                SafefyConjunction newConjunction = new SafefyConjunction(returnProposition(con.getLhsOperand()), con.getRhsOperand(), new Proposition(genNewName()));
-                Result splitResultLhs = splitExpression(con.getLhsOperand());
-
-                resultExpressions.add(splitResultLhs.finalExpression);
-                resultExpressions.addAll(splitResultLhs.expressions);
-                return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
-
-            } else if (!isChildConjunction(con.getLhsOperand()) && isChildConjunction(con.getRhsOperand())){
-                SafefyConjunction newConjunction = new SafefyConjunction(con.getLhsOperand(), returnProposition(con.getRhsOperand()), new Proposition(genNewName()));
-                Result splitResultRhs = splitExpression(con.getRhsOperand());
-
-                resultExpressions.add(splitResultRhs.finalExpression);
-                resultExpressions.addAll(splitResultRhs.expressions);
-                return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
-
-            } else if (!isChildConjunction(con.getLhsOperand()) && !isChildConjunction(con.getRhsOperand())){
-                SafefyConjunction newConjunction = new SafefyConjunction(con.getLhsOperand(), con.getRhsOperand(), new Proposition(genNewName()));
-                return new SafetyConditionTransformation.Result(newConjunction);
-            } else {
-                throw new IllegalStateException("What is this sub type?");
-            }
+            return buildConjunction(exp);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }
@@ -103,11 +80,19 @@ public class SafetyConditionTransformation {
         }
     }
 
-    private Expression returnProposition(Expression expression){
+    private Expression returnProposition(Expression expression, Result result){
         if (expression.getClass() == Negation.class){
-            return new Negation(new Proposition(genNewName()));
+            return new Negation(returnPropositionWhenConjunction(result.finalExpression));
         } else {
-            return new Proposition(genNewName());
+            return returnPropositionWhenConjunction(result.finalExpression);
+        }
+    }
+
+    private Expression returnPropositionWhenConjunction(Expression expression){
+        if (expression.getClass() == Negation.class){
+            return new Negation(((SafefyConjunction) ((Negation) expression).getOperand()).getId());
+        } else {
+            return ((SafefyConjunction) expression).getId();
         }
     }
 
@@ -123,6 +108,48 @@ public class SafetyConditionTransformation {
         public Result(Expression finalExpression) {
             this.expressions = new ArrayList<>();
             this.finalExpression = finalExpression;
+        }
+    }
+
+    private SafetyConditionTransformation.Result buildConjunction(Expression exp){
+        Conjunction con = (Conjunction) exp;
+        ArrayList<Expression> resultExpressions = new ArrayList<>();
+
+        if (isChildConjunction(con.getLhsOperand()) && isChildConjunction(con.getRhsOperand())){
+            Result splitResultLhs = splitExpression(con.getLhsOperand());
+            Result splitResultRhs = splitExpression(con.getRhsOperand());
+            SafefyConjunction newConjunction = new SafefyConjunction(returnProposition(con.getLhsOperand(),splitResultLhs), returnProposition(con.getRhsOperand(),splitResultLhs), new Proposition(genNewName()));
+
+            resultExpressions.addAll(splitResultLhs.expressions);
+            resultExpressions.add(splitResultLhs.finalExpression);
+            resultExpressions.addAll(splitResultRhs.expressions);
+            resultExpressions.add(splitResultRhs.finalExpression);
+
+            return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
+
+        } else if (isChildConjunction(con.getLhsOperand()) && !isChildConjunction(con.getRhsOperand())){
+            Result splitResultLhs = splitExpression(con.getLhsOperand());
+            SafefyConjunction newConjunction = new SafefyConjunction(returnProposition(con.getLhsOperand(),splitResultLhs), con.getRhsOperand(), new Proposition(genNewName()));
+
+            resultExpressions.addAll(splitResultLhs.expressions);
+            resultExpressions.add(splitResultLhs.finalExpression);
+
+            return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
+
+        } else if (!isChildConjunction(con.getLhsOperand()) && isChildConjunction(con.getRhsOperand())){
+            Result splitResultRhs = splitExpression(con.getRhsOperand());
+            SafefyConjunction newConjunction = new SafefyConjunction(con.getLhsOperand(), returnProposition(con.getRhsOperand(),splitResultRhs), new Proposition(genNewName()));
+
+            resultExpressions.addAll(splitResultRhs.expressions);
+            resultExpressions.add(splitResultRhs.finalExpression);
+
+            return new SafetyConditionTransformation.Result(resultExpressions, newConjunction);
+
+        } else if (!isChildConjunction(con.getLhsOperand()) && !isChildConjunction(con.getRhsOperand())){
+            SafefyConjunction newConjunction = new SafefyConjunction(con.getLhsOperand(), con.getRhsOperand(), new Proposition(genNewName()));
+            return new SafetyConditionTransformation.Result(newConjunction);
+        } else {
+            throw new IllegalStateException("What is this sub type?");
         }
     }
 }

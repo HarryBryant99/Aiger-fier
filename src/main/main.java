@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.omg.CORBA.StringHolder;
 import tptp.Ladder;
 import tptp.LadderParser;
 import tseitin_transformation.TseitinTransformation;

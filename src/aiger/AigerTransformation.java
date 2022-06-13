@@ -12,6 +12,7 @@ import prop_logic.Proposition;
 import prop_logic.SafefyConjunction;
 import tptp.Ladder;
 import tptp.Rung;
+import tptp.SafetyCondition;
 
 public class AigerTransformation {
 
@@ -28,6 +29,16 @@ public class AigerTransformation {
         Aig targetAig = new Aig();
         for (Rung r : sourceL.getRungs()) {
             targetAig.addComponent(splitEquivalence(r.getEquivalence()));
+        }
+
+        System.out.println(propositionKey);
+        return targetAig;
+    }
+
+    public Aig convertSafetyCondition(SafetyCondition sourceSC) {
+        Aig targetAig = new Aig();
+        for (Expression exp : sourceSC.getExpression()) {
+            targetAig.addComponent(splitExpression(exp));
         }
 
         System.out.println(propositionKey);
@@ -69,9 +80,30 @@ public class AigerTransformation {
 
             return new And(lhsIndex, newNameLhs, newNameRhs);
         } else if (exp.getClass() == SafefyConjunction.class) {
+            throw new IllegalStateException("SafetyConjunction found in Transitions");
+        } else {
+            throw new IllegalStateException("What is this sub type?");
+        }
+    }
+
+    private AigerComponent splitExpression(Expression exp){
+        if (exp.getClass() == Proposition.class) {
+            return (new Output(propositionReplacer(exp, false)));
+        } else if (exp.getClass() == Negation.class) {
+            if (((Negation) exp).getOperand().getClass() == Conjunction.class){
+                return null;
+            } else {
+
+                return (new Output(propositionReplacer(((Negation) exp).getOperand(), true)));
+            }
+        } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
+            throw new IllegalStateException("How the hell did we get this");
+        } else if (exp.getClass() == Conjunction.class) {
+            throw new IllegalStateException("Regular Conjunction found in Transitions");
+        } else if (exp.getClass() == SafefyConjunction.class) {
             SafefyConjunction con = (SafefyConjunction) exp;
 
-            Proposition splitResultId = (Proposition) con.getId();
+            Proposition splitResultId = con.getId();
             Integer newNameId = (genNewName(splitResultId.getName()));
 
             Proposition splitResultLhs = (Proposition) con.getLhsOperand();
@@ -130,16 +162,9 @@ public class AigerTransformation {
 
     private class Result {
         public List<Equivalence> equivalences;
-        public Expression finalExpression;
 
         public Result(List<Equivalence> equivalences, Expression finalExpression) {
             this.equivalences = equivalences;
-            this.finalExpression = finalExpression;
-        }
-
-        public Result(Expression finalExpression) {
-            this.equivalences = new ArrayList<>();
-            this.finalExpression = finalExpression;
         }
     }
 
