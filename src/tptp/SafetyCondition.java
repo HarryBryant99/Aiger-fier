@@ -22,6 +22,9 @@ public class SafetyCondition {
         conditions.addAll(newExpressions);
     }
 
+    public void updateExpression(int i, Expression expression){
+        conditions.set(i,expression);
+    }
 
     public ArrayList<Expression> getExpression(){
         return conditions;

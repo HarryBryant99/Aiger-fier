@@ -1,7 +1,9 @@
 package safety_condition_transformation;
 
+import aiger.Output;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Popup;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
 import prop_logic.Equivalence;
@@ -35,7 +37,20 @@ public class SafetyConditionTransformation {
         }
         targetSC.addAllExpressions(splitResult.expressions);
 
-        return targetSC;
+        return getOutput(targetSC);
+    }
+
+    private SafetyCondition getOutput(SafetyCondition safetyCondition){
+        Expression exp = safetyCondition.getExpression().get(0);
+        if ((exp.getClass() == Negation.class) && (((Negation) exp).getOperand().getClass() != Proposition.class)){
+            Proposition proposition = new Proposition(((SafefyConjunction) ((Negation) exp).getOperand()).getId().getName());
+            safetyCondition.updateExpression(0,((Negation) exp).getOperand());
+            safetyCondition.addExpression(new Negation(proposition));
+        } else if (exp.getClass() == SafefyConjunction.class){
+            Proposition proposition = new Proposition(((SafefyConjunction) exp).getId().getName());
+            safetyCondition.addExpression(proposition);
+        }
+        return safetyCondition;
     }
 
     private SafetyConditionTransformation.Result splitExpression(Expression exp){
