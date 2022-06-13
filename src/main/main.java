@@ -9,8 +9,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import safety_condition_transformation.SafetyConditionTransformation;
 import tptp.Ladder;
 import tptp.LadderParser;
+import tptp.SafetyCondition;
+import tptp.SafetyConditionParser;
 import tseitin_transformation.TseitinTransformation;
 
 public class main {
@@ -23,23 +26,20 @@ public class main {
 
         File safetyFile = new File("ladder_logic_examples/Example1Safety.tptp");
         in = new FileInputStream(safetyFile);
-        Ladder safety = LadderParser.parseLadder(in);
+        SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
 
         File input = new File("ladder_logic_examples/Example1Inputs.txt");
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 
         TseitinTransformation tt = new TseitinTransformation();
+        SafetyConditionTransformation sct = new SafetyConditionTransformation();
         AigerTransformation aig = new AigerTransformation(iv.getHashMap());
 
         Aig newAiger = aig.convertLadder(tt.transform(l));
+        Aig scAiger = aig.convertSafetyCondition(sct.transform(sc));
 
-//        Ladder transformed = tt.transform(safety);
-//        newAiger.addAllComponents(aig.addSafetyProperty(transformed));
-        Output output = new Output(-1);
-        newAiger.addComponent(output);
-
-        System.out.println(newAiger);
+        newAiger.addAllComponents(scAiger.getComponents());
 
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();

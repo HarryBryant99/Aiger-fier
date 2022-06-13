@@ -5,18 +5,11 @@ import static org.junit.Assert.assertEquals;
 import aiger.Aig;
 import aiger.AigerTransformation;
 import aiger.And;
-import aiger.Latch;
 import aiger.Output;
 import org.junit.Test;
-import prop_logic.Conjunction;
-import prop_logic.Disjunction;
-import prop_logic.Equivalence;
 import prop_logic.Negation;
 import prop_logic.Proposition;
-import prop_logic.SafefyConjunction;
-import safety_condition_transformation.SafetyConditionTransformation;
-import tptp.Ladder;
-import tptp.Rung;
+import prop_logic.SafetyConjunction;
 import tptp.SafetyCondition;
 
 public class AigerSafetyTransformationTests {
@@ -55,7 +48,7 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA & vB)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vA"),new Proposition("vB"),new Proposition("gen_0")));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vA"),new Proposition("vB"),new Proposition("sc_0")));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -70,8 +63,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vB & vC)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vC"), new Proposition("gen_0")));
-        sourceSC.addExpression(new Proposition("gen_0"));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vC"), new Proposition("sc_0")));
+        sourceSC.addExpression(new Proposition("sc_0"));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -87,8 +80,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vB | vE)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")), new Proposition("gen_0")));
-        sourceSC.addExpression(new Negation(new Proposition("gen_0")));
+        sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")), new Proposition("sc_0")));
+        sourceSC.addExpression(new Negation(new Proposition("sc_0")));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -104,8 +97,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> ~vB | ~vE)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("gen_0")));
-        sourceSC.addExpression(new Negation(new Proposition("gen_0")));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        sourceSC.addExpression(new Negation(new Proposition("sc_0")));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -121,8 +114,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> ~(vB & vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("gen_0")));
-        sourceSC.addExpression(new Negation(new Proposition("gen_0")));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        sourceSC.addExpression(new Negation(new Proposition("sc_0")));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -138,8 +131,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> ~(vB & vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("gen_0")));
-        sourceSC.addExpression(new Negation(new Proposition("gen_0")));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        sourceSC.addExpression(new Negation(new Proposition("sc_0")));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -155,8 +148,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> ~(vB | vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        sourceSC.addExpression(new Proposition("gen_0"));
+        sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        sourceSC.addExpression(new Proposition("sc_0"));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -172,8 +165,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> ~(~vB | vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        sourceSC.addExpression(new Proposition("gen_0"));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        sourceSC.addExpression(new Proposition("sc_0"));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -189,9 +182,9 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> (vB | vE) & vC)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Negation(new Proposition("gen_0")),new Proposition("vC"),new Proposition("gen_1")));
-        sourceSC.addExpression(new SafefyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        sourceSC.addExpression(new Proposition("gen_1"));
+        sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Proposition("vC"),new Proposition("sc_1")));
+        sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        sourceSC.addExpression(new Proposition("sc_1"));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -208,9 +201,9 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> (vB & vE) | vC)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Negation(new Proposition("gen_0")),new Negation(new Proposition("vC")),new Proposition("gen_1")));
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
-        sourceSC.addExpression(new Negation(new Proposition("gen_1")));
+        sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("vC")),new Proposition("sc_1")));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
+        sourceSC.addExpression(new Negation(new Proposition("sc_1")));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -227,9 +220,9 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> (vB | vE) | vC)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("gen_0"),new Negation(new Proposition("vC")),new Proposition("gen_1")));
-        sourceSC.addExpression(new SafefyConjunction(new Negation (new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        sourceSC.addExpression(new Negation(new Proposition("gen_1")));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("sc_0"),new Negation(new Proposition("vC")),new Proposition("sc_1")));
+        sourceSC.addExpression(new SafetyConjunction(new Negation (new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        sourceSC.addExpression(new Negation(new Proposition("sc_1")));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -246,9 +239,9 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> (vB & vE) & vC)";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("gen_0"),new Proposition("vC"),new Proposition("gen_1")));
-        sourceSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
-        sourceSC.addExpression(new Proposition("gen_1"));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("sc_0"),new Proposition("vC"),new Proposition("sc_1")));
+        sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
+        sourceSC.addExpression(new Proposition("sc_1"));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
@@ -265,8 +258,8 @@ public class AigerSafetyTransformationTests {
         String data = "fof(ax,axiom, vA <=> ~(vB | ~vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
-        sourceSC.addExpression(new SafefyConjunction(new Negation(new Proposition("vB")),new Proposition("vE"),new Proposition("gen_0")));
-        sourceSC.addExpression(new Proposition("gen_0"));
+        sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Proposition("vE"),new Proposition("sc_0")));
+        sourceSC.addExpression(new Proposition("sc_0"));
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();

@@ -1,6 +1,5 @@
 package aiger;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import prop_logic.Conjunction;
@@ -9,7 +8,7 @@ import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic.Negation;
 import prop_logic.Proposition;
-import prop_logic.SafefyConjunction;
+import prop_logic.SafetyConjunction;
 import tptp.Ladder;
 import tptp.Rung;
 import tptp.SafetyCondition;
@@ -79,7 +78,7 @@ public class AigerTransformation {
             Integer newNameRhs = (genNewName(splitResultRhs.getName()));
 
             return new And(lhsIndex, newNameLhs, newNameRhs);
-        } else if (exp.getClass() == SafefyConjunction.class) {
+        } else if (exp.getClass() == SafetyConjunction.class) {
             throw new IllegalStateException("SafetyConjunction found in Transitions");
         } else {
             throw new IllegalStateException("What is this sub type?");
@@ -100,8 +99,8 @@ public class AigerTransformation {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("Regular Conjunction found in Transitions");
-        } else if (exp.getClass() == SafefyConjunction.class) {
-            SafefyConjunction con = (SafefyConjunction) exp;
+        } else if (exp.getClass() == SafetyConjunction.class) {
+            SafetyConjunction con = (SafetyConjunction) exp;
 
             Proposition splitResultId = con.getId();
             Integer newNameId = (genNewName(splitResultId.getName()));

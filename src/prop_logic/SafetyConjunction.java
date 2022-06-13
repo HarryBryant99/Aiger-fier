@@ -2,10 +2,10 @@ package prop_logic;
 
 import java.util.Objects;
 
-public class SafefyConjunction extends BinaryOperation {
+public class SafetyConjunction extends BinaryOperation {
     private final Proposition id;
 
-    public SafefyConjunction(Expression lhs, Expression rhs, Proposition id) {
+    public SafetyConjunction(Expression lhs, Expression rhs, Proposition id) {
         super(lhs, rhs);
         this.id = id;
     }
@@ -20,12 +20,12 @@ public class SafefyConjunction extends BinaryOperation {
     }
 
     @Override
-    public SafefyConjunction cloneWithoutDisjunctions() {
-        return new SafefyConjunction(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions(), id);
+    public SafetyConjunction cloneWithoutDisjunctions() {
+        return new SafetyConjunction(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions(), id);
     }
 
-    public SafefyConjunction cloneRemovingDoubleNegation() {
-        return new SafefyConjunction(getLhsOperand().cloneRemovingDoubleNegation(),getRhsOperand().cloneRemovingDoubleNegation(), id);
+    public SafetyConjunction cloneRemovingDoubleNegation() {
+        return new SafetyConjunction(getLhsOperand().cloneRemovingDoubleNegation(),getRhsOperand().cloneRemovingDoubleNegation(), id);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SafefyConjunction extends BinaryOperation {
         if (!super.equals(o)) {
             return false;
         }
-        SafefyConjunction that = (SafefyConjunction) o;
+        SafetyConjunction that = (SafetyConjunction) o;
         return id.equals(that.id);
     }
 

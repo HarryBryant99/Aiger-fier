@@ -2,19 +2,14 @@ package safety_condition_transformation_tests;
 
 import static org.junit.Assert.assertEquals;
 
-import com.sun.org.apache.xpath.internal.operations.Neg;
 import org.junit.Test;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
-import prop_logic.Equivalence;
 import prop_logic.Negation;
 import prop_logic.Proposition;
-import prop_logic.SafefyConjunction;
+import prop_logic.SafetyConjunction;
 import safety_condition_transformation.SafetyConditionTransformation;
-import tptp.Ladder;
-import tptp.Rung;
 import tptp.SafetyCondition;
-import tseitin_transformation.TseitinTransformation;
 
 public class SafetyConditionTransformationTests {
     @Test
@@ -71,8 +66,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vC"), new Proposition("gen_0")));
-        expectedSC.addExpression(new Proposition("gen_0"));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vC"), new Proposition("sc_0")));
+        expectedSC.addExpression(new Proposition("sc_0"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -87,8 +82,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")), new Proposition("gen_0")));
-        expectedSC.addExpression(new Negation(new Proposition("gen_0")));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")), new Proposition("sc_0")));
+        expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -103,8 +98,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("gen_0")));
-        expectedSC.addExpression(new Negation(new Proposition("gen_0")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -119,8 +114,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("gen_0")));
-        expectedSC.addExpression(new Negation(new Proposition("gen_0")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -135,8 +130,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("gen_0")));
-        expectedSC.addExpression(new Negation(new Proposition("gen_0")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -151,8 +146,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        expectedSC.addExpression(new Proposition("gen_0"));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new Proposition("sc_0"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -167,8 +162,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        expectedSC.addExpression(new Proposition("gen_0"));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new Proposition("sc_0"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -183,9 +178,9 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Negation(new Proposition("gen_0")),new Proposition("vC"),new Proposition("gen_1")));
-        expectedSC.addExpression(new SafefyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        expectedSC.addExpression(new Proposition("gen_1"));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Proposition("vC"),new Proposition("sc_1")));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new Proposition("sc_1"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -200,9 +195,9 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Negation(new Proposition("gen_0")),new Negation(new Proposition("vC")),new Proposition("gen_1")));
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
-        expectedSC.addExpression(new Negation(new Proposition("gen_1")));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("vC")),new Proposition("sc_1")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
+        expectedSC.addExpression(new Negation(new Proposition("sc_1")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -217,9 +212,9 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("gen_0"),new Negation(new Proposition("vC")),new Proposition("gen_1")));
-        expectedSC.addExpression(new SafefyConjunction(new Negation (new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        expectedSC.addExpression(new Negation(new Proposition("gen_1")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_0"),new Negation(new Proposition("vC")),new Proposition("sc_1")));
+        expectedSC.addExpression(new SafetyConjunction(new Negation (new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new Negation(new Proposition("sc_1")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
@@ -234,9 +229,9 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("gen_0"),new Proposition("vC"),new Proposition("gen_1")));
-        expectedSC.addExpression(new SafefyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
-        expectedSC.addExpression(new Proposition("gen_1"));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_0"),new Proposition("vC"),new Proposition("sc_1")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
+        expectedSC.addExpression(new Proposition("sc_1"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));
