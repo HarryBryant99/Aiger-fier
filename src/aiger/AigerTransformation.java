@@ -106,13 +106,24 @@ public class AigerTransformation {
             Proposition splitResultId = con.getId();
             Integer newNameId = (genNewName(splitResultId.getName()));
 
-            Proposition splitResultLhs = (Proposition) con.getLhsOperand();
-            Integer newNameLhs = (genNewName(splitResultLhs.getName()));
+            Expression splitResultLhs = con.getLhsOperand();
 
-            Proposition splitResultRhs = (Proposition) con.getRhsOperand();
-            Integer newNameRhs = (genNewName(splitResultRhs.getName()));
+            Integer newNameLhs = getIntegerForProposition(splitResultLhs);
+
+            Expression splitResultRhs = con.getRhsOperand();
+            Integer newNameRhs = getIntegerForProposition(splitResultRhs);
 
             return new And(newNameId, newNameLhs, newNameRhs);
+        } else {
+            throw new IllegalStateException("What is this sub type?");
+        }
+    }
+
+    private Integer getIntegerForProposition(Expression exp){
+        if (exp.getClass() == Proposition.class) {
+            return (genNewName(((Proposition) exp).getName()));
+        } else if (exp.getClass() == Negation.class){
+            return (genNewName(((Proposition) ((Negation) exp).getOperand()).getName())+1);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }
