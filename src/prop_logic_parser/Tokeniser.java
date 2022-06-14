@@ -75,7 +75,7 @@ public class Tokeniser {
     }
 
     private static boolean isCharAllowedInVariable(Character c){
-        return Character.isLetterOrDigit(c);
+        return Character.isLetterOrDigit(c) || Character.isLetter('_');
     }
 
     public boolean atEnd(){
