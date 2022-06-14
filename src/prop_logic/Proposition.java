@@ -19,7 +19,7 @@ public class Proposition extends Expression {
 
     private String processName(String name){
         if ((name.endsWith("0") || name.endsWith("1")) && !name.startsWith("gen")){
-            return name.substring(0,name.length()-1);
+            return name.substring(0,name.length()-2);
         } else {
             return name;
         }
