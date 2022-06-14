@@ -14,7 +14,15 @@ public class Proposition extends Expression {
         if (name.trim().equals("")){
             throw new IllegalArgumentException("Proposition cannot have empty name");
         }
-        this.name = name;
+        this.name = processName(name);
+    }
+
+    private String processName(String name){
+        if (name.endsWith("0") || name.endsWith("1")){
+            return name.substring(0,name.length()-1);
+        } else {
+            return name;
+        }
     }
 
     public String getName() {
