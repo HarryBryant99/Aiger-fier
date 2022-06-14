@@ -1,8 +1,13 @@
 package aiger;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import prop_logic.Proposition;
 import tptp.Rung;
 
@@ -46,13 +51,7 @@ public class PrintAiger {
     public void printAig() {
         sortAig();
 
-        int vars;
-        if (latches.get(latches.size()-1).getId() > ands.get(ands.size()-1).getId()) {
-            vars = (latches.get(latches.size() - 1).getId() / 2);
-        } else {
-            vars = (ands.get(ands.size()-1).getId()/2);
-        }
-        System.out.println("aag " + vars + " 0 " + latches.size() + " 0 " + ands.size() + " 1");
+        System.out.println("aag " + getVars() + " 0 " + latches.size() + " 0 " + ands.size() + " 1");
 
         for (Latch l: latches) {
             System.out.println(l.print());
@@ -81,5 +80,44 @@ public class PrintAiger {
     @Override
     public int hashCode() {
         return Objects.hash(aig, latches, output, ands);
+    }
+
+    public void writeAiger() throws IOException {
+        File yourFile = new File("aiger.aag");
+        yourFile.createNewFile(); // if file already exists will do nothing
+        FileOutputStream oFile = new FileOutputStream(yourFile, false);
+
+        try {
+            java.io.FileWriter fileWriter = new java.io.FileWriter("aiger.aag");
+
+            fileWriter.write("aag " + getVars() + " 0 " + latches.size() + " 0 " + ands.size() + " 1\n");
+
+            for (Latch l: latches) {
+                fileWriter.write(l.print() + "\n");
+            }
+
+            fileWriter.write(output.print() + "\n");
+
+            for (And a: ands) {
+                fileWriter.write(a.print() + "\n");
+            }
+
+            fileWriter.close(); //Closes the fileWriter
+
+        } catch (FileNotFoundException e) { // If the file does not exist, handles problem.
+            System.err.println("File newFile.txt does not exist.");
+            System.exit(-1);
+        } catch (IOException e){ // If there was a problem writing, gives feedback to the user.
+            System.err.println("Caught IO error, writing to newFile.txt");
+            System.exit(-1);
+        }
+    }
+
+    public int getVars() {
+        if (latches.get(latches.size() - 1).getId() > ands.get(ands.size() - 1).getId()) {
+            return (latches.get(latches.size() - 1).getId() / 2);
+        } else {
+            return (ands.get(ands.size() - 1).getId() / 2);
+        }
     }
 }

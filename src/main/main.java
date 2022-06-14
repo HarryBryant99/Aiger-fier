@@ -43,5 +43,6 @@ public class main {
 
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();
+        printer.writeAiger();
     }
 }

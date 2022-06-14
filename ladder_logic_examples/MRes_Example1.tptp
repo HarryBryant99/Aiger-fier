@@ -1,0 +1,4 @@
+fof(ax,axiom, va <=> ((~ va & vb & vd) | (~ va & vb & vc) | (vb & vc & vd) | (va & ~ vb & ~ vc))).
+fof(ax,axiom, vb <=> ((~ va & vc) | (~ va & vb))).
+fof(ax,axiom, vc <=> ((~ vb & vc) | (vc & vd) | (va & ~ vb & ~ vd))).
+fof(ax,axiom, vd <=> ((vc & vd) | (~ va & vb & ~ vc))).
