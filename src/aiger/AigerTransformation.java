@@ -46,7 +46,7 @@ public class AigerTransformation {
             updateProposition(exp);
         }
 
-
+        targetAig.addAllComponents(addInputLatches());
 
         System.out.println(propositionKey);
         System.out.println(propositionComputed);
