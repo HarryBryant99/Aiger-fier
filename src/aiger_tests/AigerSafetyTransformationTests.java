@@ -264,7 +264,7 @@ public class AigerSafetyTransformationTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new And(2,5,6));
-        expectedAig.addComponent(new Output(2));
+        expectedAig.addComponent(new Output(4));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));

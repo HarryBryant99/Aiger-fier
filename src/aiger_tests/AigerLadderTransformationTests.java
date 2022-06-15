@@ -25,6 +25,7 @@ public class AigerLadderTransformationTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
+        expectedAig.addComponent(new Latch(4,4,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -42,6 +43,7 @@ public class AigerLadderTransformationTests {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(4,4,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -61,6 +63,7 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(4,2,6));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -80,6 +83,8 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -105,6 +110,8 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(12,9,0));
         expectedAig.addComponent(new And(14,6,12));
         expectedAig.addComponent(new Latch(16,15,0));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(10,10,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -126,6 +133,8 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
         expectedAig.addComponent(new Latch(12,11,0));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -145,6 +154,8 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -166,6 +177,8 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
         expectedAig.addComponent(new Latch(12,11,0));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -189,6 +202,8 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(8,10,0));
         expectedAig.addComponent(new Latch(12,9,0));
         expectedAig.addComponent(new And(14,6,12));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(10,10,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -210,6 +225,8 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new Latch(10,7,0));
         expectedAig.addComponent(new And(12,2,10));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -239,6 +256,9 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(16,15,0));
         expectedAig.addComponent(new Latch(18,20,0));
         expectedAig.addComponent(new And(22,16,18));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(20,20,0));
+        expectedAig.addComponent(new Latch(10,10,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -268,6 +288,9 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(18,15,0));
         expectedAig.addComponent(new And(20,12,18));
         expectedAig.addComponent(new Latch(22,21,0));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(16,16,0));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -299,6 +322,9 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new Latch(20,17,0));
         expectedAig.addComponent(new And(22,14,20));
         expectedAig.addComponent(new Latch(24,23,0));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(18,18,0));
+        expectedAig.addComponent(new Latch(10,10,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -322,6 +348,9 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new And(10,2,6));
         expectedAig.addComponent(new Latch(12,14,0));
         expectedAig.addComponent(new And(16,10,12));
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(14,14,0));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));

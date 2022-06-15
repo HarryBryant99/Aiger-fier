@@ -43,13 +43,10 @@ public class AigerTransformation {
         Aig targetAig = new Aig();
         for (Expression exp : sourceSC.getExpression()) {
             targetAig.addComponent(splitExpression(exp));
-            updateProposition(exp);
         }
 
-        targetAig.addAllComponents(addInputLatches());
-
-        System.out.println(propositionKey);
-        System.out.println(propositionComputed);
+//        System.out.println(propositionKey);
+//        System.out.println(propositionComputed);
         return targetAig;
     }
 

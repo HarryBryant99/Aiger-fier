@@ -34,6 +34,7 @@ public class InputPropostionsTest {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,1));
+        expectedAig.addComponent(new Latch(4,4,1));
 
         AigerTransformation tt = new AigerTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -53,6 +54,7 @@ public class InputPropostionsTest {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
+        expectedAig.addComponent(new Latch(4,4,0));
 
         AigerTransformation tt = new AigerTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -74,6 +76,7 @@ public class InputPropostionsTest {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,1));
         expectedAig.addComponent(new Latch(6,3,0));
+        expectedAig.addComponent(new Latch(4,4,1));
 
         AigerTransformation tt = new AigerTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -97,6 +100,8 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(2,4,1));
         expectedAig.addComponent(new Latch(6,8,1));
         expectedAig.addComponent(new And(4,2,6));
+        expectedAig.addComponent(new Latch(8,8,1));
+
 
         AigerTransformation tt = new AigerTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -120,6 +125,8 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(2,4,1));
         expectedAig.addComponent(new Latch(6,8,0));
         expectedAig.addComponent(new And(10,2,6));
+        expectedAig.addComponent(new Latch(4,4,1));
+        expectedAig.addComponent(new Latch(8,8,0));
 
         AigerTransformation tt = new AigerTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
@@ -149,6 +156,8 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(12,9,0));
         expectedAig.addComponent(new And(14,6,12));
         expectedAig.addComponent(new Latch(16,15,0));
+        expectedAig.addComponent(new Latch(4,4,1));
+        expectedAig.addComponent(new Latch(10,10,0));
 
         AigerTransformation tt = new AigerTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));

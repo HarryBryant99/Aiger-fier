@@ -28,7 +28,7 @@ public class And extends AigerComponent {
 
     @Override
     public String toString() {
-        return "Latch{" + id + " " + getLhs() + " " + getRhs() + '}';
+        return "And{" + id + " " + getLhs() + " " + getRhs() + '}';
     }
 
     public String print(){
