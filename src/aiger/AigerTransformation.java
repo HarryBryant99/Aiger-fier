@@ -1,5 +1,6 @@
 package aiger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import prop_logic.Conjunction;
@@ -16,6 +17,7 @@ import tptp.SafetyCondition;
 public class AigerTransformation {
 
     private HashMap<String, Integer> propositionKey = new HashMap<String, Integer>();
+    private HashMap<String, Boolean> propositionComputed = new HashMap<String, Boolean>();
     private HashMap<String, Integer> initalVariableValues;
     private static Integer currentIndex;
 
@@ -28,7 +30,10 @@ public class AigerTransformation {
         Aig targetAig = new Aig();
         for (Rung r : sourceL.getRungs()) {
             targetAig.addComponent(splitEquivalence(r.getEquivalence()));
+            updateProposition(r.getEquivalence().getLhsOperand());
         }
+
+        targetAig.addAllComponents(addInputLatches());
 
         System.out.println(propositionKey);
         return targetAig;
@@ -38,21 +43,14 @@ public class AigerTransformation {
         Aig targetAig = new Aig();
         for (Expression exp : sourceSC.getExpression()) {
             targetAig.addComponent(splitExpression(exp));
+            updateProposition(exp);
         }
+
+
 
         System.out.println(propositionKey);
+        System.out.println(propositionComputed);
         return targetAig;
-    }
-
-    public List<AigerComponent> addSafetyProperty(Ladder sourceL) {
-        Aig targetAig = new Aig();
-        for (Rung r : sourceL.getRungs()) {
-            targetAig.addComponent(splitEquivalence(r.getEquivalence()));
-        }
-
-        Output output = new Output((targetAig.getComponents().get(targetAig.getComponents().size() - 1).getId()) + 1);
-        targetAig.addComponent(output);
-        return targetAig.getComponents();
     }
 
     private AigerComponent splitEquivalence(Equivalence equiv){
@@ -156,6 +154,7 @@ public class AigerTransformation {
 
     private void addProposition(String proposition){
         propositionKey.put(proposition, currentIndex);
+        propositionComputed.put(proposition, false);
     }
 
     private Integer getProposition(String proposition){
@@ -187,5 +186,26 @@ public class AigerTransformation {
             Integer index = (genNewName(prop.getName()));
             return index;
         }
+    }
+
+    private void updateProposition(Expression exp){
+        if (exp.getClass() == Proposition.class) {
+            propositionComputed.replace(((Proposition) exp).getName(), true);
+        } else if (exp.getClass() == SafetyConjunction.class) {
+            propositionComputed.replace(((SafetyConjunction) exp).getId().getName(), true);
+        } else {
+            throw new IllegalStateException("What is this sub type?");
+        }
+    }
+
+    private List<AigerComponent> addInputLatches(){
+        ArrayList<AigerComponent> inputLatches = new ArrayList<>();
+        for (String prop : propositionKey.keySet()) {
+            if (!propositionComputed.get(prop)){
+                Latch newInputLatch = new Latch(getProposition(prop),getProposition(prop),findInitialValue(prop, false));
+                inputLatches.add(newInputLatch);
+            }
+        }
+        return inputLatches;
     }
 }
