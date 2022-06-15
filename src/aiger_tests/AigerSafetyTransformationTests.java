@@ -94,7 +94,7 @@ public class AigerSafetyTransformationTests {
 
     @Test
     public void test6(){
-        String data = "fof(ax,axiom, vA <=> ~vB | ~vE)";
+        String data = "fof(ax,axiom, ~vB | ~vE)";
 
         SafetyCondition sourceSC = new SafetyCondition();
         sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
@@ -111,7 +111,7 @@ public class AigerSafetyTransformationTests {
 
     @Test
     public void test7(){
-        String data = "fof(ax,axiom, vA <=> ~(vB & vE))";
+        String data = "fof(ax,axiom, ~(vB & vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
         sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
@@ -128,7 +128,7 @@ public class AigerSafetyTransformationTests {
 
     @Test
     public void test8(){
-        String data = "fof(ax,axiom, vA <=> ~(vB & vE))";
+        String data = "fof(ax,axiom, ~(vB & vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
         sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
@@ -145,7 +145,7 @@ public class AigerSafetyTransformationTests {
 
     @Test
     public void test9(){
-        String data = "fof(ax,axiom, vA <=> ~(vB | vE))";
+        String data = "fof(ax,axiom, ~(vB | vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
         sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
@@ -162,7 +162,7 @@ public class AigerSafetyTransformationTests {
 
     @Test
     public void test10(){
-        String data = "fof(ax,axiom, vA <=> ~(~vB | vE))";
+        String data = "fof(ax,axiom, ~(~vB | vE))";
 
         SafetyCondition sourceSC = new SafetyCondition();
         sourceSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("sc_0")));
@@ -179,7 +179,7 @@ public class AigerSafetyTransformationTests {
 
     @Test
     public void test11(){
-        String data = "fof(ax,axiom, vA <=> (vB | vE) & vC)";
+        String data = "fof(ax,axiom, (vB | vE) & vC)";
 
         SafetyCondition sourceSC = new SafetyCondition();
         sourceSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Proposition("vC"),new Proposition("sc_1")));
@@ -264,7 +264,7 @@ public class AigerSafetyTransformationTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new And(2,5,6));
-        expectedAig.addComponent(new Output(4));
+        expectedAig.addComponent(new Output(2));
 
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));

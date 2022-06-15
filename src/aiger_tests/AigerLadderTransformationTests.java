@@ -390,6 +390,9 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new And(24,18,22));
         expectedAig.addComponent(new Latch(14,25,0));
 
+        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(10,10,0));
+
         AigerTransformation tt = new AigerTransformation(null);
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
