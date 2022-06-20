@@ -1,0 +1,3 @@
+fof(ax,axiom, va <=> (va & vb)).
+fof(ax,axiom, vb <=> (va & vb)).
+fof(ax,axiom, vc <=> (va & vb & ~ vc)).

@@ -3,6 +3,7 @@ package aiger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
 import prop_logic.Equivalence;
@@ -47,6 +48,17 @@ public class AigerTransformation {
 
 //        System.out.println(propositionKey);
 //        System.out.println(propositionComputed);
+
+        for(Map.Entry<String, Integer> entry: propositionKey.entrySet()) {
+
+            // if give value is equal to value from entry
+            // print the corresponding key
+            if(entry.getValue() == 17122) {
+                System.out.println("The key for value " + 17122 + " is " + entry.getKey());
+                break;
+            }
+        }
+
         return targetAig;
     }
 

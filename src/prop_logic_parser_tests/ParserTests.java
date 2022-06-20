@@ -75,5 +75,12 @@ public class ParserTests {
         assertEquals(expected, e);
     }
 
+    @Test
+    public void canParseVariableInLochNess(){
+        Expression e = Parser.parse("vNUA__C_S110_1");
+        Expression expected = new Proposition("vNUA__C_S110");
+        assertEquals(expected, e);
+    }
+
 
 }
