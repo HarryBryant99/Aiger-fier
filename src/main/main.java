@@ -46,5 +46,7 @@ public class main {
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();
         printer.writeAiger();
+
+        System.out.println("\nNumber of variables:" + aig.getNumberOfVariables());
     }
 }

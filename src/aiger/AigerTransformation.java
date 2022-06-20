@@ -213,4 +213,8 @@ public class AigerTransformation {
         }
         return inputLatches;
     }
+
+    public int getNumberOfVariables(){
+        return propositionKey.size();
+    }
 }
