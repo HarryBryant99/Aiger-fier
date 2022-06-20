@@ -20,7 +20,7 @@ public class main {
     public static void main(String[] args) throws IOException {
         //TODO argparse
 
-        File f = new File("ladder_logic_examples/LochNess2.tptp");
+        File f = new File("ladder_logic_examples/LochNess.tptp");
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
 

@@ -114,10 +114,18 @@ public class PrintAiger {
     }
 
     public int getVars() {
-        if (latches.get(latches.size() - 1).getId() > ands.get(ands.size() - 1).getId()) {
-            return (latches.get(latches.size() - 1).getId() / 2);
-        } else {
-            return (ands.get(ands.size() - 1).getId() / 2);
+        int maxVar = 0;
+        for (Latch l : latches) {
+            if (l.getId() > maxVar){
+                maxVar = l.getId();
+            }
         }
+
+        for (And a : ands) {
+            if (a.getId() > maxVar){
+                maxVar = a.getId();
+            }
+        }
+        return maxVar/2;
     }
 }

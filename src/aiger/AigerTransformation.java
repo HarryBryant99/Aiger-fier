@@ -53,10 +53,6 @@ public class AigerTransformation {
 
             // if give value is equal to value from entry
             // print the corresponding key
-            if(entry.getValue() == 17122) {
-                System.out.println("The key for value " + 17122 + " is " + entry.getKey());
-                break;
-            }
         }
 
         return targetAig;
