@@ -45,6 +45,11 @@ public class Negation extends Expression {
     }
 
     @Override
+    public Negation cloneWithoutConjunctions() {
+        return new Negation(operand.cloneWithoutDisjunctions());
+    }
+
+    @Override
     public Expression cloneRemovingDoubleNegation() {
         if (operand.getClass() == Negation.class) {
             return ((Negation) operand).getOperand().cloneRemovingDoubleNegation();

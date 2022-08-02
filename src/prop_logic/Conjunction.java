@@ -16,6 +16,13 @@ public class Conjunction extends BinaryOperation {
         return new Conjunction(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions());
     }
 
+    @Override
+    public Negation cloneWithoutConjunctions() {
+        Negation x = new Negation(getLhsOperand().cloneWithoutDisjunctions());
+        Negation y = new Negation(getRhsOperand().cloneWithoutDisjunctions());
+        return new Negation(new Disjunction(x, y));
+    }
+
     public Conjunction cloneRemovingDoubleNegation() {
         return new Conjunction(getLhsOperand().cloneRemovingDoubleNegation(),getRhsOperand().cloneRemovingDoubleNegation());
     }

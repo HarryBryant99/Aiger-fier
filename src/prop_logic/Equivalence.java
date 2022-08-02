@@ -17,6 +17,11 @@ public class Equivalence extends BinaryOperation {
     }
 
     @Override
+    public Equivalence cloneWithoutConjunctions() {
+        return new Equivalence(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions());
+    }
+
+    @Override
     public Equivalence cloneRemovingDoubleNegation() {
         return new Equivalence(getLhsOperand().cloneRemovingDoubleNegation(),getRhsOperand().cloneRemovingDoubleNegation());
     }

@@ -57,6 +57,11 @@ public class Proposition extends Expression {
     }
 
     @Override
+    public Proposition cloneWithoutConjunctions() {
+        return new Proposition(name);
+    }
+
+    @Override
     public Proposition cloneRemovingDoubleNegation() {
         return new Proposition(name);
     }

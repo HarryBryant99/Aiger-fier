@@ -19,6 +19,11 @@ public class Disjunction extends BinaryOperation {
     }
 
     @Override
+    public Disjunction cloneWithoutConjunctions() {
+        return new Disjunction(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions());
+    }
+
+    @Override
     public Disjunction cloneRemovingDoubleNegation() {
         return new Disjunction(getLhsOperand().cloneRemovingDoubleNegation(),getRhsOperand().cloneRemovingDoubleNegation());
     }

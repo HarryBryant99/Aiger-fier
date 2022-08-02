@@ -96,10 +96,10 @@ public class PrintAiger {
                 fileWriter.write(l.print() + "\n");
             }
 
-            fileWriter.write(output.print() + "\n");
+            fileWriter.write(output.print());
 
             for (And a: ands) {
-                fileWriter.write(a.print() + "\n");
+                fileWriter.write("\n" + a.print());
             }
 
             fileWriter.close(); //Closes the fileWriter
