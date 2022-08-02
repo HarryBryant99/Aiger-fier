@@ -46,7 +46,7 @@ public class Negation extends Expression {
 
     @Override
     public Negation cloneWithoutConjunctions() {
-        return new Negation(operand.cloneWithoutDisjunctions());
+        return new Negation(operand.cloneWithoutConjunctions());
     }
 
     @Override
