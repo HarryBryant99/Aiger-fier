@@ -18,8 +18,8 @@ public class Conjunction extends BinaryOperation {
 
     @Override
     public Negation cloneWithoutConjunctions() {
-        Negation x = new Negation(getLhsOperand().cloneWithoutDisjunctions());
-        Negation y = new Negation(getRhsOperand().cloneWithoutDisjunctions());
+        Negation x = new Negation(getLhsOperand().cloneWithoutConjunctions());
+        Negation y = new Negation(getRhsOperand().cloneWithoutConjunctions());
         return new Negation(new Disjunction(x, y));
     }
 

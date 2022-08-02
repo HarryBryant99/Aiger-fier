@@ -20,7 +20,7 @@ public class Disjunction extends BinaryOperation {
 
     @Override
     public Disjunction cloneWithoutConjunctions() {
-        return new Disjunction(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions());
+        return new Disjunction(getLhsOperand().cloneWithoutConjunctions(),getRhsOperand().cloneWithoutConjunctions());
     }
 
     @Override

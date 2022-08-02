@@ -56,13 +56,13 @@ public class ConjunctionRemover {
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Disjunction.class) {
-            Conjunction con = (Conjunction) exp;
+            Disjunction dis = (Disjunction) exp;
 
-            Result splitResultLhs = splitExpression(con.getLhsOperand());
+            Result splitResultLhs = splitExpression(dis.getLhsOperand());
             String newNameLhs = genNewName();
             Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs.finalExpression);
 
-            Result splitResultRhs = splitExpression(con.getRhsOperand());
+            Result splitResultRhs = splitExpression(dis.getRhsOperand());
             String newNameRhs = genNewName();
             Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs.finalExpression);
 

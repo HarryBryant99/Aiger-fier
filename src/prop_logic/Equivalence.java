@@ -18,7 +18,7 @@ public class Equivalence extends BinaryOperation {
 
     @Override
     public Equivalence cloneWithoutConjunctions() {
-        return new Equivalence(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions());
+        return new Equivalence(getLhsOperand().cloneWithoutConjunctions(),getRhsOperand().cloneWithoutConjunctions());
     }
 
     @Override
