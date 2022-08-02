@@ -11,7 +11,7 @@ import prop_logic.Proposition;
 import tptp.Ladder;
 import tptp.Rung;
 
-public class RemoveConjunctions {
+public class ConjunctionRemover {
     private static final String GEN_NAME_PREFIX = "gen_";
     private int newVarNextNumber = 0;
 
@@ -53,9 +53,9 @@ public class RemoveConjunctions {
             resultEquivs.add(equiv);
 
             return new Result(resultEquivs, new Negation(new Proposition(newName)));
-        } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
+        } else if (exp.getClass() == Equivalence.class || exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
-        } else if (exp.getClass() == Conjunction.class) {
+        } else if (exp.getClass() == Disjunction.class) {
             Conjunction con = (Conjunction) exp;
 
             Result splitResultLhs = splitExpression(con.getLhsOperand());
@@ -72,7 +72,7 @@ public class RemoveConjunctions {
             resultEquivs.addAll(splitResultRhs.equivalences);
             resultEquivs.add(equivRhs);
 
-            return new Result(resultEquivs, new Conjunction(new Proposition(newNameLhs), new Proposition(newNameRhs)));
+            return new Result(resultEquivs, new Disjunction(new Proposition(newNameLhs), new Proposition(newNameRhs)));
         } else {
             throw new IllegalStateException("What is thi sub type?");
         }

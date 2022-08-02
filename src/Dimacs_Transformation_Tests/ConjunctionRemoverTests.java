@@ -2,6 +2,7 @@ package Dimacs_Transformation_Tests;
 
 import static org.junit.Assert.assertEquals;
 
+import Dimacs_Transformation.ConjunctionRemover;
 import org.junit.Test;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
@@ -12,7 +13,7 @@ import tptp.Ladder;
 import tptp.Rung;
 import tseitin_transformation.TseitinTransformation;
 
-public class RemoveConjunctionsTests {
+public class ConjunctionRemoverTests {
 
     @Test
     public void test1(){
@@ -25,8 +26,8 @@ public class RemoveConjunctionsTests {
         Ladder expectedL = new Ladder();
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -41,8 +42,8 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_0")))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -56,8 +57,8 @@ public class RemoveConjunctionsTests {
         Ladder expectedL = new Ladder();
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vBanana_1-"))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -73,8 +74,8 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -93,8 +94,8 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Conjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_4")))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -111,8 +112,8 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_2")))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -128,8 +129,8 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -145,8 +146,9 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_2")))));
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -163,8 +165,9 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vE"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -180,8 +183,9 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Negation(new Proposition("gen_1")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_2")))));
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -201,8 +205,9 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Negation(new Proposition("gen_4")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Proposition("vC"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_5"),new Proposition("gen_6")))));
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -222,8 +227,9 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Negation(new Proposition("gen_4")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Conjunction(new Proposition("gen_3"),new Proposition("gen_5")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_6")))));
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -244,8 +250,9 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Negation(new Proposition("gen_5")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_7"),new Conjunction(new Proposition("gen_4"),new Proposition("gen_6")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"), new Negation(new Proposition("gen_7")))));
-                TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -262,8 +269,9 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Proposition("vC"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("gen_2"),new Proposition("gen_3")))));
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 
     @Test
@@ -290,7 +298,7 @@ public class RemoveConjunctionsTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_8"),new Conjunction(new Proposition("gen_5"),new Proposition("gen_7")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_8")))));
 
-        TseitinTransformation tt = new TseitinTransformation();
-        assertEquals(expectedL, tt.transform(sourceL));
+        ConjunctionRemover cr = new ConjunctionRemover();
+        assertEquals(expectedL, cr.transform(sourceL));
     }
 }

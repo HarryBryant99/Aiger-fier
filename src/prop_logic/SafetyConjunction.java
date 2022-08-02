@@ -24,6 +24,11 @@ public class SafetyConjunction extends BinaryOperation {
         return new SafetyConjunction(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions(), id);
     }
 
+    @Override
+    public SafetyConjunction cloneWithoutConjunctions() {
+        return new SafetyConjunction(getLhsOperand().cloneWithoutDisjunctions(),getRhsOperand().cloneWithoutDisjunctions(), id);
+    }
+
     public SafetyConjunction cloneRemovingDoubleNegation() {
         return new SafetyConjunction(getLhsOperand().cloneRemovingDoubleNegation(),getRhsOperand().cloneRemovingDoubleNegation(), id);
     }
