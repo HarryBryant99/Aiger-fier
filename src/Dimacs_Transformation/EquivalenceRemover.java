@@ -33,21 +33,43 @@ public class EquivalenceRemover {
 
         List<Expression> decomposedResult = decomposeExpression(equiv.getRhsOperand());
 
-        Expression exp = new Disjunction(new Negation(equiv.getLhsOperand()), decomposedResult.get(0));
+        if ((equiv.getRhsOperand().getClass() == Negation.class) &&
+                (((Negation) equiv.getRhsOperand()).getOperand().getClass() == Disjunction.class)){
+            Expression exp =
+                    new Disjunction(equiv.getLhsOperand(), new Negation(decomposedResult.get(0)));
 
-        for (int i = 1; i < decomposedResult.size(); i++) {
-            exp = new Disjunction(exp, decomposedResult.get(i));
-        }
+            for (int i = 1; i < decomposedResult.size(); i++) {
+                exp = new Disjunction(exp, new Negation(decomposedResult.get(i)));
+            }
 
-        exp = exp.cloneRemovingDoubleNegation();
+            exp = exp.cloneRemovingDoubleNegation();
 
-        newExpressions.add(exp);
+            newExpressions.add(exp);
 
-        List<Expression> splitResult = splitExpression(equiv.getRhsOperand());
+            List<Expression> splitResult = splitExpression(equiv.getRhsOperand());
 
-        for (int i = 0; i < splitResult.size(); i++) {
-            Expression newExp = new Disjunction(equiv.getLhsOperand(), splitResult.get(i));
-            newExpressions.add(newExp.cloneRemovingDoubleNegation());
+            for (int i = 0; i < splitResult.size(); i++) {
+                Expression newExp = new Disjunction(new Negation(equiv.getLhsOperand()), splitResult.get(i));
+                newExpressions.add(newExp.cloneRemovingDoubleNegation());
+            }
+        } else {
+            Expression exp =
+                    new Disjunction(new Negation(equiv.getLhsOperand()), decomposedResult.get(0));
+
+            for (int i = 1; i < decomposedResult.size(); i++) {
+                exp = new Disjunction(exp, decomposedResult.get(i));
+            }
+
+            exp = exp.cloneRemovingDoubleNegation();
+
+            newExpressions.add(exp);
+
+            List<Expression> splitResult = splitExpression(equiv.getRhsOperand());
+
+            for (int i = 0; i < splitResult.size(); i++) {
+                Expression newExp = new Disjunction(equiv.getLhsOperand(), splitResult.get(i));
+                newExpressions.add(newExp.cloneRemovingDoubleNegation());
+            }
         }
 
         return newExpressions;
