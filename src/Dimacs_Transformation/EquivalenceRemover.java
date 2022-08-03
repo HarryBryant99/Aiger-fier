@@ -19,32 +19,38 @@ public class EquivalenceRemover {
         return GEN_NAME_PREFIX + newVarNextNumber++;
     }
 
-    public Ladder transform(Ladder sourceL){
-        Ladder targetL = new Ladder();
+    public List<Expression> transform(Ladder sourceL){
+        ArrayList<Expression> targetList = new ArrayList<>();
         for (Rung r : sourceL.getRungs()) {
-            for(Equivalence equ : splitEquivalence(r.getEquivalence())) {
-                targetL.addRung(new Rung(equ));
-            }
+            targetList.add(splitEquivalence(r.getEquivalence()));
         }
-        return targetL;
+        return targetList;
     }
 
-    private List<Equivalence> splitEquivalence(Equivalence equiv){
-        Expression splitResult = splitExpression(equiv.getRhsOperand());
+    private Expression splitEquivalence(Equivalence equiv){
+        List<Expression> splitResult = splitExpression(equiv.getRhsOperand());
 
-        ArrayList<Equivalence> result = new ArrayList<>();
-        //result.addAll(splitResult.equivalences);
-        result.add(new Equivalence(equiv.getLhsOperand(), splitResult));
+        Expression exp = new Disjunction(equiv.getRhsOperand(), new Negation(equiv.getLhsOperand()));
 
-        return result;
+        for (int i = 0; i < splitResult.size(); i++) {
+            Expression newExp = new Disjunction(equiv.getLhsOperand(), splitResult.get(i));
+            exp = new Conjunction(exp, newExp);
+        }
+
+        return exp;
     }
 
-    private Expression splitExpression(Expression exp){
+    private List<Expression> splitExpression(Expression exp){
+        ArrayList<Expression> expressions = new ArrayList<>();
         if (exp.getClass() == Proposition.class) {
             Negation neg = new Negation(exp);
-            return neg;
+            expressions.add(neg);
+            return expressions;
         } else if (exp.getClass() == Negation.class) {
-            return ((Negation) exp).getOperand();
+            //return ((Negation) exp).getOperand();
+
+            expressions.add(((Negation) exp).getOperand());
+            return expressions;
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Disjunction.class) {
