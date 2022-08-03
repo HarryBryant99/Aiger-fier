@@ -1,6 +1,7 @@
 package Dimacs_Transformation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
@@ -73,13 +74,15 @@ public class EquivalenceRemover {
 //            return new Result(resultEquivs, new Disjunction(new Proposition(newNameLhs), new Proposition(newNameRhs)));
 
             if (((Disjunction) exp).getLhsOperand().getClass() == Disjunction.class){
-                expressions.add((Expression) splitExpression(dis.getLhsOperand()));
+                expressions.addAll(
+                        (Collection<? extends Expression>) splitExpression(dis.getLhsOperand()));
             } else {
                 expressions.add(new Negation (((Disjunction) exp).getLhsOperand()));
             }
 
             if (((Disjunction) exp).getRhsOperand().getClass() == Disjunction.class){
-                expressions.add((Expression) splitExpression(dis.getRhsOperand()));
+                expressions.addAll(
+                        (Collection<? extends Expression>) splitExpression(dis.getRhsOperand()));
             } else {
                 expressions.add(new Negation (((Disjunction) exp).getRhsOperand()));
             }

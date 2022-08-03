@@ -42,8 +42,9 @@ public class EquivalenceRemoverTests {
         Ladder expectedL = new Ladder();
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -57,8 +58,9 @@ public class EquivalenceRemoverTests {
         Ladder expectedL = new Ladder();
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("vBanana_1-")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -77,8 +79,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_4")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -94,8 +97,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -113,8 +117,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -133,8 +138,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_4")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -152,8 +158,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -170,8 +177,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Disjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_2")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -189,8 +197,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_2")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_3")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -211,8 +220,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Disjunction(new Proposition("gen_3"),new Proposition("gen_5")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_6")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -233,8 +243,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Proposition("vC"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_5"),new Proposition("gen_6")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -252,8 +263,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Proposition("vC"))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_2"),new Proposition("gen_3")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -275,8 +287,9 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_7"),new Disjunction(new Proposition("gen_4"),new Proposition("gen_6")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_7")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
@@ -303,7 +316,8 @@ public class EquivalenceRemoverTests {
         expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_8"),new Disjunction(new Proposition("gen_5"),new Proposition("gen_7")))));
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_8")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 }
