@@ -35,6 +35,13 @@ public class EquivalenceRemover {
 
         if ((equiv.getRhsOperand().getClass() == Negation.class) &&
                 (((Negation) equiv.getRhsOperand()).getOperand().getClass() == Disjunction.class)){
+            List<Expression> splitResult = splitExpression(equiv.getRhsOperand());
+
+            for (int i = 0; i < splitResult.size(); i++) {
+                Expression newExp = new Disjunction(new Negation(equiv.getLhsOperand()), splitResult.get(i));
+                newExpressions.add(newExp.cloneRemovingDoubleNegation());
+            }
+
             Expression exp =
                     new Disjunction(equiv.getLhsOperand(), new Negation(decomposedResult.get(0)));
 
@@ -45,14 +52,14 @@ public class EquivalenceRemover {
             exp = exp.cloneRemovingDoubleNegation();
 
             newExpressions.add(exp);
-
+        } else {
             List<Expression> splitResult = splitExpression(equiv.getRhsOperand());
 
             for (int i = 0; i < splitResult.size(); i++) {
-                Expression newExp = new Disjunction(new Negation(equiv.getLhsOperand()), splitResult.get(i));
+                Expression newExp = new Disjunction(equiv.getLhsOperand(), splitResult.get(i));
                 newExpressions.add(newExp.cloneRemovingDoubleNegation());
             }
-        } else {
+
             Expression exp =
                     new Disjunction(new Negation(equiv.getLhsOperand()), decomposedResult.get(0));
 
@@ -63,13 +70,6 @@ public class EquivalenceRemover {
             exp = exp.cloneRemovingDoubleNegation();
 
             newExpressions.add(exp);
-
-            List<Expression> splitResult = splitExpression(equiv.getRhsOperand());
-
-            for (int i = 0; i < splitResult.size(); i++) {
-                Expression newExp = new Disjunction(equiv.getLhsOperand(), splitResult.get(i));
-                newExpressions.add(newExp.cloneRemovingDoubleNegation());
-            }
         }
 
         return newExpressions;
@@ -134,14 +134,14 @@ public class EquivalenceRemover {
                 expressions.addAll(
                         (Collection<? extends Expression>) splitExpression(dis.getLhsOperand()));
             } else {
-                expressions.add(new Negation (((Disjunction) exp).getLhsOperand()));
+                expressions.add(((Disjunction) exp).getLhsOperand());
             }
 
             if (((Disjunction) exp).getRhsOperand().getClass() == Disjunction.class){
                 expressions.addAll(
                         (Collection<? extends Expression>) splitExpression(dis.getRhsOperand()));
             } else {
-                expressions.add(new Negation (((Disjunction) exp).getRhsOperand()));
+                expressions.add(((Disjunction) exp).getRhsOperand());
             }
 
             return expressions;
