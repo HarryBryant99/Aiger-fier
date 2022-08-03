@@ -54,7 +54,7 @@ public class EquivalenceRemover {
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Disjunction.class) {
-//            Disjunction dis = (Disjunction) exp;
+            Disjunction dis = (Disjunction) exp;
 //
 //            Result splitResultLhs = splitExpression(dis.getLhsOperand());
 //            String newNameLhs = genNewName();
@@ -71,7 +71,20 @@ public class EquivalenceRemover {
 //            resultEquivs.add(equivRhs);
 //
 //            return new Result(resultEquivs, new Disjunction(new Proposition(newNameLhs), new Proposition(newNameRhs)));
-            return null;
+
+            if (((Disjunction) exp).getLhsOperand().getClass() == Disjunction.class){
+                expressions.add((Expression) splitExpression(dis.getLhsOperand()));
+            } else {
+                expressions.add(new Negation (((Disjunction) exp).getLhsOperand()));
+            }
+
+            if (((Disjunction) exp).getRhsOperand().getClass() == Disjunction.class){
+                expressions.add((Expression) splitExpression(dis.getRhsOperand()));
+            } else {
+                expressions.add(new Negation (((Disjunction) exp).getRhsOperand()));
+            }
+
+            return expressions;
         } else {
             throw new IllegalStateException("What is thi sub type?");
         }

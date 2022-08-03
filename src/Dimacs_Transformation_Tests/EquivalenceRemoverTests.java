@@ -26,8 +26,9 @@ public class EquivalenceRemoverTests {
         Ladder expectedL = new Ladder();
         expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("vB")))));
 
+        ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
-        assertEquals(expectedL, er.transform(sourceL));
+        assertEquals(expectedL, er.transform(cr.transform(sourceL)));
     }
 
     @Test
