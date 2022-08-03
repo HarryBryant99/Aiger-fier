@@ -113,9 +113,9 @@ public class EquivalenceRemoverTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-
-        Expression expectedE = new Conjunction(new Disjunction(new Proposition("vB"), new Negation(new Proposition("vA"))),new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
-        expectedList.add(expectedE);
+        expectedList.add(new Disjunction(new Proposition("vA"), new Proposition("vB")));
+        expectedList.add(new Disjunction(new Proposition("vA"), new Proposition("vE")));
+        expectedList.add(new Disjunction(new Disjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vB"))), new Negation(new Proposition("vE"))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
@@ -131,9 +131,9 @@ public class EquivalenceRemoverTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-
-        Expression expectedE = new Conjunction(new Disjunction(new Proposition("vB"), new Negation(new Proposition("vA"))),new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
-        expectedList.add(expectedE);
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vE")));
+        expectedList.add(new Disjunction(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))), new Negation(new Proposition("vE"))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
@@ -149,9 +149,9 @@ public class EquivalenceRemoverTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-
-        Expression expectedE = new Conjunction(new Disjunction(new Proposition("vB"), new Negation(new Proposition("vA"))),new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
-        expectedList.add(expectedE);
+        expectedList.add(new Disjunction(new Proposition("vA"), new Proposition("vB")));
+        expectedList.add(new Disjunction(new Proposition("vA"), new Proposition("vC")));
+        expectedList.add(new Disjunction(new Disjunction(new Negation(new Proposition("vA")), new Negation(new Proposition("vB"))), new Negation(new Proposition("vC"))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
@@ -167,9 +167,9 @@ public class EquivalenceRemoverTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-
-        Expression expectedE = new Conjunction(new Disjunction(new Proposition("vB"), new Negation(new Proposition("vA"))),new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
-        expectedList.add(expectedE);
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Negation(new Proposition("vE"))));
+        expectedList.add(new Disjunction(new Disjunction(new Proposition("vA"), new Proposition("vB")), new Proposition("vE")));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
@@ -185,9 +185,9 @@ public class EquivalenceRemoverTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-
-        Expression expectedE = new Conjunction(new Disjunction(new Proposition("vB"), new Negation(new Proposition("vA"))),new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
-        expectedList.add(expectedE);
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Negation(new Proposition("vE"))));
+        expectedList.add(new Disjunction(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))), new Proposition("vE")));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
@@ -203,9 +203,10 @@ public class EquivalenceRemoverTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-
-        Expression expectedE = new Conjunction(new Disjunction(new Proposition("vB"), new Negation(new Proposition("vA"))),new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
-        expectedList.add(expectedE);
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Negation(new Proposition("vE"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vC")));
+        expectedList.add(new Disjunction(new Disjunction(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))), new Negation(new Proposition("vE"))), new Proposition("vC")));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
@@ -239,9 +240,10 @@ public class EquivalenceRemoverTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-
-        Expression expectedE = new Conjunction(new Disjunction(new Proposition("vB"), new Negation(new Proposition("vA"))),new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
-        expectedList.add(expectedE);
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vE"))));
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vC"))));
+        expectedList.add(new Disjunction(new Disjunction(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")), new Proposition("vE")), new Proposition("vC")));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         EquivalenceRemover er = new EquivalenceRemover();
