@@ -39,8 +39,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_0")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("vB")))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -70,12 +69,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vC"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_4")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vC")))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -90,9 +84,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("vB"),new Proposition("vE")))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -107,11 +99,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE"))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -126,12 +114,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_4")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -146,11 +129,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vC"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vC"))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -165,10 +144,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Disjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_2")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Proposition("vB"),new Proposition("vE"))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -183,11 +159,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_3")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Negation(new Proposition("vB")),new Proposition("vE"))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -202,14 +174,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Disjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Proposition("vC"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Negation(new Proposition("gen_4")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Disjunction(new Proposition("gen_3"),new Proposition("gen_5")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_6")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Negation(new Disjunction(new Proposition("vB"),new Proposition("vE"))),new Negation(new Proposition("vC")))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -224,14 +189,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Negation(new Proposition("gen_4")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Proposition("vC"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_5"),new Proposition("gen_6")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Negation(new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")))),new Proposition("vC")))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -246,11 +204,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Disjunction(new Proposition("gen_0"),new Proposition("gen_1")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Proposition("vC"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_2"),new Proposition("gen_3")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Disjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -265,15 +219,7 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Proposition("vC"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Negation(new Proposition("gen_5")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_7"),new Disjunction(new Proposition("gen_4"),new Proposition("gen_6")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_7")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE"))),new Negation(new Proposition("vC")))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));
@@ -290,18 +236,9 @@ public class ConjunctionRemoverTests {
 
         // TODO: Calculate real expected result
         Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Negation(new Proposition("gen_2")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("gen_1"),new Proposition("gen_3")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE"))))));
 
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Proposition("vB"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Negation(new Proposition("gen_4")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Proposition("vE"))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_7"),new Negation(new Proposition("gen_6")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_8"),new Disjunction(new Proposition("gen_5"),new Proposition("gen_7")))));
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_8")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")))))));
 
         ConjunctionRemover cr = new ConjunctionRemover();
         assertEquals(expectedL, cr.transform(sourceL));

@@ -43,36 +43,39 @@ public class ConjunctionRemover {
         if (exp.getClass() == Proposition.class) {
             return new Result(exp);
         } else if (exp.getClass() == Negation.class) {
-            Negation neg = (Negation) exp;
-            Result splitResult = splitExpression(neg.getOperand());
-
-            ArrayList<Equivalence> resultEquivs = new ArrayList<>();
-            resultEquivs.addAll(splitResult.equivalences);
-            String newName = genNewName();
-            Equivalence equiv = new Equivalence(new Proposition(newName), splitResult.finalExpression);
-            resultEquivs.add(equiv);
-
-            return new Result(resultEquivs, new Negation(new Proposition(newName)));
+//            Negation neg = (Negation) exp;
+//            Result splitResult = splitExpression(neg.getOperand());
+//
+//            ArrayList<Equivalence> resultEquivs = new ArrayList<>();
+//            resultEquivs.addAll(splitResult.equivalences);
+//            String newName = genNewName();
+//            Equivalence equiv = new Equivalence(new Proposition(newName), splitResult.finalExpression);
+//            resultEquivs.add(equiv);
+//
+//            return new Result(resultEquivs, new Negation(new Proposition(newName)));
+            return new Result(exp);
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Disjunction.class) {
             Disjunction dis = (Disjunction) exp;
 
-            Result splitResultLhs = splitExpression(dis.getLhsOperand());
-            String newNameLhs = genNewName();
-            Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs.finalExpression);
+//            Result splitResultLhs = splitExpression(dis.getLhsOperand());
+//            String newNameLhs = genNewName();
+//            Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs.finalExpression);
+//
+//            Result splitResultRhs = splitExpression(dis.getRhsOperand());
+//            String newNameRhs = genNewName();
+//            Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs.finalExpression);
+//
+//            ArrayList<Equivalence> resultEquivs = new ArrayList<>();
+//            resultEquivs.addAll(splitResultLhs.equivalences);
+//            resultEquivs.add(equivLhs);
+//            resultEquivs.addAll(splitResultRhs.equivalences);
+//            resultEquivs.add(equivRhs);
+//
+//            return new Result(resultEquivs, new Disjunction(new Proposition(newNameLhs), new Proposition(newNameRhs)));
 
-            Result splitResultRhs = splitExpression(dis.getRhsOperand());
-            String newNameRhs = genNewName();
-            Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs.finalExpression);
-
-            ArrayList<Equivalence> resultEquivs = new ArrayList<>();
-            resultEquivs.addAll(splitResultLhs.equivalences);
-            resultEquivs.add(equivLhs);
-            resultEquivs.addAll(splitResultRhs.equivalences);
-            resultEquivs.add(equivRhs);
-
-            return new Result(resultEquivs, new Disjunction(new Proposition(newNameLhs), new Proposition(newNameRhs)));
+            return new Result(new Disjunction(dis.getLhsOperand(), dis.getRhsOperand()));
         } else {
             throw new IllegalStateException("What is thi sub type?");
         }
