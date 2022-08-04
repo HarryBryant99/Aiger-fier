@@ -89,7 +89,7 @@ public class CnfConverter {
                         new Disjunction(splitExpression(dis.getLhsOperand()),
                                 splitExpression(((Conjunction) dis.getRhsOperand()).getRhsOperand())));
             } else {
-                return new Conjunction(splitExpression(dis.getLhsOperand()),splitExpression(dis.getRhsOperand()));
+                return exp;
             }
 
         } else if (exp.getClass() == Conjunction.class) {
@@ -118,14 +118,29 @@ public class CnfConverter {
 
     private List<Expression> returnWhenBothProposition(Expression p, Expression q){
         List<Expression> newExpressions = new ArrayList<>();
+        Expression deMorganedQ;
 
-        Expression deMorganedQ = q.cloneWithoutDisjunctions().cloneRemovingDoubleNegation();
-        Expression newExp = new Disjunction(new Negation(p), ((Conjunction) deMorganedQ).getLhsOperand());
-        Expression newExp2 = new Disjunction(new Negation(p), ((Conjunction) deMorganedQ).getRhsOperand());
-        Expression newExp3 = new Disjunction(p, new Negation(q));
-        newExpressions.add(newExp.cloneRemovingDoubleNegation());
-        newExpressions.add(newExp2.cloneRemovingDoubleNegation());
-        newExpressions.add(newExp3.cloneRemovingDoubleNegation());
+        if (q.getClass() == Disjunction.class){
+            deMorganedQ = q.cloneWithoutConjunctions().cloneRemovingDoubleNegation();
+            Expression newExp3 = new Disjunction(new Negation(p), q);
+            Expression newExp = new Disjunction(p, new Negation(((Disjunction) deMorganedQ).getLhsOperand()));
+            Expression newExp2 = new Disjunction(p, new Negation(((Disjunction) deMorganedQ).getRhsOperand()));
+            newExpressions.add(newExp.cloneRemovingDoubleNegation());
+            newExpressions.add(newExp2.cloneRemovingDoubleNegation());
+            newExpressions.add(newExp3.cloneRemovingDoubleNegation());
+
+        } else if (q.getClass() == Negation.class) {
+            deMorganedQ = q.cloneWithoutDisjunctions().cloneRemovingDoubleNegation();
+            Expression newExp = new Disjunction(new Negation(p), ((Conjunction) deMorganedQ).getLhsOperand());
+            Expression newExp2 = new Disjunction(new Negation(p), ((Conjunction) deMorganedQ).getRhsOperand());
+            Expression newExp3 = new Disjunction(p, new Negation(q));
+            newExpressions.add(newExp.cloneRemovingDoubleNegation());
+            newExpressions.add(newExp2.cloneRemovingDoubleNegation());
+            newExpressions.add(newExp3.cloneRemovingDoubleNegation());
+
+        } else {
+            throw new IllegalStateException("Unexpected Expression - Send help");
+        }
 
         return newExpressions;
     }
@@ -150,9 +165,14 @@ public class CnfConverter {
 
             } else if (q.getClass() == Disjunction.class) {
                 Disjunction dis = (Disjunction) q;
-                newExpressions.addAll(returnWhenProposition(p, dis.getLhsOperand()));
-                newExpressions.addAll(returnWhenProposition(p, dis.getRhsOperand()));
 
+                if ((dis.getLhsOperand().getClass() == Proposition.class) &&
+                        (dis.getRhsOperand().getClass() == Proposition.class)) {
+                    newExpressions.addAll(returnWhenBothProposition(p, q));
+                } else {
+                    newExpressions.addAll(returnWhenProposition(p, dis.getLhsOperand()));
+                    newExpressions.addAll(returnWhenProposition(p, dis.getRhsOperand()));
+                }
             }
 
         return newExpressions;
