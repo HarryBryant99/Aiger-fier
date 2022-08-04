@@ -95,7 +95,8 @@ public class CnfConverter {
         } else if (exp.getClass() == Conjunction.class) {
             Conjunction con = (Conjunction) exp;
 
-            if ((con.getLhsOperand().getClass() == Proposition.class) && (con.getRhsOperand().getClass() == Proposition.class)){
+            if (((con.getLhsOperand().getClass() == Proposition.class) || (con.getLhsOperand().getClass() == Negation.class))
+                    && ((con.getRhsOperand().getClass() == Proposition.class) || (con.getRhsOperand().getClass() == Negation.class))){
                 return exp.cloneWithoutConjunctions().cloneRemovingDoubleNegation();
             } else {
                 return exp;
@@ -166,8 +167,8 @@ public class CnfConverter {
             } else if (q.getClass() == Disjunction.class) {
                 Disjunction dis = (Disjunction) q;
 
-                if ((dis.getLhsOperand().getClass() == Proposition.class) &&
-                        (dis.getRhsOperand().getClass() == Proposition.class)) {
+                if (((dis.getLhsOperand().getClass() == Proposition.class) || (dis.getLhsOperand().getClass() == Negation.class))
+                        && ((dis.getRhsOperand().getClass() == Proposition.class) || (dis.getRhsOperand().getClass() == Negation.class))){
                     newExpressions.addAll(returnWhenBothProposition(p, q));
                 } else {
                     newExpressions.addAll(returnWhenProposition(p, dis.getLhsOperand()));
