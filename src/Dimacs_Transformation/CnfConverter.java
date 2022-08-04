@@ -105,7 +105,7 @@ public class CnfConverter {
     private List<Expression> returnWhenProposition(Expression p, Expression q){
         List<Expression> newExpressions = new ArrayList<>();
         Expression newExp = new Disjunction(new Negation(p), q);
-        Expression newExp2 = new Disjunction(q, new Negation(p));
+        Expression newExp2 = new Disjunction(p, new Negation(q));
         newExpressions.add(newExp);
         newExpressions.add(newExp2);
 

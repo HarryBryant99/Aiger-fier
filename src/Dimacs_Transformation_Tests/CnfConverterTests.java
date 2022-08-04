@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import Dimacs_Transformation.CnfConverter;
 import Dimacs_Transformation.CnfJavaPrinter;
+import java.util.ArrayList;
 import org.junit.Test;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
@@ -23,11 +24,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -38,11 +40,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("vB")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -53,11 +56,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vBanana_1-"))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -68,11 +72,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("vB"),new Proposition("vC")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -83,11 +88,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Proposition("vB"),new Proposition("vE")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -98,11 +104,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -113,11 +120,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("vB"),new Proposition("vE")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -128,11 +136,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Conjunction(new Proposition("vB"),new Proposition("vC"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -143,11 +152,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Proposition("vB"),new Proposition("vE"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -158,11 +168,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Negation(new Proposition("vB")),new Proposition("vE"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -173,11 +184,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Disjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -188,11 +200,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Conjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -203,11 +216,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Disjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -218,11 +232,12 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Conjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 
     @Test
@@ -235,10 +250,11 @@ public class CnfConverterTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("vB"),new Proposition("vE")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
 
         CnfConverter cc = new CnfConverter();
-        assertEquals(expectedL, cc.transform(sourceL));
+        assertEquals(expectedList, cc.transform(sourceL));
     }
 }
