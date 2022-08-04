@@ -95,7 +95,11 @@ public class CnfConverter {
         } else if (exp.getClass() == Conjunction.class) {
             Conjunction con = (Conjunction) exp;
 
-            return new Conjunction(splitExpression(con.getLhsOperand()),splitExpression(con.getRhsOperand()));
+            if ((con.getLhsOperand().getClass() == Proposition.class) && (con.getRhsOperand().getClass() == Proposition.class)){
+                return exp.cloneWithoutConjunctions().cloneRemovingDoubleNegation();
+            } else {
+                return exp;
+            }
 
         } else {
             throw new IllegalStateException("What is this sub type?");
@@ -106,8 +110,22 @@ public class CnfConverter {
         List<Expression> newExpressions = new ArrayList<>();
         Expression newExp = new Disjunction(new Negation(p), q);
         Expression newExp2 = new Disjunction(p, new Negation(q));
-        newExpressions.add(newExp);
-        newExpressions.add(newExp2);
+        newExpressions.add(newExp.cloneRemovingDoubleNegation());
+        newExpressions.add(newExp2.cloneRemovingDoubleNegation());
+
+        return newExpressions;
+    }
+
+    private List<Expression> returnWhenBothProposition(Expression p, Expression q){
+        List<Expression> newExpressions = new ArrayList<>();
+
+        Expression deMorganedQ = q.cloneWithoutDisjunctions().cloneRemovingDoubleNegation();
+        Expression newExp = new Disjunction(new Negation(p), ((Conjunction) deMorganedQ).getLhsOperand());
+        Expression newExp2 = new Disjunction(new Negation(p), ((Conjunction) deMorganedQ).getRhsOperand());
+        Expression newExp3 = new Disjunction(p, new Negation(q));
+        newExpressions.add(newExp.cloneRemovingDoubleNegation());
+        newExpressions.add(newExp2.cloneRemovingDoubleNegation());
+        newExpressions.add(newExp3.cloneRemovingDoubleNegation());
 
         return newExpressions;
     }
@@ -122,7 +140,7 @@ public class CnfConverter {
                 if (neg.getOperand().getClass() == Proposition.class) {
                     newExpressions.addAll(returnWhenProposition(p, q));
                 } else {
-                    throw new IllegalStateException("How the hell did we get this");
+                    newExpressions.addAll(returnWhenBothProposition(p, q));
                 }
 
             } else if (q.getClass() == Conjunction.class){
