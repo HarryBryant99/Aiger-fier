@@ -64,18 +64,33 @@ public class CnfConverter {
         } else if (exp.getClass() == Disjunction.class) {
             Disjunction dis = (Disjunction) exp;
 
-            if (((dis.getLhsOperand().getClass() != Proposition.class) && (dis.getLhsOperand().getClass() != Negation.class)) &&
-                    ((dis.getRhsOperand().getClass() != Proposition.class) && (dis.getRhsOperand().getClass() != Negation.class))){
-                //Do 2d loopy thing
-                return disjunction(0, exp);
-            } else if (((dis.getLhsOperand().getClass() != Proposition.class) && (dis.getLhsOperand().getClass() != Negation.class)) &&
-                    ((dis.getRhsOperand().getClass() == Proposition.class) || dis.getRhsOperand().getClass() == Negation.class)) {
-                //Do loopy thing
-                return disjunction(1, exp);
-            } else if (((dis.getLhsOperand().getClass() == Proposition.class) || (dis.getLhsOperand().getClass() == Negation.class)) &&
-                    ((dis.getRhsOperand().getClass() != Proposition.class) && (dis.getRhsOperand().getClass() != Negation.class))) {
-                //Do loopy thing
-                return disjunction(2, exp);
+            if ((dis.getLhsOperand().getClass() != Proposition.class) &&
+                    (dis.getRhsOperand().getClass() != Proposition.class)){
+
+                if ((((Negation) dis.getLhsOperand()).getOperand().getClass() != Proposition.class) && (((Negation) dis.getRhsOperand()).getOperand().getClass() != Proposition.class)) {
+                    //Do loopy thing
+                    return disjunction(0, exp);
+                }
+            }
+
+            if ((dis.getLhsOperand().getClass() != Proposition.class) &&
+                    (dis.getRhsOperand().getClass() == Proposition.class)) {
+
+                if (((Negation) dis.getLhsOperand()).getOperand().getClass() == Proposition.class) {
+                    return exp;
+                } else {
+                    //Do loopy thing
+                    return disjunction(1, exp);
+                }
+            } else if ((dis.getLhsOperand().getClass() == Proposition.class) &&
+                    (dis.getRhsOperand().getClass() != Proposition.class)) {
+
+                if (((Negation) dis.getRhsOperand()).getOperand().getClass() == Proposition.class) {
+                    return exp;
+                } else {
+                    //Do loopy thing
+                    return disjunction(2, exp);
+                }
             } else {
                 return exp;
             }
