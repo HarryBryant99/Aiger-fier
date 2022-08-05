@@ -125,7 +125,8 @@ public class CnfConverterTests {
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
         expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
-        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vE")));
+        expectedList.add(new Disjunction(new Proposition("vA"),new Disjunction(new Negation(new Proposition("vB")), new Negation(new Proposition("vE")))));
 
         CnfConverter cc = new CnfConverter();
         assertEquals(expectedList, cc.transform(sourceL));
@@ -140,8 +141,9 @@ public class CnfConverterTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
-        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Proposition("vA"), new Proposition("vB")));
+        expectedList.add(new Disjunction(new Proposition("vA"), new Proposition("vC")));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")),new Disjunction(new Negation(new Proposition("vB")), new Negation(new Proposition("vC")))));
 
         CnfConverter cc = new CnfConverter();
         assertEquals(expectedList, cc.transform(sourceL));
@@ -156,8 +158,9 @@ public class CnfConverterTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
-        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vE"))));
+        expectedList.add(new Disjunction(new Proposition("vA"),new Disjunction(new Proposition("vB"), new Proposition("vE"))));
 
         CnfConverter cc = new CnfConverter();
         assertEquals(expectedList, cc.transform(sourceL));
@@ -172,8 +175,9 @@ public class CnfConverterTests {
 
         // TODO: Calculate real expected result
         ArrayList expectedList = new ArrayList();
-        expectedList.add(new Disjunction(new Negation(new Proposition("vA")), new Proposition("vB")));
-        expectedList.add(new Disjunction(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")),new Proposition("vB")));
+        expectedList.add(new Disjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vE"))));
+        expectedList.add(new Disjunction(new Proposition("vA"),new Disjunction(new Negation(new Proposition("vB")), new Proposition("vE"))));
 
         CnfConverter cc = new CnfConverter();
         assertEquals(expectedList, cc.transform(sourceL));
