@@ -128,7 +128,7 @@ public class SafetyConditionTransformation {
         if (isChildConjunction(con.getLhsOperand()) && isChildConjunction(con.getRhsOperand())){
             Result splitResultLhs = splitExpression(con.getLhsOperand());
             Result splitResultRhs = splitExpression(con.getRhsOperand());
-            SafetyConjunction newConjunction = new SafetyConjunction(returnProposition(con.getLhsOperand(),splitResultLhs), returnProposition(con.getRhsOperand(),splitResultLhs), new Proposition(genNewName()));
+            SafetyConjunction newConjunction = new SafetyConjunction(returnProposition(con.getLhsOperand(),splitResultLhs), returnProposition(con.getRhsOperand(),splitResultRhs), new Proposition(genNewName()));
 
             resultExpressions.addAll(splitResultLhs.expressions);
             resultExpressions.add(splitResultLhs.finalExpression);

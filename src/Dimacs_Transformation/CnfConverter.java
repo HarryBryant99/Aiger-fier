@@ -66,7 +66,7 @@ public class CnfConverter {
 
             if ((dis.getLhsOperand().getClass() != Proposition.class) &&
                     (dis.getRhsOperand().getClass() != Proposition.class)){
-
+//check if negation
                 if ((((Negation) dis.getLhsOperand()).getOperand().getClass() != Proposition.class) && (((Negation) dis.getRhsOperand()).getOperand().getClass() != Proposition.class)) {
                     //Do loopy thing
                     return disjunction(0, exp);
@@ -194,6 +194,8 @@ public class CnfConverter {
 
 
         Expression e = splitExpression(newExp2);
+
+        //newExpressions.add(e.cloneWithoutConjunctions().cloneRemovingDoubleNegation());
         //newExpressions.add(newExp.cloneWithoutConjunctions().cloneRemovingDoubleNegation());
         newExpressions.add(newExp2.cloneWithoutConjunctions().cloneRemovingDoubleNegation());
 
@@ -220,11 +222,15 @@ public class CnfConverter {
                         new Disjunction(splitExpression(((Conjunction) dis.getLhsOperand()).getRhsOperand()),
                                 splitExpression(dis.getRhsOperand())));
             case 2:
-                return new Conjunction(
-                        new Disjunction(splitExpression(dis.getLhsOperand()),
-                                splitExpression(((Conjunction) dis.getRhsOperand()).getLhsOperand())),
-                        new Disjunction(splitExpression(dis.getLhsOperand()),
-                                splitExpression(((Conjunction) dis.getRhsOperand()).getRhsOperand())));
+//                return new Conjunction(
+//                        new Disjunction(splitExpression(dis.getLhsOperand()),
+//                                splitExpression(((Conjunction) dis.getRhsOperand()).getLhsOperand())),
+//                        new Disjunction(splitExpression(dis.getLhsOperand()),
+//                                splitExpression(((Conjunction) dis.getRhsOperand()).getRhsOperand())));
+
+                Expression t = new Disjunction(splitExpression(dis.getLhsOperand()),
+                                splitExpression(dis.getRhsOperand()).cloneWithoutConjunctions().cloneRemovingDoubleNegation());
+                return t;
             case 3:
                 return exp;
             default:
