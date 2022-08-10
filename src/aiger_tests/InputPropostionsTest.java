@@ -153,11 +153,69 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(2,4,1));
         expectedAig.addComponent(new Latch(6,3,0));
         expectedAig.addComponent(new Latch(8,10,0));
-        expectedAig.addComponent(new Latch(12,9,0));
+        expectedAig.addComponent(new Latch(12,9,1));
         expectedAig.addComponent(new And(14,6,12));
-        expectedAig.addComponent(new Latch(16,15,0));
+        expectedAig.addComponent(new Latch(16,15,1));
         expectedAig.addComponent(new Latch(4,4,1));
         expectedAig.addComponent(new Latch(10,10,0));
+
+        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        assertEquals(expectedAig, tt.convertLadder(sourceL));
+    }
+
+    @Test
+    public void test7() throws FileNotFoundException {
+        File input = new File("input.txt");
+        InputStream in = new FileInputStream(input);
+        InputPropositions iv = new InputPropositions(in);
+
+        String data = "fof(ax,axiom, vA <=> ~(vB & vC))";
+
+        Ladder sourceL = new Ladder();
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_0"), new Proposition("vB"))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_1"), new Proposition("vE"))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),
+                new Conjunction(new Proposition("gen_0"), new Proposition("gen_1")))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_2")))));
+
+        // TODO: Calculate real expected result
+        Aig expectedAig = new Aig();
+        expectedAig.addComponent(new Latch(2, 4, 1));
+        expectedAig.addComponent(new Latch(6, 8, 0));
+        expectedAig.addComponent(new And(10, 2, 6));
+        expectedAig.addComponent(new Latch(12, 11, 1));
+        expectedAig.addComponent(new Latch(4, 4, 1));
+        expectedAig.addComponent(new Latch(8, 8, 0));
+
+        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        assertEquals(expectedAig, tt.convertLadder(sourceL));
+    }
+
+    @Test
+    public void test8() throws FileNotFoundException {
+        File input = new File("input.txt");
+        InputStream in = new FileInputStream(input);
+        InputPropositions iv = new InputPropositions(in);
+
+        String data = "fof(ax,axiom, vA <=> ~(vB & ~vC))";
+
+        Ladder sourceL = new Ladder();
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_0"), new Proposition("vB"))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_1"), new Proposition("vE"))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_2"), new Negation(new Proposition("gen_1")))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),
+                new Conjunction(new Proposition("gen_0"), new Proposition("gen_2")))));
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_3")))));
+
+        // TODO: Calculate real expected result
+        Aig expectedAig = new Aig();
+        expectedAig.addComponent(new Latch(2, 4, 1));
+        expectedAig.addComponent(new Latch(6, 8, 0));
+        expectedAig.addComponent(new Latch(10, 7, 1));
+        expectedAig.addComponent(new And(12, 2, 10));
+        expectedAig.addComponent(new Latch(14, 13, 0));
+        expectedAig.addComponent(new Latch(4, 4, 1));
+        expectedAig.addComponent(new Latch(8, 8, 0));
 
         AigerTransformation tt = new AigerTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));

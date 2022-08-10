@@ -30,7 +30,20 @@ public class AigerTransformation {
     public Aig convertLadder(Ladder sourceL) {
         Aig targetAig = new Aig();
         for (Rung r : sourceL.getRungs()) {
-            targetAig.addComponent(splitEquivalence(r.getEquivalence()));
+            AigerComponent newAig = splitEquivalence(r.getEquivalence());
+
+            if (newAig.getClass() == Latch.class) {
+                initalVariableValues.put(((Proposition) r.getEquivalence().getLhsOperand()).getName(),
+                        ((Latch) newAig).getOriginal());
+            } else if (newAig.getClass() == And.class) {
+                initalVariableValues.put(((Proposition) r.getEquivalence().getLhsOperand()).getName(),
+                        computeAnd(((Conjunction) r.getEquivalence().getRhsOperand()).getLhsOperand(),
+                                ((Conjunction) r.getEquivalence().getRhsOperand()).getRhsOperand()));
+            } else {
+                throw new IllegalStateException("Ay??? What is this?");
+            }
+
+            targetAig.addComponent(newAig);
             updateProposition(r.getEquivalence().getLhsOperand());
         }
 
@@ -143,6 +156,13 @@ public class AigerTransformation {
                         return 1;
                     }
                 }
+            } else {
+                if (isNegative) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+                //return initialValue;
             }
         }
         return initialValue;
@@ -216,5 +236,14 @@ public class AigerTransformation {
 
     public int getNumberOfVariables(){
         return propositionKey.size();
+    }
+
+    private int computeAnd(Expression lhs, Expression rhs){
+        if ((initalVariableValues.get(((Proposition) lhs).getName()) == 1) &&
+        (initalVariableValues.get(((Proposition) rhs).getName()) == 1)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
