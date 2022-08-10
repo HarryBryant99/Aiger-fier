@@ -525,7 +525,7 @@ public class AigerLadderTransformationTests {
         expectedAig.addComponent(new And(50,46,48));
         expectedAig.addComponent(new Latch(52,51,1));
         expectedAig.addComponent(new And(54,38,52));
-        expectedAig.addComponent(new Latch(22,55,0));
+        expectedAig.addComponent(new Latch(22,55,1));
         expectedAig.addComponent(new Latch(4,4,1));
         expectedAig.addComponent(new Latch(8,8,1));
         expectedAig.addComponent(new Latch(14,14,1));
