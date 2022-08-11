@@ -20,21 +20,23 @@ public class main {
     public static void main(String[] args) throws IOException {
         //TODO argparse
 
-        File f = new File("ladder_logic_examples/Example3.tptp");
+        File f = new File("ladder_logic_examples/Example2.tptp");
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
 
-        File safetyFile = new File("ladder_logic_examples/Example3Safety.tptp");
+        File safetyFile = new File("ladder_logic_examples/Example2Safety.tptp");
         in = new FileInputStream(safetyFile);
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
 
-        File input = new File("ladder_logic_examples/Example3Inputs.txt");
+        File input = new File("ladder_logic_examples/Example2Inputs.txt");
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 
         TseitinTransformation tt = new TseitinTransformation();
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         AigerTransformation aig = new AigerTransformation(iv.getHashMap());
+
+        System.out.println(iv.getHashMap());
 
         Aig newAiger = aig.convertLadder(tt.transform(l));
         Aig scAiger = aig.convertSafetyCondition(sct.transform(sc));

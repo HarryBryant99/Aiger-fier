@@ -32,15 +32,30 @@ public class AigerTransformation {
         for (Rung r : sourceL.getRungs()) {
             AigerComponent newAig = splitEquivalence(r.getEquivalence());
 
-            if (newAig.getClass() == Latch.class) {
-                initalVariableValues.put(((Proposition) r.getEquivalence().getLhsOperand()).getName(),
-                        ((Latch) newAig).getOriginal());
-            } else if (newAig.getClass() == And.class) {
-                initalVariableValues.put(((Proposition) r.getEquivalence().getLhsOperand()).getName(),
-                        computeAnd(((Conjunction) r.getEquivalence().getRhsOperand()).getLhsOperand(),
-                                ((Conjunction) r.getEquivalence().getRhsOperand()).getRhsOperand()));
-            } else {
-                throw new IllegalStateException("Ay??? What is this?");
+            String prop = ((Proposition) r.getEquivalence().getLhsOperand()).getName();
+
+            if (initalVariableValues != null) {
+                if (!initalVariableValues.containsKey(prop)) {
+                    if (newAig.getClass() == Latch.class) {
+                        initalVariableValues.put(prop,
+                                ((Latch) newAig).getOriginal());
+
+                        System.out.println(prop + " = " + initalVariableValues.get(prop));
+
+                    } else if (newAig.getClass() == And.class) {
+                        initalVariableValues
+                                .put(((Proposition) r.getEquivalence().getLhsOperand()).getName(),
+                                        computeAnd(
+                                                ((Conjunction) r.getEquivalence().getRhsOperand())
+                                                        .getLhsOperand(),
+                                                ((Conjunction) r.getEquivalence().getRhsOperand())
+                                                        .getRhsOperand()));
+
+                        System.out.println(prop + " = " + initalVariableValues.get(prop));
+                    } else {
+                        throw new IllegalStateException("Ay??? What is this?");
+                    }
+                }
             }
 
             targetAig.addComponent(newAig);
@@ -50,6 +65,9 @@ public class AigerTransformation {
         targetAig.addAllComponents(addInputLatches());
 
         System.out.println(propositionKey);
+
+        System.out.println("\n"+initalVariableValues+"\n");
+
         return targetAig;
     }
 
@@ -239,6 +257,9 @@ public class AigerTransformation {
     }
 
     private int computeAnd(Expression lhs, Expression rhs){
+        System.out.println(initalVariableValues.get(((Proposition) lhs).getName()));
+        System.out.println(initalVariableValues.get(((Proposition) rhs).getName()));
+
         if ((initalVariableValues.get(((Proposition) lhs).getName()) == 1) &&
         (initalVariableValues.get(((Proposition) rhs).getName()) == 1)) {
             return 1;

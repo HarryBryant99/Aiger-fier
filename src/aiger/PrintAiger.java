@@ -32,7 +32,6 @@ public class PrintAiger {
         components.addAll(ands);
 
         aig.setAigerComponents(components);
-
         return aig;
     }
 
