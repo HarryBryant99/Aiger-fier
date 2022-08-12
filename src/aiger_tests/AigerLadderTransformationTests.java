@@ -620,7 +620,7 @@ public class AigerLadderTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new Latch(2,3,0));
+        expectedAig.addComponent(new Latch(2,3,1));
         expectedAig.addComponent(new Latch(4,2,1));
 
         //expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_22")))));

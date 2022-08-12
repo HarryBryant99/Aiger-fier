@@ -26,7 +26,9 @@ public class AigerTransformation {
     public AigerTransformation(HashMap<String, Integer> initalVariableValues) {
         currentIndex = 0;
         this.initalVariableValues = initalVariableValues;
-        originalInitialVariableValues.putAll(initalVariableValues);
+        if (initalVariableValues != null) {
+            originalInitialVariableValues.putAll(initalVariableValues);
+        }
     }
 
     public Aig convertLadder(Ladder sourceL) {
