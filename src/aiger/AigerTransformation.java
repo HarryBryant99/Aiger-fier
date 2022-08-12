@@ -20,20 +20,23 @@ public class AigerTransformation {
     private HashMap<String, Integer> propositionKey = new HashMap<String, Integer>();
     private HashMap<String, Boolean> propositionComputed = new HashMap<String, Boolean>();
     private HashMap<String, Integer> initalVariableValues;
+    final HashMap<String, Integer> originalInitialVariableValues = new HashMap<>();
     private static Integer currentIndex;
 
-    public AigerTransformation(HashMap<String,Integer> initalVariableValues) {
+    public AigerTransformation(HashMap<String, Integer> initalVariableValues) {
         currentIndex = 0;
         this.initalVariableValues = initalVariableValues;
+        originalInitialVariableValues.putAll(initalVariableValues);
     }
 
     public Aig convertLadder(Ladder sourceL) {
+        //System.out.println(initalVariableValues);
+
         Aig targetAig = new Aig();
         for (Rung r : sourceL.getRungs()) {
             AigerComponent newAig = splitEquivalence(r.getEquivalence());
 
             String prop = ((Proposition) r.getEquivalence().getLhsOperand()).getName();
-
             if (initalVariableValues != null) {
                 if (!initalVariableValues.containsKey(prop)) {
                     if (newAig.getClass() == Latch.class) {
@@ -44,12 +47,12 @@ public class AigerTransformation {
 
                     } else if (newAig.getClass() == And.class) {
                         initalVariableValues
-                                .put(((Proposition) r.getEquivalence().getLhsOperand()).getName(),
-                                        computeAnd(
-                                                ((Conjunction) r.getEquivalence().getRhsOperand())
-                                                        .getLhsOperand(),
-                                                ((Conjunction) r.getEquivalence().getRhsOperand())
-                                                        .getRhsOperand()));
+                                .put(((Proposition) r.getEquivalence().getLhsOperand())
+                                                .getName(),
+                                        computeAnd(((Conjunction) r.getEquivalence()
+                                                        .getRhsOperand()).getLhsOperand(),
+                                                ((Conjunction) r.getEquivalence()
+                                                        .getRhsOperand()).getRhsOperand()));
 
                         System.out.println(prop + " = " + initalVariableValues.get(prop));
                     } else {
@@ -57,16 +60,18 @@ public class AigerTransformation {
                     }
                 }
             }
+            //System.out.println(initalVariableValues);
 
             targetAig.addComponent(newAig);
             updateProposition(r.getEquivalence().getLhsOperand());
         }
+        //System.out.println("orginal: "+originalInitialVariableValues);
 
         targetAig.addAllComponents(addInputLatches());
 
         System.out.println(propositionKey);
 
-        System.out.println("\n"+initalVariableValues+"\n");
+        System.out.println("\n" + initalVariableValues + "\n");
 
         return targetAig;
     }
@@ -80,7 +85,7 @@ public class AigerTransformation {
 //        System.out.println(propositionKey);
 //        System.out.println(propositionComputed);
 
-        for(Map.Entry<String, Integer> entry: propositionKey.entrySet()) {
+        for (Map.Entry<String, Integer> entry : propositionKey.entrySet()) {
 
             // if give value is equal to value from entry
             // print the corresponding key
@@ -89,17 +94,27 @@ public class AigerTransformation {
         return targetAig;
     }
 
-    private AigerComponent splitEquivalence(Equivalence equiv){
-        Integer lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(),false);
+    private AigerComponent splitEquivalence(Equivalence equiv) {
+        Integer lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(), false);
 
         Expression exp = equiv.getRhsOperand();
 
         if (exp.getClass() == Proposition.class) {
             String rhsName = ((Proposition) exp).getName();
-            return (new Latch(lhsIndex,propositionReplacer(exp, false),findInitialValue(rhsName, false)));
+            return (new Latch(lhsIndex, propositionReplacer(exp, false),
+                    findInitialValue(rhsName, false)));
         } else if (exp.getClass() == Negation.class) {
             String rhsName = ((Proposition) ((Negation) exp).getOperand()).getName();
-            return (new Latch(lhsIndex,propositionReplacer(((Negation) exp).getOperand(), true),findInitialValue(rhsName, true)));
+
+            //if lhs is in initial variables return the original
+            if (originalInitialVariableValues.containsKey(((Proposition) equiv.getLhsOperand()).getName())) {
+                findInitialValue(((Proposition) equiv.getLhsOperand()).getName(), true);
+                return (new Latch(lhsIndex, propositionReplacer(((Negation) exp).getOperand(), true),
+                        findInitialValue(((Proposition) equiv.getLhsOperand()).getName(), false)));
+            } else {
+                return (new Latch(lhsIndex, propositionReplacer(((Negation) exp).getOperand(), true),
+                    findInitialValue(rhsName, true)));
+            }
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
@@ -119,11 +134,11 @@ public class AigerTransformation {
         }
     }
 
-    private AigerComponent splitExpression(Expression exp){
+    private AigerComponent splitExpression(Expression exp) {
         if (exp.getClass() == Proposition.class) {
             return (new Output(propositionReplacer(exp, false)));
         } else if (exp.getClass() == Negation.class) {
-            if (((Negation) exp).getOperand().getClass() == Conjunction.class){
+            if (((Negation) exp).getOperand().getClass() == Conjunction.class) {
                 return null;
             } else {
 
@@ -152,17 +167,17 @@ public class AigerTransformation {
         }
     }
 
-    private Integer getIntegerForProposition(Expression exp){
+    private Integer getIntegerForProposition(Expression exp) {
         if (exp.getClass() == Proposition.class) {
             return (genNewName(((Proposition) exp).getName()));
-        } else if (exp.getClass() == Negation.class){
-            return (genNewName(((Proposition) ((Negation) exp).getOperand()).getName())+1);
+        } else if (exp.getClass() == Negation.class) {
+            return (genNewName(((Proposition) ((Negation) exp).getOperand()).getName()) + 1);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }
     }
 
-    private Integer findInitialValue(String proposition, boolean isNegative){
+    private Integer findInitialValue(String proposition, boolean isNegative) {
         Integer initialValue = 0;
         if (initalVariableValues != null) {
             if (initalVariableValues.containsKey(proposition)) {
@@ -186,8 +201,8 @@ public class AigerTransformation {
         return initialValue;
     }
 
-    private Integer genNewName(String proposition){
-        if (isExistingProposition(proposition)){
+    private Integer genNewName(String proposition) {
+        if (isExistingProposition(proposition)) {
             return getProposition(proposition);
         }
         newIndex();
@@ -195,20 +210,20 @@ public class AigerTransformation {
         return currentIndex;
     }
 
-    private void addProposition(String proposition){
+    private void addProposition(String proposition) {
         propositionKey.put(proposition, currentIndex);
         propositionComputed.put(proposition, false);
     }
 
-    private Integer getProposition(String proposition){
+    private Integer getProposition(String proposition) {
         return propositionKey.get(proposition);
     }
 
-    private void newIndex(){
+    private void newIndex() {
         currentIndex += 2;
     }
 
-    private boolean isExistingProposition(String proposition){
+    private boolean isExistingProposition(String proposition) {
         return propositionKey.containsKey(proposition);
     }
 
@@ -220,10 +235,10 @@ public class AigerTransformation {
         }
     }
 
-    public Integer propositionReplacer(Expression exp, Boolean isNegative){
+    public Integer propositionReplacer(Expression exp, Boolean isNegative) {
         Proposition prop = (Proposition) exp;
         if (isNegative) {
-            Integer index = (genNewName(prop.getName())+1);
+            Integer index = (genNewName(prop.getName()) + 1);
             return index;
         } else {
             Integer index = (genNewName(prop.getName()));
@@ -231,7 +246,7 @@ public class AigerTransformation {
         }
     }
 
-    private void updateProposition(Expression exp){
+    private void updateProposition(Expression exp) {
         if (exp.getClass() == Proposition.class) {
             propositionComputed.replace(((Proposition) exp).getName(), true);
         } else if (exp.getClass() == SafetyConjunction.class) {
@@ -241,27 +256,25 @@ public class AigerTransformation {
         }
     }
 
-    private List<AigerComponent> addInputLatches(){
+    private List<AigerComponent> addInputLatches() {
         ArrayList<AigerComponent> inputLatches = new ArrayList<>();
         for (String prop : propositionKey.keySet()) {
-            if (!propositionComputed.get(prop)){
-                Latch newInputLatch = new Latch(getProposition(prop),getProposition(prop),findInitialValue(prop, false));
+            if (!propositionComputed.get(prop)) {
+                Latch newInputLatch = new Latch(getProposition(prop), getProposition(prop),
+                        findInitialValue(prop, false));
                 inputLatches.add(newInputLatch);
             }
         }
         return inputLatches;
     }
 
-    public int getNumberOfVariables(){
+    public int getNumberOfVariables() {
         return propositionKey.size();
     }
 
-    private int computeAnd(Expression lhs, Expression rhs){
-        System.out.println(initalVariableValues.get(((Proposition) lhs).getName()));
-        System.out.println(initalVariableValues.get(((Proposition) rhs).getName()));
-
+    private int computeAnd(Expression lhs, Expression rhs) {
         if ((initalVariableValues.get(((Proposition) lhs).getName()) == 1) &&
-        (initalVariableValues.get(((Proposition) rhs).getName()) == 1)) {
+                (initalVariableValues.get(((Proposition) rhs).getName()) == 1)) {
             return 1;
         } else {
             return 0;
