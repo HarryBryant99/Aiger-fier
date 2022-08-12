@@ -20,15 +20,15 @@ public class main {
     public static void main(String[] args) throws IOException {
         //TODO argparse
 
-        File f = new File("ladder_logic_examples/Example2.tptp");
+        File f = new File("ladder_logic_examples/Example5.tptp");
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
 
-        File safetyFile = new File("ladder_logic_examples/Example2Safety.tptp");
+        File safetyFile = new File("ladder_logic_examples/Example5Safety.tptp");
         in = new FileInputStream(safetyFile);
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
 
-        File input = new File("ladder_logic_examples/Example2Inputs.txt");
+        File input = new File("ladder_logic_examples/Example5Inputs.txt");
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 

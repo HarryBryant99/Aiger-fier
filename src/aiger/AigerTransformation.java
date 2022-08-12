@@ -103,14 +103,19 @@ public class AigerTransformation {
 
         if (exp.getClass() == Proposition.class) {
             String rhsName = ((Proposition) exp).getName();
-            return (new Latch(lhsIndex, propositionReplacer(exp, false),
-                    findInitialValue(rhsName, false)));
+
+            if (originalInitialVariableValues.containsKey(((Proposition) equiv.getLhsOperand()).getName())) {
+                return (new Latch(lhsIndex, propositionReplacer(exp, false),
+                        findInitialValue(((Proposition) equiv.getLhsOperand()).getName(), false)));
+            } else {
+                return (new Latch(lhsIndex, propositionReplacer(exp, false),
+                        findInitialValue(rhsName, false)));
+            }
         } else if (exp.getClass() == Negation.class) {
             String rhsName = ((Proposition) ((Negation) exp).getOperand()).getName();
 
             //if lhs is in initial variables return the original
             if (originalInitialVariableValues.containsKey(((Proposition) equiv.getLhsOperand()).getName())) {
-                findInitialValue(((Proposition) equiv.getLhsOperand()).getName(), true);
                 return (new Latch(lhsIndex, propositionReplacer(((Negation) exp).getOperand(), true),
                         findInitialValue(((Proposition) equiv.getLhsOperand()).getName(), false)));
             } else {
