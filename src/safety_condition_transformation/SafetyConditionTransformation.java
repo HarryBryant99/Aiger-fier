@@ -27,24 +27,34 @@ public class SafetyConditionTransformation {
 
         targetSC.addAllExpressions(splitResult.expressions);
 
+        boolean formulaNegated;
         if (formattedSC.getClass() == Negation.class){
-            targetSC.addExpression(new Negation(splitResult.finalExpression));
+            targetSC.addExpression(splitResult.finalExpression);
+            formulaNegated = true;
         } else {
             targetSC.addExpression(splitResult.finalExpression);
+            formulaNegated = false;
         }
 
-        return getOutput(targetSC);
+        return getOutput(targetSC, formulaNegated);
     }
 
-    private SafetyCondition getOutput(SafetyCondition safetyCondition){
+    private SafetyCondition getOutput(SafetyCondition safetyCondition, boolean formulaNegated){
         int finalCondition = safetyCondition.getExpression().size();
         Expression exp = safetyCondition.getExpression().get(finalCondition-1);
-        if ((exp.getClass() == Negation.class) && (((Negation) exp).getOperand().getClass() != Proposition.class)){
-            Proposition proposition = new Proposition(((SafetyConjunction) ((Negation) exp).getOperand()).getId().getName());
-            safetyCondition.updateExpression(0,((Negation) exp).getOperand());
+//        if ((exp.getClass() == Negation.class) && (((Negation) exp).getOperand().getClass() != Proposition.class)){
+//            Proposition proposition = new Proposition(((SafetyConjunction) ((Negation) exp).getOperand()).getId().getName());
+//            safetyCondition.updateExpression(0,((Negation) exp).getOperand());
+//            safetyCondition.addExpression(new Negation(proposition));
+//        } else if (exp.getClass() == SafetyConjunction.class){
+//            Proposition proposition = new Proposition(((SafetyConjunction) exp).getId().getName());
+//            safetyCondition.addExpression(proposition);
+//        }
+
+        Proposition proposition = new Proposition(((SafetyConjunction) exp).getId().getName());
+        if (formulaNegated){
             safetyCondition.addExpression(new Negation(proposition));
-        } else if (exp.getClass() == SafetyConjunction.class){
-            Proposition proposition = new Proposition(((SafetyConjunction) exp).getId().getName());
+        } else {
             safetyCondition.addExpression(proposition);
         }
         return safetyCondition;
