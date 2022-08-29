@@ -27,19 +27,20 @@ public class SafetyConditionTransformation {
 
         targetSC.addAllExpressions(splitResult.expressions);
 
-        boolean formulaNegated;
         if (formattedSC.getClass() == Negation.class){
-            targetSC.addExpression(splitResult.finalExpression);
-            formulaNegated = true;
+            targetSC.addExpression(new Negation(splitResult.finalExpression));
         } else {
             targetSC.addExpression(splitResult.finalExpression);
-            formulaNegated = false;
         }
 
-        return getOutput(targetSC, formulaNegated);
+        if (splitResult.finalExpression.getClass() != Proposition.class) {
+            return getOutput(targetSC);
+        } else {
+            return targetSC;
+        }
     }
 
-    private SafetyCondition getOutput(SafetyCondition safetyCondition, boolean formulaNegated){
+    private SafetyCondition getOutput(SafetyCondition safetyCondition){
         int finalCondition = safetyCondition.getExpression().size();
         Expression exp = safetyCondition.getExpression().get(finalCondition-1);
 //        if ((exp.getClass() == Negation.class) && (((Negation) exp).getOperand().getClass() != Proposition.class)){
@@ -51,12 +52,18 @@ public class SafetyConditionTransformation {
 //            safetyCondition.addExpression(proposition);
 //        }
 
-        Proposition proposition = new Proposition(((SafetyConjunction) exp).getId().getName());
-        if (formulaNegated){
+        Proposition proposition;
+        if (exp.getClass() == SafetyConjunction.class) {
+            proposition = new Proposition(((SafetyConjunction) exp).getId().getName());
+            safetyCondition.addExpression(proposition);
+        } else if ((exp.getClass() == Negation.class) && (((Negation) exp).getOperand().getClass() != Proposition.class)){
+            proposition = new Proposition(((SafetyConjunction) ((Negation) exp).getOperand()).getId().getName());
+            safetyCondition.updateExpression(finalCondition-1,((Negation) exp).getOperand());
             safetyCondition.addExpression(new Negation(proposition));
         } else {
-            safetyCondition.addExpression(proposition);
+            throw new IllegalStateException("Shouldn't be processed");
         }
+
         return safetyCondition;
     }
 
