@@ -184,8 +184,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Proposition("vC"),new Proposition("sc_1")));
         expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Proposition("vC"),new Proposition("sc_1")));
         expectedSC.addExpression(new Proposition("sc_1"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -329,6 +329,33 @@ public class SafetyConditionTransformationTests {
         expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vC")),new Proposition("sc_7")));
         expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_7"),new Proposition("vD"),new Proposition("sc_8")));
         expectedSC.addExpression(new Negation(new Proposition("sc_9")));
+
+        SafetyConditionTransformation sct = new SafetyConditionTransformation();
+        assertEquals(expectedSC, sct.transform(sourceSC));
+    }
+
+    @Test
+    public void testExample5(){
+        String data = "fof(ax,axiom, (vc | (vb & ~ vd) | (va & ~ vd) | (~ va & ~ vb & vd))).";
+
+        SafetyCondition sourceSC = new SafetyCondition();
+        sourceSC.addExpression(new Disjunction(new Disjunction(new Disjunction(
+                new Proposition("vC"),
+                new Conjunction(new Proposition("vB"),new Negation(new Proposition("vD")))),
+                new Conjunction(new Proposition("vA"),new Negation(new Proposition("vD")))),
+                new Conjunction(new Conjunction(new Negation(new Proposition("vA")), new Negation(new Proposition("vB"))), new Proposition("vD")
+                )));
+
+        // TODO: Calculate real expected result
+        SafetyCondition expectedSC = new SafetyCondition();
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_3"),new Negation(new Proposition("sc_5")),new Proposition("sc_6")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vD")),new Proposition("sc_0")));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vC")),new Negation(new Proposition("sc_0")),new Proposition("sc_1")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("vA"),new Negation(new Proposition("vD")),new Proposition("sc_2")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_1"), new Negation(new Proposition("sc_2")),new Proposition("sc_3")));
+        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vB")),new Proposition("sc_4")));
+        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_4"),new Proposition("vD"),new Proposition("sc_5")));
+        expectedSC.addExpression(new Negation(new Proposition("sc_6")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
         assertEquals(expectedSC, sct.transform(sourceSC));

@@ -538,4 +538,54 @@ public class TseitinTransformationTests {
 
         System.out.println(transformed);
     }
+
+    @Test
+    public void checker(){
+        String data = "fof(ax,axiom, vD <=> ((~ vA & vB & ~ vC) | (~ vA & vB & vD) | (vA & vC & vD)))";
+
+        Ladder sourceL = new Ladder();
+        sourceL.addRung(new Rung(new Equivalence(new Proposition("vD"),
+                new Disjunction(new Disjunction(
+                        new Conjunction(new Conjunction(new Negation(new Proposition("vA")),new Proposition("vB")),new Negation(new Proposition("vC"))),
+                        new Conjunction(new Conjunction(new Negation(new Proposition("vA")),new Proposition("vB")),new Proposition("vD"))),
+                        new Conjunction(new Conjunction(new Proposition("vA"), new Proposition("vC")), new Proposition("vD"))))));
+
+        // TODO: Calculate real expected result
+        Ladder expectedL = new Ladder();
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vA"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Negation(new Proposition("gen_0")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Proposition("vB"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Conjunction(new Proposition("gen_1"),new Proposition("gen_2")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Proposition("vC"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Negation(new Proposition("gen_4")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Conjunction(new Proposition("gen_3"),new Proposition("gen_5")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_7"),new Negation(new Proposition("gen_6")))));
+
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_8"),new Proposition("vA"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_9"),new Negation(new Proposition("gen_8")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_10"),new Proposition("vB"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_11"),new Conjunction(new Proposition("gen_9"),new Proposition("gen_10")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_12"),new Proposition("vD"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_13"),new Conjunction(new Proposition("gen_11"),new Proposition("gen_12")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_14"),new Negation(new Proposition("gen_13")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_15"),new Conjunction(new Proposition("gen_7"),new Proposition("gen_14")))));
+
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_16"),new Proposition("vA"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_17"),new Proposition("vC"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_18"),new Conjunction(new Proposition("gen_16"),new Proposition("gen_17")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_19"),new Proposition("vD"))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_20"),new Conjunction(new Proposition("gen_18"),new Proposition("gen_19")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_21"),new Negation(new Proposition("gen_20")))));
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("gen_22"),new Conjunction(new Proposition("gen_15"),new Proposition("gen_21")))));
+
+        expectedL.addRung(new Rung(new Equivalence(new Proposition("vD"),new Negation(new Proposition("gen_22")))));
+
+        TseitinTransformation tt = new TseitinTransformation();
+
+        Ladder transformed = tt.transform(sourceL);
+
+        assertEquals(expectedL, transformed);
+
+        System.out.println(transformed);
+    }
 }

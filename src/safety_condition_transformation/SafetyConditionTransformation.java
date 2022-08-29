@@ -25,18 +25,20 @@ public class SafetyConditionTransformation {
 
         SafetyConditionTransformation.Result splitResult = splitExpression(formattedSC);
 
+        targetSC.addAllExpressions(splitResult.expressions);
+
         if (formattedSC.getClass() == Negation.class){
             targetSC.addExpression(new Negation(splitResult.finalExpression));
         } else {
             targetSC.addExpression(splitResult.finalExpression);
         }
-        targetSC.addAllExpressions(splitResult.expressions);
 
         return getOutput(targetSC);
     }
 
     private SafetyCondition getOutput(SafetyCondition safetyCondition){
-        Expression exp = safetyCondition.getExpression().get(0);
+        int finalCondition = safetyCondition.getExpression().size();
+        Expression exp = safetyCondition.getExpression().get(finalCondition-1);
         if ((exp.getClass() == Negation.class) && (((Negation) exp).getOperand().getClass() != Proposition.class)){
             Proposition proposition = new Proposition(((SafetyConjunction) ((Negation) exp).getOperand()).getId().getName());
             safetyCondition.updateExpression(0,((Negation) exp).getOperand());
