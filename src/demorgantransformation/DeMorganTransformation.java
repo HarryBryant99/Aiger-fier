@@ -13,6 +13,8 @@ import safety_condition_transformation.SafetyConditionTransformation;
 import tptp.Ladder;
 import tptp.Rung;
 import tptp.SafetyCondition;
+import tptp.Transition;
+import tptp.TransitionRelation;
 import tseitin_transformation.TseitinTransformation;
 
 public class DeMorganTransformation {
@@ -23,11 +25,11 @@ public class DeMorganTransformation {
         return GEN_NAME_PREFIX + newVarNextNumber++;
     }
 
-    public Ladder transform(Ladder sourceL){
-        Ladder targetL = new Ladder();
+    public TransitionRelation transform(Ladder sourceL){
+        TransitionRelation targetL = new TransitionRelation();
         for (Rung r : sourceL.getRungs()) {
             for(Equivalence equ : splitEquivalence(r.getEquivalence().cloneWithoutDisjunctions().cloneRemovingDoubleNegation())) {
-                targetL.addRung(new Rung(equ));
+                targetL.addTransition(new Transition(equ));
             }
         }
         return targetL;
@@ -39,6 +41,8 @@ public class DeMorganTransformation {
         ArrayList<Equivalence> result = new ArrayList<>();
         result.addAll(splitResult.equivalences);
         result.add(new Equivalence(equiv.getLhsOperand(), splitResult.finalExpression));
+
+
 
         return result;
     }
