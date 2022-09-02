@@ -11,6 +11,8 @@ import prop_logic.Negation;
 import prop_logic.Proposition;
 import tptp.Ladder;
 import tptp.Rung;
+import tptp.Transition;
+import tptp.TransitionRelation;
 import tseitin_transformation.TseitinTransformation;
 
 public class DeMorganTransformationTests {
@@ -23,11 +25,13 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Proposition("vB"))));
+        TransitionRelation tr = new TransitionRelation();
+
+        Transition t = new Transition(new Equivalence(new Proposition("vA"), new Proposition("vB")));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test
@@ -38,11 +42,13 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("vB")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("vB")))));
+        TransitionRelation tr = new TransitionRelation();
+
+        Transition t = new Transition(new Equivalence(new Proposition("vA"), new Negation(new Proposition("vB"))));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test

@@ -10,7 +10,7 @@ import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic.Negation;
 import prop_logic.Proposition;
-import prop_logic.SafetyConjunction;
+import prop_logic.DeMorganConjunction;
 import tptp.Ladder;
 import tptp.Rung;
 import tptp.SafetyCondition;
@@ -134,7 +134,7 @@ public class AigerTransformation {
             Integer newNameRhs = (genNewName(splitResultRhs.getName()));
 
             return new And(lhsIndex, newNameLhs, newNameRhs);
-        } else if (exp.getClass() == SafetyConjunction.class) {
+        } else if (exp.getClass() == DeMorganConjunction.class) {
             throw new IllegalStateException("SafetyConjunction found in Transitions");
         } else {
             throw new IllegalStateException("What is this sub type?");
@@ -155,8 +155,8 @@ public class AigerTransformation {
             throw new IllegalStateException("How the hell did we get this");
         } else if (exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("Regular Conjunction found in Transitions");
-        } else if (exp.getClass() == SafetyConjunction.class) {
-            SafetyConjunction con = (SafetyConjunction) exp;
+        } else if (exp.getClass() == DeMorganConjunction.class) {
+            DeMorganConjunction con = (DeMorganConjunction) exp;
 
             Proposition splitResultId = con.getId();
             Integer newNameId = (genNewName(splitResultId.getName()));
@@ -256,8 +256,8 @@ public class AigerTransformation {
     private void updateProposition(Expression exp) {
         if (exp.getClass() == Proposition.class) {
             propositionComputed.replace(((Proposition) exp).getName(), true);
-        } else if (exp.getClass() == SafetyConjunction.class) {
-            propositionComputed.replace(((SafetyConjunction) exp).getId().getName(), true);
+        } else if (exp.getClass() == DeMorganConjunction.class) {
+            propositionComputed.replace(((DeMorganConjunction) exp).getId().getName(), true);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }

@@ -2,20 +2,14 @@ package safety_condition_transformation_tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import org.junit.Test;
 import prop_logic.Conjunction;
 import prop_logic.Disjunction;
 import prop_logic.Negation;
 import prop_logic.Proposition;
-import prop_logic.SafetyConjunction;
+import prop_logic.DeMorganConjunction;
 import safety_condition_transformation.SafetyConditionTransformation;
 import tptp.SafetyCondition;
-import tptp.SafetyConditionParser;
 
 public class SafetyConditionTransformationTests {
     @Test
@@ -72,7 +66,7 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vC"), new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Proposition("vC"), new Proposition("sc_0")));
         expectedSC.addExpression(new Proposition("sc_0"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -88,7 +82,7 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")), new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")), new Proposition("sc_0")));
         expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -104,7 +98,7 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
         expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -120,7 +114,7 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
         expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -136,7 +130,7 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"), new Proposition("sc_0")));
         expectedSC.addExpression(new Negation(new Proposition("sc_0")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -152,7 +146,7 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
         expectedSC.addExpression(new Proposition("sc_0"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -168,7 +162,7 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("sc_0")));
         expectedSC.addExpression(new Proposition("sc_0"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -184,8 +178,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Proposition("vC"),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("sc_0")),new Proposition("vC"),new Proposition("sc_1")));
         expectedSC.addExpression(new Proposition("sc_1"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -201,8 +195,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("vC")),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("vC")),new Proposition("sc_1")));
         expectedSC.addExpression(new Negation(new Proposition("sc_1")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -218,8 +212,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Negation (new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_0"),new Negation(new Proposition("vC")),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation (new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_0"),new Negation(new Proposition("vC")),new Proposition("sc_1")));
         expectedSC.addExpression(new Negation(new Proposition("sc_1")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -235,8 +229,8 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_0"),new Proposition("vC"),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_0"),new Proposition("vC"),new Proposition("sc_1")));
         expectedSC.addExpression(new Proposition("sc_1"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -252,9 +246,9 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vC")),new Negation(new Proposition("vD")),new Proposition("sc_1")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("sc_1")),new Proposition("sc_2")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vC")),new Negation(new Proposition("vD")),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("sc_1")),new Proposition("sc_2")));
         expectedSC.addExpression(new Proposition("sc_2"));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -270,9 +264,9 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vC"),new Proposition("vD"),new Proposition("sc_1")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("sc_1")),new Proposition("sc_2")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vC"),new Proposition("vD"),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("sc_1")),new Proposition("sc_2")));
         expectedSC.addExpression(new Negation(new Proposition("sc_2")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -291,13 +285,13 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vD")),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vC")),new Negation(new Proposition("sc_0")),new Proposition("sc_1")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vA"),new Negation(new Proposition("vD")),new Proposition("sc_2")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_1"), new Negation(new Proposition("sc_2")),new Proposition("sc_3")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vB")),new Proposition("sc_4")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_4"), new Proposition("vD"),new Proposition("sc_5")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_3"), new Negation(new Proposition("sc_5")),new Proposition("sc_6")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Negation(new Proposition("vD")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vC")),new Negation(new Proposition("sc_0")),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vA"),new Negation(new Proposition("vD")),new Proposition("sc_2")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_1"), new Negation(new Proposition("sc_2")),new Proposition("sc_3")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vB")),new Proposition("sc_4")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_4"), new Proposition("vD"),new Proposition("sc_5")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_3"), new Negation(new Proposition("sc_5")),new Proposition("sc_6")));
         expectedSC.addExpression(new Negation(new Proposition("sc_6")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -318,16 +312,16 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vC"),new Negation(new Proposition("vD")),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vD")),new Proposition("sc_1")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("sc_1")),new Proposition("sc_2")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"), new Proposition("vC"),new Proposition("sc_3")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_2"),new Negation(new Proposition("sc_3")),new Proposition("sc_4")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vA"),new Negation(new Proposition("vB")),new Proposition("sc_5")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_4"),new Negation(new Proposition("sc_5")),new Proposition("sc_6")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vC")),new Proposition("sc_7")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_7"),new Proposition("vD"),new Proposition("sc_8")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_6"), new Negation(new Proposition("sc_8")),new Proposition("sc_9")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vC"),new Negation(new Proposition("vD")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Negation(new Proposition("vD")),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("sc_0")),new Negation(new Proposition("sc_1")),new Proposition("sc_2")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"), new Proposition("vC"),new Proposition("sc_3")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_2"),new Negation(new Proposition("sc_3")),new Proposition("sc_4")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vA"),new Negation(new Proposition("vB")),new Proposition("sc_5")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_4"),new Negation(new Proposition("sc_5")),new Proposition("sc_6")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vC")),new Proposition("sc_7")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_7"),new Proposition("vD"),new Proposition("sc_8")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_6"), new Negation(new Proposition("sc_8")),new Proposition("sc_9")));
         expectedSC.addExpression(new Negation(new Proposition("sc_9")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
@@ -348,13 +342,13 @@ public class SafetyConditionTransformationTests {
 
         // TODO: Calculate real expected result
         SafetyCondition expectedSC = new SafetyCondition();
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vB"),new Negation(new Proposition("vD")),new Proposition("sc_0")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vC")),new Negation(new Proposition("sc_0")),new Proposition("sc_1")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("vA"),new Negation(new Proposition("vD")),new Proposition("sc_2")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_1"), new Negation(new Proposition("sc_2")),new Proposition("sc_3")));
-        expectedSC.addExpression(new SafetyConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vB")),new Proposition("sc_4")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_4"),new Proposition("vD"),new Proposition("sc_5")));
-        expectedSC.addExpression(new SafetyConjunction(new Proposition("sc_3"),new Negation(new Proposition("sc_5")),new Proposition("sc_6")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vB"),new Negation(new Proposition("vD")),new Proposition("sc_0")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vC")),new Negation(new Proposition("sc_0")),new Proposition("sc_1")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("vA"),new Negation(new Proposition("vD")),new Proposition("sc_2")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_1"), new Negation(new Proposition("sc_2")),new Proposition("sc_3")));
+        expectedSC.addExpression(new DeMorganConjunction(new Negation(new Proposition("vA")),new Negation(new Proposition("vB")),new Proposition("sc_4")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_4"),new Proposition("vD"),new Proposition("sc_5")));
+        expectedSC.addExpression(new DeMorganConjunction(new Proposition("sc_3"),new Negation(new Proposition("sc_5")),new Proposition("sc_6")));
         expectedSC.addExpression(new Negation(new Proposition("sc_6")));
 
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
