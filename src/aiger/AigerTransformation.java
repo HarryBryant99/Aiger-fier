@@ -45,7 +45,7 @@ public class AigerTransformation {
                         initalVariableValues.put(prop,
                                 ((Latch) newAig).getOriginal());
 
-                        System.out.println(prop + " = " + initalVariableValues.get(prop));
+                        //System.out.println(prop + " = " + initalVariableValues.get(prop));
 
                     } else if (newAig.getClass() == And.class) {
                         initalVariableValues
@@ -56,7 +56,7 @@ public class AigerTransformation {
                                                 ((Conjunction) r.getEquivalence()
                                                         .getRhsOperand()).getRhsOperand()));
 
-                        System.out.println(prop + " = " + initalVariableValues.get(prop));
+                        //System.out.println(prop + " = " + initalVariableValues.get(prop));
                     } else {
                         throw new IllegalStateException("Ay??? What is this?");
                     }
@@ -71,9 +71,9 @@ public class AigerTransformation {
 
         targetAig.addAllComponents(addInputLatches());
 
-        System.out.println(propositionKey);
+        //System.out.println(propositionKey);
 
-        System.out.println("\n" + initalVariableValues + "\n");
+        //System.out.println("\n" + initalVariableValues + "\n");
 
         return targetAig;
     }

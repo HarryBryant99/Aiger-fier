@@ -45,6 +45,8 @@ public class main {
 
         System.out.println(tt.transform(l));
 
+        System.out.println("\n"+newAiger.getComponents()+"\n");
+
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();
         printer.writeAiger();
