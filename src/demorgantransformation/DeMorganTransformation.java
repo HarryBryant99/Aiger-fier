@@ -88,6 +88,8 @@ public class DeMorganTransformation {
             //resultEquivs.add(equivRhs);
 
             if ((isChildConjunction(con.getLhsOperand())) && (isChildConjunction(con.getRhsOperand()))) {
+                String andID = genNewName();
+
                 String newNameLhs = genNewName();
                 DeMorganConjunction equivLhs = new DeMorganConjunction(new Proposition(newNameLhs), splitResultLhs.finalExpression, new Proposition("badger"));
                 String newNameRhs = genNewName();
@@ -95,29 +97,46 @@ public class DeMorganTransformation {
                 resultEquivs.add(equivLhs);
                 resultEquivs.add(equivRhs);
 
+                DeMorganConjunction conj = new DeMorganConjunction(equivLhs.getLhsOperand(),
+                                equivRhs.getLhsOperand(), new Proposition(andID));
+
                 return new DeMorganTransformation.Result(resultEquivs,
-                        new Conjunction(equivLhs.getLhsOperand(),
-                                equivRhs.getLhsOperand()));
+                        new Proposition(andID));
             } else if ((isChildConjunction(con.getLhsOperand())) && (!isChildConjunction(con.getRhsOperand()))) {
+                String andID = genNewName();
+
                 String newNameLhs = genNewName();
                 DeMorganConjunction equivLhs = new DeMorganConjunction(new Proposition(newNameLhs), splitResultLhs.finalExpression, new Proposition("badger"));
                 resultEquivs.add(equivLhs);
 
+                DeMorganConjunction conj = new DeMorganConjunction(equivLhs.getLhsOperand(),
+                                splitResultRhs.finalExpression, new Proposition(andID));
+
+                resultEquivs.add(conj);
+
                 return new DeMorganTransformation.Result(resultEquivs,
-                        new Conjunction(equivLhs.getLhsOperand(),
-                                splitResultRhs.finalExpression));
+                        new Proposition(andID));
             } else if ((!isChildConjunction(con.getLhsOperand())) && (isChildConjunction(con.getRhsOperand()))) {
+                String andID = genNewName();
+
                 String newNameRhs = genNewName();
                 DeMorganConjunction equivRhs = new DeMorganConjunction(splitResultRhs.finalExpression, new Proposition(newNameRhs), new Proposition("badger"));
                 resultEquivs.add(equivRhs);
 
+                DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
+                        equivRhs.getLhsOperand(), new Proposition(andID));
+                resultEquivs.add(conj);
+
                 return new DeMorganTransformation.Result(resultEquivs,
-                        new Conjunction(splitResultLhs.finalExpression,
-                                equivRhs.getLhsOperand()));
+                        new Proposition(andID));
             } else {
+                String andID = genNewName();
+                DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
+                        splitResultRhs.finalExpression, new Proposition(andID));
+                resultEquivs.add(conj);
+
                 return new DeMorganTransformation.Result(resultEquivs,
-                        new Conjunction(splitResultLhs.finalExpression,
-                                splitResultRhs.finalExpression));
+                        new Proposition(andID));
             }
         } else {
             throw new IllegalStateException("What is this sub type?");
