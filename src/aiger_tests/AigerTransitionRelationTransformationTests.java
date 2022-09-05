@@ -234,19 +234,19 @@ public class AigerTransitionRelationTransformationTests {
 
         TransitionRelation sourceTR = new TransitionRelation();
 
-        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Proposition("gen_1")));
-        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_0")),new Proposition("vC"),new Proposition("gen_1")));
+        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_1")),new Proposition("vC"),new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_1")));
         sourceTR.addTransition(t);
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new And(6, 9, 11));
-        expectedAig.addComponent(new And(4, 7, 12));
+        expectedAig.addComponent(new And(4, 7, 8));
+        expectedAig.addComponent(new And(6, 11, 13));
+        expectedAig.addComponent(new Latch(10,10,0));
         expectedAig.addComponent(new Latch(8,8,0));
         expectedAig.addComponent(new Latch(12,12,0));
-        expectedAig.addComponent(new Latch(10,10,0));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -258,19 +258,19 @@ public class AigerTransitionRelationTransformationTests {
 
         TransitionRelation sourceTR = new TransitionRelation();
 
-        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_1"))));
-        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
-        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_0")),new Negation(new Proposition("vC")),new Proposition("gen_1")));
+        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_0"))));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_1")),new Negation(new Proposition("vC")),new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_1")));
         sourceTR.addTransition(t);
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,5,0));
-        expectedAig.addComponent(new And(6, 8, 10));
-        expectedAig.addComponent(new And(4, 7, 13));
+        expectedAig.addComponent(new And(4, 7, 9));
+        expectedAig.addComponent(new And(6, 10, 12));
+        expectedAig.addComponent(new Latch(10,10,0));
         expectedAig.addComponent(new Latch(8,8,0));
         expectedAig.addComponent(new Latch(12,12,0));
-        expectedAig.addComponent(new Latch(10,10,0));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -282,9 +282,9 @@ public class AigerTransitionRelationTransformationTests {
 
         TransitionRelation sourceTR = new TransitionRelation();
 
-        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_1"))));
-        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
-        t.addConjunction(new DeMorganConjunction(new Proposition("gen_0"),new Negation(new Proposition("vC")),new Proposition("gen_1")));
+        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_0"))));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_1")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("gen_1"),new Negation(new Proposition("vC")),new Proposition("gen_0")));
         sourceTR.addTransition(t);
 
         // TODO: Calculate real expected result
@@ -306,9 +306,9 @@ public class AigerTransitionRelationTransformationTests {
 
         TransitionRelation sourceTR = new TransitionRelation();
 
-        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Proposition("gen_1")));
-        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
-        t.addConjunction(new DeMorganConjunction(new Proposition("gen_0"),new Proposition("vC"),new Proposition("gen_1")));
+        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_1")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("gen_1"),new Proposition("vC"),new Proposition("gen_0")));
         sourceTR.addTransition(t);
 
         // TODO: Calculate real expected result
@@ -360,13 +360,13 @@ public class AigerTransitionRelationTransformationTests {
         TransitionRelation sourceTR = new TransitionRelation();
 
         Transition t = new Transition(new Equivalence(new Proposition("vA"), new Negation(new Proposition("gen_0"))));
-        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_1")),new Negation(new Proposition("gen_2")),new Proposition("gen_0")));
-        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_3")),new Negation(new Proposition("gen_4")),new Proposition("gen_1")));
-        t.addConjunction(new DeMorganConjunction(new Proposition("gen_5"),new Proposition("vD"),new Proposition("gen_3")));
-        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vC"),new Proposition("gen_5")));
-        t.addConjunction(new DeMorganConjunction(new Proposition("gen_6"),new Negation(new Proposition("vC")),new Proposition("gen_4")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("gen_1"),new Negation(new Proposition("gen_6")),new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_2")),new Negation(new Proposition("gen_4")),new Proposition("gen_1")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("gen_3"),new Proposition("vD"),new Proposition("gen_2")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vC"),new Proposition("gen_3")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("gen_5"),new Negation(new Proposition("vC")),new Proposition("gen_4")));
         t.addConjunction(new DeMorganConjunction(new Proposition("vA"),new Negation(new Proposition("vB")),new Proposition("gen_5")));
-        t.addConjunction(new DeMorganConjunction(new Proposition("gen_7"),new Negation(new Proposition("vD")),new Proposition("gen_2")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("gen_7"),new Proposition("vD"),new Proposition("gen_6")));
         t.addConjunction(new DeMorganConjunction(new Proposition("vA"),new Negation(new Proposition("vB")),new Proposition("gen_7")));
 
         sourceTR.addTransition(t);
@@ -374,16 +374,15 @@ public class AigerTransitionRelationTransformationTests {
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Latch(2,5,0));
-        expectedAig.addComponent(new And(4, 7, 9));
+        expectedAig.addComponent(new And(4, 6, 9));
         expectedAig.addComponent(new And(6, 11, 13));
         expectedAig.addComponent(new And(10, 14, 16));
         expectedAig.addComponent(new And(14, 18, 20));
         expectedAig.addComponent(new And(12, 22, 21));
-        expectedAig.addComponent(new And(14, 2, 19));
-        expectedAig.addComponent(new And(8, 24, 17));
+        expectedAig.addComponent(new And(22, 2, 19));
+        expectedAig.addComponent(new And(8, 24, 16));
         expectedAig.addComponent(new And(24, 2, 19));
         expectedAig.addComponent(new Latch(18,18,0));
-        expectedAig.addComponent(new Latch(22,22,0));
         expectedAig.addComponent(new Latch(20,20,0));
         expectedAig.addComponent(new Latch(16,16,0));
 
