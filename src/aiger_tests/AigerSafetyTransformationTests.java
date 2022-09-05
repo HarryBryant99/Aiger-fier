@@ -3,7 +3,7 @@ package aiger_tests;
 import static org.junit.Assert.assertEquals;
 
 import aiger.Aig;
-import aiger.AigerTransformation;
+import aiger.AigerLadderTransformation;
 import aiger.And;
 import aiger.Output;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class AigerSafetyTransformationTests {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Output(2));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -39,7 +39,7 @@ public class AigerSafetyTransformationTests {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -54,7 +54,7 @@ public class AigerSafetyTransformationTests {
         Aig expectedAig = new Aig();
         expectedAig.addComponent(new And(2,4,6));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -71,7 +71,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,4,6));
         expectedAig.addComponent(new Output(2));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -88,7 +88,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,5,7));
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -105,7 +105,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,4,6));
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -122,7 +122,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,4,6));
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -139,7 +139,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,4,6));
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -156,7 +156,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,5,7));
         expectedAig.addComponent(new Output(2));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -173,7 +173,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,4,7));
         expectedAig.addComponent(new Output(2));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -192,7 +192,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(4,9,11));
         expectedAig.addComponent(new Output(2));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -211,7 +211,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(4,8,10));
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -230,7 +230,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(4,9,11));
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -249,7 +249,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(4,8,10));
         expectedAig.addComponent(new Output(2));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -266,7 +266,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(2,5,6));
         expectedAig.addComponent(new Output(2));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 
@@ -301,7 +301,7 @@ public class AigerSafetyTransformationTests {
         expectedAig.addComponent(new And(6,28,12));
         expectedAig.addComponent(new Output(3));
 
-        AigerTransformation tt = new AigerTransformation(null);
+        AigerLadderTransformation tt = new AigerLadderTransformation(null);
         assertEquals(expectedAig, tt.convertSafetyCondition(sourceSC));
     }
 }

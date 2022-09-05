@@ -19,7 +19,7 @@ import prop_logic.Proposition;
 import tptp.Ladder;
 import tptp.Rung;
 
-public class AigerLadderTransformationTests {
+public class AigerTransitionRelationTransformationTests {
     @Test
     public void test1(){
         String data = "fof(ax,axiom, vA <=> vB)";

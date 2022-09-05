@@ -5,17 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import prop_logic.Conjunction;
+import prop_logic.DeMorganConjunction;
 import prop_logic.Disjunction;
 import prop_logic.Equivalence;
 import prop_logic.Expression;
 import prop_logic.Negation;
 import prop_logic.Proposition;
-import prop_logic.DeMorganConjunction;
 import tptp.Ladder;
 import tptp.Rung;
 import tptp.SafetyCondition;
+import tptp.Transition;
+import tptp.TransitionRelation;
 
-public class AigerTransformation {
+public class AigerTransitionRelationTransformation {
 
     private HashMap<String, Integer> propositionKey = new HashMap<String, Integer>();
     private HashMap<String, Boolean> propositionComputed = new HashMap<String, Boolean>();
@@ -23,7 +25,7 @@ public class AigerTransformation {
     final HashMap<String, Integer> originalInitialVariableValues = new HashMap<>();
     private static Integer currentIndex;
 
-    public AigerTransformation(HashMap<String, Integer> initalVariableValues) {
+    public AigerTransitionRelationTransformation(HashMap<String, Integer> initalVariableValues) {
         currentIndex = 0;
         this.initalVariableValues = initalVariableValues;
         if (initalVariableValues != null) {
@@ -31,41 +33,17 @@ public class AigerTransformation {
         }
     }
 
-    public Aig convertLadder(Ladder sourceL) {
+    public Aig convertRelation(TransitionRelation sourceT) {
         //System.out.println(initalVariableValues);
 
         Aig targetAig = new Aig();
-        for (Rung r : sourceL.getRungs()) {
-            AigerComponent newAig = splitEquivalence(r.getEquivalence());
-
-            String prop = ((Proposition) r.getEquivalence().getLhsOperand()).getName();
-            if (initalVariableValues != null) {
-                if (!initalVariableValues.containsKey(prop)) {
-                    if (newAig.getClass() == Latch.class) {
-                        initalVariableValues.put(prop,
-                                ((Latch) newAig).getOriginal());
-
-                        //System.out.println(prop + " = " + initalVariableValues.get(prop));
-
-                    } else if (newAig.getClass() == And.class) {
-                        initalVariableValues
-                                .put(((Proposition) r.getEquivalence().getLhsOperand())
-                                                .getName(),
-                                        computeAnd(((Conjunction) r.getEquivalence()
-                                                        .getRhsOperand()).getLhsOperand(),
-                                                ((Conjunction) r.getEquivalence()
-                                                        .getRhsOperand()).getRhsOperand()));
-
-                        //System.out.println(prop + " = " + initalVariableValues.get(prop));
-                    } else {
-                        throw new IllegalStateException("Ay??? What is this?");
-                    }
-                }
-            }
-            //System.out.println(initalVariableValues);
-
+        for (Transition t : sourceT.getTransitions()) {
+            AigerComponent newAig = new Latch(getIntegerForProposition(t.getEquiv().getLhsOperand()),
+                    getIntegerForProposition(t.getEquiv().getRhsOperand()),
+                    findInitialValue(((Proposition) t.getEquiv().getLhsOperand()).getName(), false));
             targetAig.addComponent(newAig);
-            updateProposition(r.getEquivalence().getLhsOperand());
+
+            targetAig.addAllComponents(convertConjunctions(t.getConjunctions()));
         }
         //System.out.println("orginal: "+originalInitialVariableValues);
 
@@ -96,49 +74,15 @@ public class AigerTransformation {
         return targetAig;
     }
 
-    private AigerComponent splitEquivalence(Equivalence equiv) {
-        Integer lhsIndex = propositionReplacer((Proposition) equiv.getLhsOperand(), false);
-
-        Expression exp = equiv.getRhsOperand();
-
-        if (exp.getClass() == Proposition.class) {
-            String rhsName = ((Proposition) exp).getName();
-
-            if (originalInitialVariableValues.containsKey(((Proposition) equiv.getLhsOperand()).getName())) {
-                return (new Latch(lhsIndex, propositionReplacer(exp, false),
-                        findInitialValue(((Proposition) equiv.getLhsOperand()).getName(), false)));
-            } else {
-                return (new Latch(lhsIndex, propositionReplacer(exp, false),
-                        findInitialValue(rhsName, false)));
-            }
-        } else if (exp.getClass() == Negation.class) {
-            String rhsName = ((Proposition) ((Negation) exp).getOperand()).getName();
-
-            //if lhs is in initial variables return the original
-            if (originalInitialVariableValues.containsKey(((Proposition) equiv.getLhsOperand()).getName())) {
-                return (new Latch(lhsIndex, propositionReplacer(((Negation) exp).getOperand(), true),
-                        findInitialValue(((Proposition) equiv.getLhsOperand()).getName(), false)));
-            } else {
-                return (new Latch(lhsIndex, propositionReplacer(((Negation) exp).getOperand(), true),
-                    findInitialValue(rhsName, true)));
-            }
-        } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
-            throw new IllegalStateException("How the hell did we get this");
-        } else if (exp.getClass() == Conjunction.class) {
-            Conjunction con = (Conjunction) exp;
-
-            Proposition splitResultLhs = (Proposition) con.getLhsOperand();
-            Integer newNameLhs = (genNewName(splitResultLhs.getName()));
-
-            Proposition splitResultRhs = (Proposition) con.getRhsOperand();
-            Integer newNameRhs = (genNewName(splitResultRhs.getName()));
-
-            return new And(lhsIndex, newNameLhs, newNameRhs);
-        } else if (exp.getClass() == DeMorganConjunction.class) {
-            throw new IllegalStateException("SafetyConjunction found in Transitions");
-        } else {
-            throw new IllegalStateException("What is this sub type?");
+    private List<AigerComponent> convertConjunctions(ArrayList<DeMorganConjunction> conjunctions) {
+        ArrayList<AigerComponent> components = null;
+        for (DeMorganConjunction d:conjunctions) {
+            And newAnd = new And(findInitialValue(d.getId().getName(), false),
+                    findInitialValue(((Proposition) d.getLhsOperand()).getName(), false),
+                    findInitialValue(((Proposition) d.getRhsOperand()).getName(), false));
+            components.add(newAnd);
         }
+        return components;
     }
 
     private AigerComponent splitExpression(Expression exp) {

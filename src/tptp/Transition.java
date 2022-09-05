@@ -19,6 +19,14 @@ public class Transition {
     public Transition() {
     }
 
+    public void setEquiv(Equivalence equiv) {
+        this.equiv = equiv;
+    }
+
+    public void setConjunctions(ArrayList<DeMorganConjunction> conjunctions) {
+        this.conjunctions = conjunctions;
+    }
+
     public void addConjunction(DeMorganConjunction newConjunction){
         Objects.nonNull(newConjunction);
         conjunctions.add(newConjunction);

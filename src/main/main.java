@@ -1,9 +1,8 @@
 package main;
 
 import aiger.Aig;
-import aiger.AigerTransformation;
+import aiger.AigerLadderTransformation;
 import aiger.InputPropositions;
-import aiger.Output;
 import aiger.PrintAiger;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +33,7 @@ public class main {
 
         TseitinTransformation tt = new TseitinTransformation();
         SafetyConditionTransformation sct = new SafetyConditionTransformation();
-        AigerTransformation aig = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation aig = new AigerLadderTransformation(iv.getHashMap());
 
         System.out.println(iv.getHashMap());
 

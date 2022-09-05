@@ -3,7 +3,7 @@ package aiger_tests;
 import static org.junit.Assert.assertEquals;
 
 import aiger.Aig;
-import aiger.AigerTransformation;
+import aiger.AigerLadderTransformation;
 import aiger.And;
 import aiger.InputPropositions;
 import aiger.Latch;
@@ -36,7 +36,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(2,4,1));
         expectedAig.addComponent(new Latch(4,4,1));
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
@@ -56,7 +56,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(2,4,0));
         expectedAig.addComponent(new Latch(4,4,0));
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
@@ -78,7 +78,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(6,3,0));
         expectedAig.addComponent(new Latch(4,4,1));
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
@@ -103,7 +103,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(8,8,1));
 
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
@@ -128,7 +128,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(4,4,1));
         expectedAig.addComponent(new Latch(8,8,0));
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
@@ -159,7 +159,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(4,4,1));
         expectedAig.addComponent(new Latch(10,10,0));
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
@@ -187,7 +187,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(4, 4, 1));
         expectedAig.addComponent(new Latch(8, 8, 0));
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
@@ -217,7 +217,7 @@ public class InputPropostionsTest {
         expectedAig.addComponent(new Latch(4, 4, 1));
         expectedAig.addComponent(new Latch(8, 8, 0));
 
-        AigerTransformation tt = new AigerTransformation(iv.getHashMap());
+        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 }
