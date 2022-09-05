@@ -9,6 +9,7 @@ import prop_logic.Expression;
 import prop_logic.Negation;
 import prop_logic.Proposition;
 import prop_logic.DeMorganConjunction;
+import safety_condition_transformation.SafetyConditionTransformation;
 import tptp.Ladder;
 import tptp.Rung;
 import tptp.Transition;
@@ -73,21 +74,24 @@ public class DeMorganTransformation {
 
             Conjunction con = (Conjunction) exp;
 
-            DeMorganTransformation.Result splitResultLhs = splitExpression(con.getLhsOperand());
-            //String newNameLhs = genNewName();
-            //Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs.finalExpression);
-
-            DeMorganTransformation.Result splitResultRhs = splitExpression(con.getRhsOperand());
-            //String newNameRhs = genNewName();
-            //Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs.finalExpression);
-
+//            DeMorganTransformation.Result splitResultLhs = splitExpression(con.getLhsOperand());
+//            //String newNameLhs = genNewName();
+//            //Equivalence equivLhs = new Equivalence(new Proposition(newNameLhs), splitResultLhs.finalExpression);
+//
+//            DeMorganTransformation.Result splitResultRhs = splitExpression(con.getRhsOperand());
+//            //String newNameRhs = genNewName();
+//            //Equivalence equivRhs = new Equivalence(new Proposition(newNameRhs), splitResultRhs.finalExpression);
+//
             ArrayList<DeMorganConjunction> resultEquivs = new ArrayList<>();
-            resultEquivs.addAll(splitResultLhs.equivalences);
-            //resultEquivs.add(equivLhs);
-            resultEquivs.addAll(splitResultRhs.equivalences);
-            //resultEquivs.add(equivRhs);
+//            resultEquivs.addAll(splitResultLhs.equivalences);
+//            //resultEquivs.add(equivLhs);
+//            resultEquivs.addAll(splitResultRhs.equivalences);
+//            //resultEquivs.add(equivRhs);
 
             if ((isChildConjunction(con.getLhsOperand())) && (isChildConjunction(con.getRhsOperand()))) {
+                DeMorganTransformation.Result splitResultLhs = splitExpression(con.getLhsOperand());
+                DeMorganTransformation.Result splitResultRhs = splitExpression(con.getRhsOperand());
+
                 String andID = genNewName();
 
                 String newNameLhs = genNewName();
@@ -100,16 +104,19 @@ public class DeMorganTransformation {
                 DeMorganConjunction conj = new DeMorganConjunction(equivLhs.getLhsOperand(),
                                 equivRhs.getLhsOperand(), new Proposition(andID));
 
+                resultEquivs.add(conj);
+
                 return new DeMorganTransformation.Result(resultEquivs,
                         new Proposition(andID));
             } else if ((isChildConjunction(con.getLhsOperand())) && (!isChildConjunction(con.getRhsOperand()))) {
+                DeMorganTransformation.Result splitResultLhs = splitExpression(con.getLhsOperand());
+                DeMorganTransformation.Result splitResultRhs = splitExpression(con.getRhsOperand());
+
                 String andID = genNewName();
 
-                String newNameLhs = genNewName();
-                DeMorganConjunction equivLhs = new DeMorganConjunction(new Proposition(newNameLhs), splitResultLhs.finalExpression, new Proposition("badger"));
-                resultEquivs.add(equivLhs);
+                resultEquivs.addAll(splitResultLhs.equivalences);
 
-                DeMorganConjunction conj = new DeMorganConjunction(equivLhs.getLhsOperand(),
+                DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
                                 splitResultRhs.finalExpression, new Proposition(andID));
 
                 resultEquivs.add(conj);
@@ -117,19 +124,24 @@ public class DeMorganTransformation {
                 return new DeMorganTransformation.Result(resultEquivs,
                         new Proposition(andID));
             } else if ((!isChildConjunction(con.getLhsOperand())) && (isChildConjunction(con.getRhsOperand()))) {
+                DeMorganTransformation.Result splitResultLhs = splitExpression(con.getLhsOperand());
+                DeMorganTransformation.Result splitResultRhs = splitExpression(con.getRhsOperand());
+
                 String andID = genNewName();
 
-                String newNameRhs = genNewName();
-                DeMorganConjunction equivRhs = new DeMorganConjunction(splitResultRhs.finalExpression, new Proposition(newNameRhs), new Proposition("badger"));
-                resultEquivs.add(equivRhs);
+                resultEquivs.addAll(splitResultRhs.equivalences);
 
                 DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
-                        equivRhs.getLhsOperand(), new Proposition(andID));
+                        splitResultRhs.finalExpression, new Proposition(andID));
+
                 resultEquivs.add(conj);
 
                 return new DeMorganTransformation.Result(resultEquivs,
                         new Proposition(andID));
             } else {
+                DeMorganTransformation.Result splitResultLhs = splitExpression(con.getLhsOperand());
+                DeMorganTransformation.Result splitResultRhs = splitExpression(con.getRhsOperand());
+
                 String andID = genNewName();
                 DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
                         splitResultRhs.finalExpression, new Proposition(andID));

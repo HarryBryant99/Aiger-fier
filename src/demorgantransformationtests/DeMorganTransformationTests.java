@@ -112,11 +112,14 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Disjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Conjunction(new Proposition("vB"), new Proposition("vE"))))));
+        TransitionRelation tr = new TransitionRelation();
+
+        Transition t = new Transition(new Equivalence(new Proposition("vA"), new Negation(new Proposition("gen_0"))));
+        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test
@@ -127,11 +130,14 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("vB"),new Proposition("vE")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("vB"),new Proposition("vE")))));
+        TransitionRelation tr = new TransitionRelation();
+
+        Transition t = new Transition(new Equivalence(new Proposition("vA"), new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test
@@ -142,11 +148,14 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Conjunction(new Proposition("vB"),new Proposition("vE"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Conjunction(new Proposition("vB"),new Proposition("vE"))))));
+        TransitionRelation tr = new TransitionRelation();
+
+        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_0"))));
+        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Proposition("vE"),new Proposition("gen_0")));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test
@@ -157,12 +166,14 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Proposition("vB"),new Proposition("vE"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE"))))));
+        TransitionRelation tr = new TransitionRelation();
 
+        Transition t = new Transition(new Equivalence(new Proposition("vA"), new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test
@@ -173,11 +184,14 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Disjunction(new Negation(new Proposition("vB")),new Proposition("vE"))))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Proposition("vB"),new Negation(new Proposition("vE"))))));
+        TransitionRelation tr = new TransitionRelation();
+
+        Transition t = new Transition(new Equivalence(new Proposition("vA"), new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Proposition("vB"),new Negation(new Proposition("vE")),new Proposition("gen_0")));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test
@@ -188,11 +202,15 @@ public class DeMorganTransformationTests {
         sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Disjunction(new Proposition("vB"),new Proposition("vE")),new Proposition("vC")))));
 
         // TODO: Calculate real expected result
-        Ladder expectedL = new Ladder();
-        expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Conjunction(new Negation(new Conjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")))),new Proposition("vc")))));
+        TransitionRelation tr = new TransitionRelation();
+
+        Transition t = new Transition(new Equivalence(new Proposition("vA"),new Proposition("gen_1")));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("vB")),new Negation(new Proposition("vE")),new Proposition("gen_0")));
+        t.addConjunction(new DeMorganConjunction(new Negation(new Proposition("gen_0")),new Proposition("vC"),new Proposition("gen_1")));
+        tr.addTransition(t);
 
         DeMorganTransformation dmt = new DeMorganTransformation();
-        assertEquals(expectedL, dmt.transform(sourceL));
+        assertEquals(tr, dmt.transform(sourceL));
     }
 
     @Test
