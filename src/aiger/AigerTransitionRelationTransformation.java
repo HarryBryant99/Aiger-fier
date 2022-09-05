@@ -43,13 +43,17 @@ public class AigerTransitionRelationTransformation {
                     findInitialValue(((Proposition) t.getEquiv().getLhsOperand()).getName(), false));
             targetAig.addComponent(newAig);
 
-            targetAig.addAllComponents(convertConjunctions(t.getConjunctions()));
+            propositionComputed.put(((Proposition) t.getEquiv().getLhsOperand()).getName(), true);
+
+            if (t.getConjunctions().size() != 0) {
+                targetAig.addAllComponents(convertConjunctions(t.getConjunctions()));
+            }
         }
         //System.out.println("orginal: "+originalInitialVariableValues);
 
         targetAig.addAllComponents(addInputLatches());
 
-        //System.out.println(propositionKey);
+        System.out.println(propositionKey);
 
         //System.out.println("\n" + initalVariableValues + "\n");
 
@@ -75,12 +79,14 @@ public class AigerTransitionRelationTransformation {
     }
 
     private List<AigerComponent> convertConjunctions(ArrayList<DeMorganConjunction> conjunctions) {
-        ArrayList<AigerComponent> components = null;
+        ArrayList<AigerComponent> components = new ArrayList<>();
         for (DeMorganConjunction d:conjunctions) {
-            And newAnd = new And(findInitialValue(d.getId().getName(), false),
-                    findInitialValue(((Proposition) d.getLhsOperand()).getName(), false),
-                    findInitialValue(((Proposition) d.getRhsOperand()).getName(), false));
+            And newAnd = new And(getIntegerForProposition(d.getId()),
+                    getIntegerForProposition(d.getLhsOperand()),
+                    getIntegerForProposition(d.getRhsOperand()));
             components.add(newAnd);
+
+            propositionComputed.put(d.getId().getName(), true);
         }
         return components;
     }
