@@ -354,7 +354,7 @@ public class AigerTransitionRelationTransformationTests {
     }
 
     @Test
-    public void test19(){
+    public void test19() throws FileNotFoundException {
         String data = "fof(ax,axiom, vA <=> ((vB & vC & vD) | (vA & ~ vB & ~ vC) | (vA & ~ vB & vD)))";
 
         TransitionRelation sourceTR = new TransitionRelation();
@@ -373,7 +373,7 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new Latch(2,5,0));
+        expectedAig.addComponent(new Latch(2,5,1));
         expectedAig.addComponent(new And(4, 6, 9));
         expectedAig.addComponent(new And(6, 11, 13));
         expectedAig.addComponent(new And(10, 14, 16));
@@ -382,11 +382,15 @@ public class AigerTransitionRelationTransformationTests {
         expectedAig.addComponent(new And(22, 2, 19));
         expectedAig.addComponent(new And(8, 24, 16));
         expectedAig.addComponent(new And(24, 2, 19));
-        expectedAig.addComponent(new Latch(18,18,0));
-        expectedAig.addComponent(new Latch(20,20,0));
-        expectedAig.addComponent(new Latch(16,16,0));
+        expectedAig.addComponent(new Latch(18,18,1));
+        expectedAig.addComponent(new Latch(20,20,1));
+        expectedAig.addComponent(new Latch(16,16,1));
 
-        AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
+        File input = new File("ladder_logic_examples/ExampleInputs.txt");
+        InputStream in = new FileInputStream(input);
+        InputPropositions iv = new InputPropositions(in);
+
+        AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
     }
 

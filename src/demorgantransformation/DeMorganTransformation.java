@@ -102,10 +102,10 @@ public class DeMorganTransformation {
                 DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
                         splitResultRhs.finalExpression, new Proposition(andID));
 
-                resultEquivs.add(conj);
-
                 resultEquivs.addAll(splitResultLhs.equivalences);
                 resultEquivs.addAll(splitResultRhs.equivalences);
+                resultEquivs.add(conj);
+
 
                 return new DeMorganTransformation.Result(resultEquivs,
                         new Proposition(andID));
@@ -118,9 +118,9 @@ public class DeMorganTransformation {
                 DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
                                 splitResultRhs.finalExpression, new Proposition(andID));
 
+                resultEquivs.addAll(splitResultLhs.equivalences);
                 resultEquivs.add(conj);
 
-                resultEquivs.addAll(splitResultLhs.equivalences);
 
                 return new DeMorganTransformation.Result(resultEquivs,
                         new Proposition(andID));
@@ -133,9 +133,9 @@ public class DeMorganTransformation {
                 DeMorganConjunction conj = new DeMorganConjunction(splitResultLhs.finalExpression,
                         splitResultRhs.finalExpression, new Proposition(andID));
 
+                resultEquivs.addAll(splitResultRhs.equivalences);
                 resultEquivs.add(conj);
 
-                resultEquivs.addAll(splitResultRhs.equivalences);
 
                 return new DeMorganTransformation.Result(resultEquivs,
                         new Proposition(andID));

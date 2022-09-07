@@ -31,6 +31,12 @@ public class AigerTransitionRelationTransformation {
         if (initalVariableValues != null) {
             originalInitialVariableValues.putAll(initalVariableValues);
         }
+
+//        propositionKey.put("va", 2);
+//        propositionKey.put("vb", 4);
+//        propositionKey.put("vc", 6);
+//        propositionKey.put("vd", 8);
+//        currentIndex = 8;
     }
 
     public Aig convertRelation(TransitionRelation sourceT) {
@@ -38,16 +44,16 @@ public class AigerTransitionRelationTransformation {
 
         Aig targetAig = new Aig();
         for (Transition t : sourceT.getTransitions()) {
+            if (t.getConjunctions().size() != 0) {
+                targetAig.addAllComponents(convertConjunctions(t.getConjunctions()));
+            }
+
             AigerComponent newAig = new Latch(getIntegerForProposition(t.getEquiv().getLhsOperand()),
                     getIntegerForProposition(t.getEquiv().getRhsOperand()),
                     findInitialValue(((Proposition) t.getEquiv().getLhsOperand()).getName(), false));
             targetAig.addComponent(newAig);
 
             propositionComputed.put(((Proposition) t.getEquiv().getLhsOperand()).getName(), true);
-
-            if (t.getConjunctions().size() != 0) {
-                targetAig.addAllComponents(convertConjunctions(t.getConjunctions()));
-            }
         }
         //System.out.println("orginal: "+originalInitialVariableValues);
 

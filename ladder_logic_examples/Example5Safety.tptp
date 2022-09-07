@@ -1,1 +1,1 @@
-fof(ax,axiom, (vc | (vb & ~ vd) | (va & ~ vd) | (~ va & ~ vb & vd))).
+fof(ax,axiom, (vc | (~ va & vb) | (va & ~ vd))).
