@@ -38,6 +38,8 @@ public class InputPropostionsTest {
 
         AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
         assertEquals(expectedAig, tt.convertLadder(sourceL));
+
+        System.out.println(iv.getHashMap());
     }
 
     @Test

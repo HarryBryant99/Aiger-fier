@@ -17,6 +17,7 @@ public class ParserTests {
         Expression e = Parser.parse("va");
         Expression expected = new Proposition("va");
         assertEquals(expected, e);
+        System.out.println(e);
     }
 
     @Test
@@ -24,6 +25,7 @@ public class ParserTests {
         Expression e = Parser.parse("~va");
         Expression expected = new Negation(new Proposition("va"));
         assertEquals(expected, e);
+        System.out.println(e);
     }
 
     @Test
@@ -82,5 +84,11 @@ public class ParserTests {
         assertEquals(expected, e);
     }
 
+    @Test
+    public void canParseComplexExpression2(){
+        Expression e = Parser.parse("(vx <=> (~vx & vy))");
+        Expression expected = new Equivalence(new Proposition("va"), new Conjunction(new Negation(new Proposition("vx")), new Proposition("vy")));
+        assertEquals(expected, e);
+    }
 
 }

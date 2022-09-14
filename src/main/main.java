@@ -21,15 +21,15 @@ public class main {
     public static void main(String[] args) throws IOException {
         //TODO argparse
 
-        File f = new File("ladder_logic_examples/Example5.tptp");
+        File f = new File("ladder_logic_examples/Example1.tptp");
         InputStream in = new FileInputStream(f);
         Ladder l = LadderParser.parseLadder(in);
 
-        File safetyFile = new File("ladder_logic_examples/Example5Safety.tptp");
+        File safetyFile = new File("ladder_logic_examples/Example1Safety.tptp");
         in = new FileInputStream(safetyFile);
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
 
-        File input = new File("ladder_logic_examples/Example5Inputs.txt");
+        File input = new File("ladder_logic_examples/Example1Inputs.txt");
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 
@@ -39,7 +39,7 @@ public class main {
         //AigerLadderTransformation aig = new AigerLadderTransformation(iv.getHashMap());
         AigerTransitionRelationTransformation aig = new AigerTransitionRelationTransformation(iv.getHashMap());
 
-        System.out.println(iv.getHashMap());
+        //System.out.println(iv.getHashMap());
 
         //Aig newAiger = aig.convertLadder(tt.transform(l));
         Aig newAiger = aig.convertRelation(dmt.transform(l));
@@ -49,7 +49,7 @@ public class main {
 
         //System.out.println(tt.transform(l));
 
-        System.out.println("\n"+newAiger.getComponents()+"\n");
+        //System.out.println("\n"+newAiger.getComponents()+"\n");
 
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();

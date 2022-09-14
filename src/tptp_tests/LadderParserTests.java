@@ -32,5 +32,7 @@ public class LadderParserTests {
         Ladder l = LadderParser.parseLadder(in);
 
         assertEquals(el, l);
+
+        System.out.println(l);
     }
 }

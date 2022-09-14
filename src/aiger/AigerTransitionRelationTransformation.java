@@ -30,8 +30,12 @@ public class AigerTransitionRelationTransformation {
         this.initalVariableValues = initalVariableValues;
         if (initalVariableValues != null) {
             originalInitialVariableValues.putAll(initalVariableValues);
-        }
 
+
+            for (String prop : initalVariableValues.keySet()) {
+                propositionKey.put(prop, currentIndex += 2);
+            }
+        }
 //        propositionKey.put("va", 2);
 //        propositionKey.put("vb", 4);
 //        propositionKey.put("vc", 6);
@@ -57,9 +61,11 @@ public class AigerTransitionRelationTransformation {
         }
         //System.out.println("orginal: "+originalInitialVariableValues);
 
+        //System.out.println(propositionComputed);
+
         targetAig.addAllComponents(addInputLatches());
 
-        System.out.println(propositionKey);
+        //AigSystem.out.println(propositionKey);
 
         //System.out.println("\n" + initalVariableValues + "\n");
 
@@ -93,6 +99,10 @@ public class AigerTransitionRelationTransformation {
             components.add(newAnd);
 
             propositionComputed.put(d.getId().getName(), true);
+            
+            checkIfExistingProposition(d.getLhsOperand());
+
+            checkIfExistingProposition(d.getRhsOperand());
         }
         return components;
     }
@@ -241,6 +251,18 @@ public class AigerTransitionRelationTransformation {
             return 1;
         } else {
             return 0;
+        }
+    }
+
+    private void checkIfExistingProposition(Expression operand){
+        if (operand.getClass() == Proposition.class) {
+            if (!propositionComputed.containsKey(((Proposition) operand).getName())) {
+                propositionComputed.put(((Proposition) operand).getName(), false);
+            }
+        } else if (operand.getClass() == Negation.class) {
+            checkIfExistingProposition(((Negation) operand).getOperand());
+        } else {
+            throw new IllegalStateException("ay");
         }
     }
 }

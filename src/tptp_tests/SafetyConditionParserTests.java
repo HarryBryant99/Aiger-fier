@@ -31,6 +31,8 @@ public class SafetyConditionParserTests {
         SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
 
         assertEquals(esc, sc);
+
+        System.out.println(sc);
     }
 
     @Test
