@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import safety_condition_transformation.SafetyConditionTransformation;
 import tptp.Ladder;
 import tptp.LadderParser;
@@ -18,7 +19,7 @@ import tptp.SafetyConditionParser;
 import tseitin_transformation.TseitinTransformation;
 
 public class main {
-    public static void main(String[] args) throws IOException {
+    public static void mainOld(String[] args) throws IOException {
         //TODO argparse
 
         File f = new File("ladder_logic_examples/Example1.tptp");
@@ -56,5 +57,58 @@ public class main {
         printer.writeAiger();
 
         System.out.println("\nNumber of variables: " + aig.getNumberOfVariables());
+    }
+
+    public static void main(String[] args) throws IOException {
+        //TODO argparse
+        String ladder = args[0];
+        String initial = args[1];
+
+        File f = new File(ladder);
+        InputStream in = new FileInputStream(f);
+        Ladder l = LadderParser.parseLadder(in);
+
+        File input = new File(initial);
+        in = new FileInputStream(input);
+        InputPropositions iv = new InputPropositions(in);
+
+        File folder = new File(args[2]);
+        ArrayList<String> safetyProperties = listFilesForFolder(folder);
+
+        for (String p:safetyProperties) {
+            File safetyFile = new File(args[2] + "\\" + p);
+            in = new FileInputStream(safetyFile);
+            SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
+
+
+            System.out.println(filename(ladder, p));
+        }
+    }
+
+    public static ArrayList<String> listFilesForFolder(final File folder) {
+        ArrayList<String> files = new ArrayList<>();
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                listFilesForFolder(fileEntry);
+            } else {
+                //System.out.println(fileEntry.getName());
+                files.add(fileEntry.getName());
+            }
+        }
+        return files;
+    }
+
+    private static String filename(String ladder, String p){
+        String ladderFormatted = "";
+        String safetyFormatted = p.substring(0, p.length()-5);
+
+        for (int i = ladder.length()-1; i > 0; i--) {
+            if (ladder.charAt(i) == '\\') {
+                ladderFormatted = ladder.substring(i+1, ladder.length()-5);
+                break;
+            }
+        }
+
+        return ladderFormatted + "_" + safetyFormatted + ".aag";
     }
 }
