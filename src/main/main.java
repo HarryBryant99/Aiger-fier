@@ -54,7 +54,7 @@ public class main {
 
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();
-        printer.writeAiger();
+        printer.writeAiger("aiger.aag");
 
         System.out.println("\nNumber of variables: " + aig.getNumberOfVariables());
     }
@@ -72,14 +72,29 @@ public class main {
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 
+        DeMorganTransformation dmt = new DeMorganTransformation();
+        AigerTransitionRelationTransformation aig = new AigerTransitionRelationTransformation(iv.getHashMap());
+        Aig transitions = aig.convertRelation(dmt.transform(l));
+
         File folder = new File(args[2]);
         ArrayList<String> safetyProperties = listFilesForFolder(folder);
+
+        Aig newAiger = new Aig();
 
         for (String p:safetyProperties) {
             File safetyFile = new File(args[2] + "\\" + p);
             in = new FileInputStream(safetyFile);
             SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
 
+            SafetyConditionTransformation sct = new SafetyConditionTransformation();
+            Aig scAiger = aig.convertSafetyCondition(sct.transform(sc));
+
+            newAiger.addAllComponents(transitions.getComponents());
+            newAiger.addAllComponents(scAiger.getComponents());
+
+            PrintAiger printer = new PrintAiger(newAiger);
+            printer.printAig();
+            printer.writeAiger(filename(ladder, p));
 
             System.out.println(filename(ladder, p));
         }

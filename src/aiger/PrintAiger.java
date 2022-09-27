@@ -81,13 +81,13 @@ public class PrintAiger {
         return Objects.hash(aig, latches, output, ands);
     }
 
-    public void writeAiger() throws IOException {
-        File yourFile = new File("aiger.aag");
+    public void writeAiger(String filename) throws IOException {
+        File yourFile = new File(filename);
         yourFile.createNewFile(); // if file already exists will do nothing
         FileOutputStream oFile = new FileOutputStream(yourFile, false);
 
         try {
-            java.io.FileWriter fileWriter = new java.io.FileWriter("aiger.aag");
+            java.io.FileWriter fileWriter = new java.io.FileWriter(filename);
 
             fileWriter.write("aag " + getVars() + " 0 " + latches.size() + " 0 " + ands.size() + " 1\n");
 
