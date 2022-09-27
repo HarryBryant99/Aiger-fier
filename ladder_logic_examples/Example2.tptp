@@ -1,3 +1,0 @@
-fof(ax,axiom, vA <=> vA).
-fof(ax,axiom, vB <=> (vA & vC) & (~vA & vB)).
-fof(ax,axiom, vC <=> (~vA | vB)).

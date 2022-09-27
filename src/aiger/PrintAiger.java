@@ -84,20 +84,29 @@ public class PrintAiger {
     }
 
     public void writeAiger(String folder, String filename) throws IOException {
-        String path = "outputs/" + folder;
+        String dir = System.getProperty("user.dir");
+        if (dir.contains("\\src")){
+            dir = dir.substring(0,dir.length()-4);
+        }
+        String path = dir + "\\outputs\\" + folder;
+
+        //System.out.println(path);
+
         File pathAsFile = new File(path);
 
         if (!Files.exists(Paths.get(path))) {
             pathAsFile.mkdir();
         }
 
-        File yourFile = new File("outputs/" + folder + "/" + filename);
+        File yourFile = new File(path + "\\" + filename);
+
+        System.out.println(yourFile);
 
         yourFile.createNewFile(); // if file already exists will do nothing
         FileOutputStream oFile = new FileOutputStream(yourFile, false);
 
         try {
-            java.io.FileWriter fileWriter = new java.io.FileWriter("outputs/" + folder + "/" + filename);
+            java.io.FileWriter fileWriter = new java.io.FileWriter(path + "\\" + filename);
 
             System.out.println("\n" + filename + "\n");
 
@@ -107,10 +116,10 @@ public class PrintAiger {
                 fileWriter.write(l.print() + "\n");
             }
 
-            fileWriter.write(output.print());
+            fileWriter.write(output.print() + "\n");
 
             for (And a: ands) {
-                fileWriter.write("\n" + a.print());
+                fileWriter.write(a.print() + "\n");
             }
 
             fileWriter.close(); //Closes the fileWriter
