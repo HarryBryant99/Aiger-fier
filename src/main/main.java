@@ -54,7 +54,7 @@ public class main {
 
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();
-        printer.writeAiger("aiger.aag");
+        printer.writeAiger("newAiger", "aiger.aag");
 
         System.out.println("\nNumber of variables: " + aig.getNumberOfVariables());
     }
@@ -79,8 +79,6 @@ public class main {
         File folder = new File(args[2]);
         ArrayList<String> safetyProperties = listFilesForFolder(folder);
 
-        Aig newAiger = new Aig();
-
         for (String p:safetyProperties) {
             File safetyFile = new File(args[2] + "\\" + p);
             in = new FileInputStream(safetyFile);
@@ -89,14 +87,16 @@ public class main {
             SafetyConditionTransformation sct = new SafetyConditionTransformation();
             Aig scAiger = aig.convertSafetyCondition(sct.transform(sc));
 
+            Aig newAiger = new Aig();
             newAiger.addAllComponents(transitions.getComponents());
             newAiger.addAllComponents(scAiger.getComponents());
 
             PrintAiger printer = new PrintAiger(newAiger);
             printer.printAig();
-            printer.writeAiger(filename(ladder, p));
 
-            System.out.println(filename(ladder, p));
+            String ladderFormatted = nameOfLadder(ladder);
+
+            printer.writeAiger(ladderFormatted, filename(ladderFormatted, p));
         }
     }
 
@@ -114,8 +114,12 @@ public class main {
     }
 
     private static String filename(String ladder, String p){
-        String ladderFormatted = "";
         String safetyFormatted = p.substring(0, p.length()-5);
+        return ladder + "_" + safetyFormatted + ".aag";
+    }
+
+    private static String nameOfLadder(String ladder){
+        String ladderFormatted = "";
 
         for (int i = ladder.length()-1; i > 0; i--) {
             if (ladder.charAt(i) == '\\') {
@@ -124,6 +128,6 @@ public class main {
             }
         }
 
-        return ladderFormatted + "_" + safetyFormatted + ".aag";
+        return ladderFormatted;
     }
 }

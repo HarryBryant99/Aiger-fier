@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -81,13 +83,23 @@ public class PrintAiger {
         return Objects.hash(aig, latches, output, ands);
     }
 
-    public void writeAiger(String filename) throws IOException {
-        File yourFile = new File(filename);
+    public void writeAiger(String folder, String filename) throws IOException {
+        String path = "outputs/" + folder;
+        File pathAsFile = new File(path);
+
+        if (!Files.exists(Paths.get(path))) {
+            pathAsFile.mkdir();
+        }
+
+        File yourFile = new File("outputs/" + folder + "/" + filename);
+
         yourFile.createNewFile(); // if file already exists will do nothing
         FileOutputStream oFile = new FileOutputStream(yourFile, false);
 
         try {
-            java.io.FileWriter fileWriter = new java.io.FileWriter(filename);
+            java.io.FileWriter fileWriter = new java.io.FileWriter("outputs/" + folder + "/" + filename);
+
+            System.out.println("\n" + filename + "\n");
 
             fileWriter.write("aag " + getVars() + " 0 " + latches.size() + " 0 " + ands.size() + " 1\n");
 
