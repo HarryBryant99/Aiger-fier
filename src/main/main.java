@@ -82,6 +82,9 @@ public class main {
         for (String p:safetyProperties) {
             File safetyFile = new File(args[2] + "\\" + p);
             in = new FileInputStream(safetyFile);
+
+            //System.out.println(p);
+
             SafetyCondition sc = SafetyConditionParser.parseSafetyCondition(in);
 
             SafetyConditionTransformation sct = new SafetyConditionTransformation();

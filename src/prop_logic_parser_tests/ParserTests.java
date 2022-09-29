@@ -85,6 +85,13 @@ public class ParserTests {
     }
 
     @Test
+    public void canParseVariableInLochNess2(){
+        Expression e = Parser.parse("vNUA__C_S110_2");
+        Expression expected = new Proposition("vNUA__C_S110");
+        assertEquals(expected, e);
+    }
+
+    @Test
     public void canParseComplexExpression2(){
         Expression e = Parser.parse("(vx <=> (~vx & vy))");
         Expression expected = new Equivalence(new Proposition("va"), new Conjunction(new Negation(new Proposition("vx")), new Proposition("vy")));

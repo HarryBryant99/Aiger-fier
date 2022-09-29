@@ -18,10 +18,36 @@ public class Proposition extends Expression {
     }
 
     private String processName(String name){
-        if ((name.endsWith("_0") || name.endsWith("_1")) && (!name.startsWith("gen") && !name.startsWith("sc"))){
+        if ((endsWithNumber(name)) && (!name.startsWith("gen") && !name.startsWith("sc"))){
             return name.substring(0,name.length()-2);
         } else {
             return name;
+        }
+    }
+
+    private boolean endsWithNumber(String name){
+        if (name.endsWith("_0")){
+            return true;
+        } else if (name.endsWith("_1")){
+            return true;
+        } else if (name.endsWith("_2")){
+            return true;
+        } else if (name.endsWith("_3")){
+            return true;
+        } else if (name.endsWith("_4")){
+            return true;
+        } else if (name.endsWith("_5")){
+            return true;
+        } else if (name.endsWith("_6")){
+            return true;
+        } else if (name.endsWith("_7")){
+            return true;
+        } else if (name.endsWith("_8")){
+            return true;
+        } else if (name.endsWith("_9")){
+            return true;
+        } else {
+            return false;
         }
     }
 
