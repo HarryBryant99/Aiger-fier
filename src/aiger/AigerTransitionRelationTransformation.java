@@ -65,7 +65,8 @@ public class AigerTransitionRelationTransformation {
 
         targetAig.addAllComponents(addInputLatches());
 
-        //AigSystem.out.println(propositionKey);
+        System.out.println(propositionComputed);
+        System.out.println(propositionKey);
 
         //System.out.println("\n" + initalVariableValues + "\n");
 
@@ -241,6 +242,8 @@ public class AigerTransitionRelationTransformation {
                 Latch newInputLatch = new Latch(getProposition(prop), getProposition(prop),
                         findInitialValue(prop, false));
                 inputLatches.add(newInputLatch);
+
+                propositionComputed.put(prop,true);
             }
         }
         return inputLatches;
@@ -280,7 +283,7 @@ public class AigerTransitionRelationTransformation {
             newComponents.addAll(addComponentsIfNotInLadder(((Negation) exp).getOperand()));
         } else if (exp.getClass() == Proposition.class) {
             if (!propositionComputed.get(((Proposition) exp).getName()) &&
-                    !((Proposition) exp).getName().contains("sc") && !initalVariableValues.containsKey(((Proposition) exp).getName())){
+                    !((Proposition) exp).getName().contains("sc_") && !initalVariableValues.containsKey(((Proposition) exp).getName())){
 
                 Latch newLatch = new Latch(getIntegerForProposition(exp), getIntegerForProposition(exp), 0);
 
