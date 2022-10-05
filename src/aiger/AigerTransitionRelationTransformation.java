@@ -76,6 +76,11 @@ public class AigerTransitionRelationTransformation {
         Aig targetAig = new Aig();
         for (Expression exp : sourceSC.getExpression()) {
             targetAig.addComponent(splitExpression(exp));
+
+            ArrayList<AigerComponent> additionalComponents = addComponentsIfNotInLadder(exp);
+            if (!additionalComponents.isEmpty()){
+                targetAig.addAllComponents(additionalComponents);
+            }
         }
 
 //        System.out.println(propositionKey);
@@ -180,7 +185,6 @@ public class AigerTransitionRelationTransformation {
         }
         newIndex();
         addProposition(proposition);
-        System.out.println(proposition);
         return currentIndex;
     }
 
@@ -265,5 +269,25 @@ public class AigerTransitionRelationTransformation {
         } else {
             throw new IllegalStateException("ay");
         }
+    }
+
+    private ArrayList<AigerComponent> addComponentsIfNotInLadder(Expression exp){
+        ArrayList<AigerComponent> newComponents = new ArrayList<>();
+        if (exp.getClass() == DeMorganConjunction.class){
+            newComponents.addAll(addComponentsIfNotInLadder(((DeMorganConjunction) exp).getLhsOperand()));
+            newComponents.addAll(addComponentsIfNotInLadder(((DeMorganConjunction) exp).getRhsOperand()));
+        } else if (exp.getClass() == Negation.class){
+            newComponents.addAll(addComponentsIfNotInLadder(((Negation) exp).getOperand()));
+        } else if (exp.getClass() == Proposition.class) {
+            if (!propositionComputed.get(((Proposition) exp).getName()) &&
+                    !((Proposition) exp).getName().contains("sc") && !initalVariableValues.containsKey(((Proposition) exp).getName())){
+
+                Latch newLatch = new Latch(getIntegerForProposition(exp), getIntegerForProposition(exp), 0);
+
+                propositionComputed.put(((Proposition) exp).getName(), true);
+                newComponents.add(newLatch);
+            }
+        }
+        return newComponents;
     }
 }
