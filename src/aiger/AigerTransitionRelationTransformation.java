@@ -180,6 +180,7 @@ public class AigerTransitionRelationTransformation {
         }
         newIndex();
         addProposition(proposition);
+        System.out.println(proposition);
         return currentIndex;
     }
 

@@ -1,6 +1,0 @@
-vcarscrossing 1
-vtrainapproach 0
-vlightsflash 0
-vbarriersdown 0
-vtraincrossing 0
-vtrainpassed 0

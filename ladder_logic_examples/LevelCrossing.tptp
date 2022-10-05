@@ -1,6 +1,0 @@
-fof(ax,axiom, vcarscrossing <=> (~ vbarriersdown)).
-fof(ax,axiom, vtrainapproach <=> (vcarscrossing & ~ vtraincrossing)).
-fof(ax,axiom, vlightsflash <=> ((vtrainapproach | vlightsflash) & ~ vtrainpassed)).
-fof(ax,axiom, vbarriersdown <=> ((vlightsflash | vbarriersdown) & ~ vtrainpassed)).
-fof(ax,axiom, vtraincrossing <=> (vbarriersdown & ~ vcarscrossing & ~ vtrainpassed)).
-fof(ax,axiom, vtrainpassed <=> (vtraincrossing)).
