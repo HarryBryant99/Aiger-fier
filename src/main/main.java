@@ -72,14 +72,14 @@ public class main {
         in = new FileInputStream(input);
         InputPropositions iv = new InputPropositions(in);
 
-        DeMorganTransformation dmt = new DeMorganTransformation();
-        AigerTransitionRelationTransformation aig = new AigerTransitionRelationTransformation(iv.getHashMap());
-        Aig transitions = aig.convertRelation(dmt.transform(l));
-
         File folder = new File(args[2]);
         ArrayList<String> safetyProperties = listFilesForFolder(folder);
 
         for (String p:safetyProperties) {
+            DeMorganTransformation dmt = new DeMorganTransformation();
+            AigerTransitionRelationTransformation aig = new AigerTransitionRelationTransformation(iv.getHashMap());
+            Aig transitions = aig.convertRelation(dmt.transform(l));
+
             File safetyFile = new File(args[2] + "\\" + p);
             in = new FileInputStream(safetyFile);
 
