@@ -30,6 +30,7 @@ public class PrintAiger {
         }
 
         ArrayList<AigerComponent> components = new ArrayList<>();
+        components.addAll(inputs);
         components.addAll(latches);
         components.add(output);
         components.addAll(ands);
@@ -77,13 +78,16 @@ public class PrintAiger {
             return false;
         }
         PrintAiger that = (PrintAiger) o;
-        return aig.equals(that.aig) && latches.equals(that.latches) && output.equals(that.output) &&
-                ands.equals(that.ands);
+        return Objects.equals(aig, that.aig) &&
+                Objects.equals(inputs, that.inputs) &&
+                Objects.equals(latches, that.latches) &&
+                Objects.equals(output, that.output) &&
+                Objects.equals(ands, that.ands);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(aig, latches, output, ands);
+        return Objects.hash(aig, inputs, latches, output, ands);
     }
 
     public void writeAiger(String folder, String filename) throws IOException {
@@ -113,7 +117,11 @@ public class PrintAiger {
 
             System.out.println("\n" + filename + "\n");
 
-            fileWriter.write("aag " + getVars() + " 0 " + latches.size() + " 0 " + ands.size() + " 1\n");
+            fileWriter.write("aag " + getVars() + " " + inputs.size() + " " + latches.size() + " 0 " + ands.size() + " 1\n");
+
+            for (Input i: inputs) {
+                fileWriter.write(i.print() + "\n");
+            }
 
             for (Latch l: latches) {
                 fileWriter.write(l.print() + "\n");

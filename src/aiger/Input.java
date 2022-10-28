@@ -21,6 +21,10 @@ public class Input extends AigerComponent {
                 '}';
     }
 
+    public String print(){
+        return String.valueOf(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
