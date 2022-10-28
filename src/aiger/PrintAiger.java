@@ -52,17 +52,17 @@ public class PrintAiger {
     public void printAig() {
         sortAig();
 
-        System.out.println("aag " + getVars() + " 0 " + latches.size() + " 0 " + ands.size() + " 1");
+//        System.out.println("aag " + getVars() + " 0 " + latches.size() + " 0 " + ands.size() + " 1");
 
-        for (Latch l: latches) {
-            System.out.println(l.print());
-        }
-
-        System.out.println(output.print());
-
-        for (And a: ands) {
-            System.out.println(a.print());
-        }
+//        for (Latch l: latches) {
+//            System.out.println(l.print());
+//        }
+//
+//        System.out.println(output.print());
+//
+//        for (And a: ands) {
+//            System.out.println(a.print());
+//        }
     }
 
     @Override

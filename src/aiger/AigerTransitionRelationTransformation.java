@@ -34,6 +34,7 @@ public class AigerTransitionRelationTransformation {
 
             for (String prop : initalVariableValues.keySet()) {
                 propositionKey.put(prop, currentIndex += 2);
+                //propositionKey.put(prop+"_computed", currentIndex+= 2);
             }
         }
 //        propositionKey.put("va", 2);
@@ -58,6 +59,8 @@ public class AigerTransitionRelationTransformation {
             targetAig.addComponent(newAig);
 
             propositionComputed.put(((Proposition) t.getEquiv().getLhsOperand()).getName(), true);
+
+            //targetAig.addAllComponents(buildLatches(t));
         }
         //System.out.println("orginal: "+originalInitialVariableValues);
 
@@ -65,7 +68,7 @@ public class AigerTransitionRelationTransformation {
 
         targetAig.addAllComponents(addInputLatches());
 
-        System.out.println(propositionComputed);
+        //System.out.println(propositionComputed);
         System.out.println(propositionKey);
 
         //System.out.println("\n" + initalVariableValues + "\n");
@@ -125,6 +128,7 @@ public class AigerTransitionRelationTransformation {
             }
         } else if (exp.getClass() == Equivalence.class || exp.getClass() == Disjunction.class) {
             throw new IllegalStateException("How the hell did we get this");
+
         } else if (exp.getClass() == Conjunction.class) {
             throw new IllegalStateException("Regular Conjunction found in Transitions");
         } else if (exp.getClass() == DeMorganConjunction.class) {
@@ -236,17 +240,23 @@ public class AigerTransitionRelationTransformation {
     }
 
     private List<AigerComponent> addInputLatches() {
-        ArrayList<AigerComponent> inputLatches = new ArrayList<>();
+        //ArrayList<AigerComponent> inputLatches = new ArrayList<>();
+        ArrayList<AigerComponent> inputs = new ArrayList<>();
         for (String prop : propositionKey.keySet()) {
-            if (!propositionComputed.get(prop)) {
-                Latch newInputLatch = new Latch(getProposition(prop), getProposition(prop),
-                        findInitialValue(prop, false));
-                inputLatches.add(newInputLatch);
+            if (propositionComputed.containsKey(prop)) {
+                if (!propositionComputed.get(prop)) {
+//                    Latch newInputLatch = new Latch(getProposition(prop), getProposition(prop),
+//                            findInitialValue(prop, false));
+//                    inputLatches.add(newInputLatch);
 
-                propositionComputed.put(prop,true);
+                    Input newInput = new Input(getProposition(prop));
+                    inputs.add(newInput);
+
+                    propositionComputed.put(prop, true);
+                }
             }
         }
-        return inputLatches;
+        return inputs;
     }
 
     public int getNumberOfVariables() {
@@ -291,6 +301,26 @@ public class AigerTransitionRelationTransformation {
                 newComponents.add(newLatch);
             }
         }
+        return newComponents;
+    }
+
+    private ArrayList<AigerComponent> buildLatches(Transition t){
+        ArrayList<AigerComponent> newComponents = new ArrayList<>();
+
+        Proposition c1Proposition = new Proposition(((Proposition) t.getEquiv().getLhsOperand()).getName()+"_computed");
+
+        AigerComponent c0 = new Latch(getIntegerForProposition(t.getEquiv().getLhsOperand()),
+                getIntegerForProposition(c1Proposition),
+                findInitialValue(((Proposition) t.getEquiv().getLhsOperand()).getName(), false));
+        newComponents.add(c0);
+
+        AigerComponent c1 = new Latch(getIntegerForProposition(c1Proposition),
+                getIntegerForProposition(t.getEquiv().getRhsOperand()),
+                findInitialValue(((Proposition) t.getEquiv().getLhsOperand()).getName(), false));
+        newComponents.add(c1);
+
+        propositionComputed.put(((Proposition) t.getEquiv().getLhsOperand()).getName(), true);
+        propositionComputed.put(((Proposition) t.getEquiv().getLhsOperand()).getName()+"_computed", true);
         return newComponents;
     }
 }
