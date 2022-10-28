@@ -48,6 +48,9 @@ public class AigerTransitionRelationTransformation {
         //System.out.println(initalVariableValues);
 
         Aig targetAig = new Aig();
+
+        targetAig.addAllComponents(addConstants());
+
         for (Transition t : sourceT.getTransitions()) {
             if (t.getConjunctions().size() != 0) {
                 targetAig.addAllComponents(convertConjunctions(t.getConjunctions()));
@@ -241,7 +244,8 @@ public class AigerTransitionRelationTransformation {
 
     private List<AigerComponent> addInputLatches() {
         //ArrayList<AigerComponent> inputLatches = new ArrayList<>();
-        ArrayList<AigerComponent> inputs = new ArrayList<>();
+        ArrayList<AigerComponent> components = new ArrayList<>();
+
         for (String prop : propositionKey.keySet()) {
             if (propositionComputed.containsKey(prop)) {
                 if (!propositionComputed.get(prop)) {
@@ -249,14 +253,18 @@ public class AigerTransitionRelationTransformation {
 //                            findInitialValue(prop, false));
 //                    inputLatches.add(newInputLatch);
 
-                    Input newInput = new Input(getProposition(prop));
-                    inputs.add(newInput);
+                    Input newInput = new Input(currentIndex);
+                    newIndex();
+                    components.add(newInput);
 
+                    And result = new And(getProposition(prop), newInput.getId(), getProposition("constant"));
+
+                    components.add(result);
                     propositionComputed.put(prop, true);
                 }
             }
         }
-        return inputs;
+        return components;
     }
 
     public int getNumberOfVariables() {
@@ -322,5 +330,21 @@ public class AigerTransitionRelationTransformation {
         propositionComputed.put(((Proposition) t.getEquiv().getLhsOperand()).getName(), true);
         propositionComputed.put(((Proposition) t.getEquiv().getLhsOperand()).getName()+"_computed", true);
         return newComponents;
+    }
+
+    private List<AigerComponent> addConstants(){
+        List<AigerComponent> latches = new ArrayList<>();
+
+        int trueLatchID = genNewName("true");
+        Latch trueLatch = new Latch(trueLatchID, trueLatchID, 1);
+        latches.add(trueLatch);
+        propositionComputed.put("true", true);
+
+        int constantLatchID = genNewName("constant");
+        Latch constantLatch = new Latch(constantLatchID, trueLatchID, 0);
+        latches.add(constantLatch);
+        propositionComputed.put("constant", true);
+
+        return latches;
     }
 }
