@@ -15,6 +15,7 @@ import tptp.Rung;
 
 public class PrintAiger {
     private Aig aig;
+    private ArrayList<Input> inputs = new ArrayList<>();
     private ArrayList<Latch> latches = new ArrayList<>();
     private Output output;
     private ArrayList<And> ands = new ArrayList<>();
@@ -44,6 +45,8 @@ public class PrintAiger {
             ands.add((And) c);
         } else if (c.getClass() == Output.class){
             output = (Output) c;
+        } else if (c.getClass() == Input.class){
+            inputs.add((Input) c);
         } else {
             throw new IllegalStateException("What is this sub type?");
         }
