@@ -49,7 +49,7 @@ public class AigerTransitionRelationTransformation {
 
         Aig targetAig = new Aig();
 
-        targetAig.addAllComponents(addConstants());
+        //targetAig.addAllComponents(addConstants());
 
         for (Transition t : sourceT.getTransitions()) {
             if (t.getConjunctions().size() != 0) {
@@ -72,7 +72,7 @@ public class AigerTransitionRelationTransformation {
         targetAig.addAllComponents(addInputLatches());
 
         //System.out.println(propositionComputed);
-        System.out.println(propositionKey);
+        //System.out.println(propositionKey);
 
         //System.out.println("\n" + initalVariableValues + "\n");
 
@@ -253,11 +253,12 @@ public class AigerTransitionRelationTransformation {
 //                            findInitialValue(prop, false));
 //                    inputLatches.add(newInputLatch);
 
-                    Input newInput = new Input(currentIndex);
                     newIndex();
+                    Input newInput = new Input(currentIndex);
                     components.add(newInput);
 
-                    And result = new And(getProposition(prop), newInput.getId(), getProposition("constant"));
+                    //And result = new And(getProposition(prop), newInput.getId(), getProposition("constant"));
+                    Latch result = new Latch(getProposition(prop), newInput.getId(), 0);
 
                     components.add(result);
                     propositionComputed.put(prop, true);
@@ -288,7 +289,7 @@ public class AigerTransitionRelationTransformation {
         } else if (operand.getClass() == Negation.class) {
             checkIfExistingProposition(((Negation) operand).getOperand());
         } else {
-            throw new IllegalStateException("ay");
+            throw new IllegalStateException("ay???");
         }
     }
 

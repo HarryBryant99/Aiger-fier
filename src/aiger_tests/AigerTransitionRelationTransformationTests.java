@@ -6,6 +6,7 @@ import aiger.Aig;
 import aiger.AigerLadderTransformation;
 import aiger.AigerTransitionRelationTransformation;
 import aiger.And;
+import aiger.Input;
 import aiger.InputPropositions;
 import aiger.Latch;
 import java.io.File;
@@ -35,8 +36,11 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new Latch(2,4,0));
-        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new Latch(6,8,0));
+        expectedAig.addComponent(new Input(10));
+        expectedAig.addComponent(new And(8,10,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -53,8 +57,11 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new Latch(2,5,0));
-        expectedAig.addComponent(new Latch(4,4,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new Latch(6,9,0));
+        expectedAig.addComponent(new Input(10));
+        expectedAig.addComponent(new And(8,10,4));
 
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
@@ -73,9 +80,12 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 4, 6));
+        expectedAig.addComponent(new Latch(2,2,1));
         expectedAig.addComponent(new Latch(4,2,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new And(6,8,10));
+        expectedAig.addComponent(new Latch(8,6,0));
+        expectedAig.addComponent(new Input(12));
+        expectedAig.addComponent(new And(10,12,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -93,10 +103,14 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 4, 6));
-        expectedAig.addComponent(new Latch(8,2,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,8,10));
+        expectedAig.addComponent(new Latch(12,6,0));
+        expectedAig.addComponent(new Input(14));
+        expectedAig.addComponent(new And(8,14,4));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(10,16,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -114,10 +128,14 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 5, 7));
-        expectedAig.addComponent(new Latch(8,3,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,9,11));
+        expectedAig.addComponent(new Latch(12,7,0));
+        expectedAig.addComponent(new Input(14));
+        expectedAig.addComponent(new And(8,14,4));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(10,16,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -135,10 +153,14 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 4, 6));
-        expectedAig.addComponent(new Latch(8,3,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,8,10));
+        expectedAig.addComponent(new Latch(12,7,0));
+        expectedAig.addComponent(new Input(14));
+        expectedAig.addComponent(new And(8,14,4));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(10,16,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -156,10 +178,14 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 4, 6));
-        expectedAig.addComponent(new Latch(8,2,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,8,10));
+        expectedAig.addComponent(new Latch(12,6,0));
+        expectedAig.addComponent(new Input(14));
+        expectedAig.addComponent(new And(8,14,4));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(10,16,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -177,10 +203,14 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 4, 6));
-        expectedAig.addComponent(new Latch(8,3,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,8,10));
+        expectedAig.addComponent(new Latch(12,7,0));
+        expectedAig.addComponent(new Input(14));
+        expectedAig.addComponent(new And(8,14,4));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(10,16,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -198,10 +228,14 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 5, 7));
-        expectedAig.addComponent(new Latch(8,2,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,9,11));
+        expectedAig.addComponent(new Latch(12,6,0));
+        expectedAig.addComponent(new Input(14));
+        expectedAig.addComponent(new And(8,14,4));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(10,16,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -219,10 +253,14 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 4, 7));
-        expectedAig.addComponent(new Latch(8,2,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,8,11));
+        expectedAig.addComponent(new Latch(12,6,0));
+        expectedAig.addComponent(new Input(14));
+        expectedAig.addComponent(new And(8,14,4));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(10,16,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -241,12 +279,17 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 5, 6));
-        expectedAig.addComponent(new And(4, 9, 11));
-        expectedAig.addComponent(new Latch(12,2,0));
-        expectedAig.addComponent(new Latch(8,8,0));
-        expectedAig.addComponent(new Latch(6,6,0));
-        expectedAig.addComponent(new Latch(10,10,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,9,10));
+        expectedAig.addComponent(new And(8,13,15));
+        expectedAig.addComponent(new Latch(16,6,0));
+        expectedAig.addComponent(new Input(18));
+        expectedAig.addComponent(new And(12,18,4));
+        expectedAig.addComponent(new Input(20));
+        expectedAig.addComponent(new And(10,20,4));
+        expectedAig.addComponent(new Input(22));
+        expectedAig.addComponent(new And(14,22,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -265,12 +308,17 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 5, 7));
-        expectedAig.addComponent(new And(4, 8, 10));
-        expectedAig.addComponent(new Latch(12,3,0));
-        expectedAig.addComponent(new Latch(8,8,0));
-        expectedAig.addComponent(new Latch(6,6,0));
-        expectedAig.addComponent(new Latch(10,10,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,9,11));
+        expectedAig.addComponent(new And(8,12,14));
+        expectedAig.addComponent(new Latch(16,7,0));
+        expectedAig.addComponent(new Input(18));
+        expectedAig.addComponent(new And(12,18,4));
+        expectedAig.addComponent(new Input(20));
+        expectedAig.addComponent(new And(10,20,4));
+        expectedAig.addComponent(new Input(22));
+        expectedAig.addComponent(new And(14,22,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -289,12 +337,17 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 5, 7));
-        expectedAig.addComponent(new And(8, 2, 11));
-        expectedAig.addComponent(new Latch(12,9,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(10,10,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,9,11));
+        expectedAig.addComponent(new And(12,6,15));
+        expectedAig.addComponent(new Latch(16,13,0));
+        expectedAig.addComponent(new Input(18));
+        expectedAig.addComponent(new And(8,18,4));
+        expectedAig.addComponent(new Input(20));
+        expectedAig.addComponent(new And(14,20,4));
+        expectedAig.addComponent(new Input(22));
+        expectedAig.addComponent(new And(10,22,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -338,13 +391,17 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(2, 5, 7));
-        expectedAig.addComponent(new Latch(8,2,0));
+        expectedAig.addComponent(new Latch(2,2,1));
+        expectedAig.addComponent(new Latch(4,2,0));
+        expectedAig.addComponent(new And(6,9,11));
+        expectedAig.addComponent(new Latch(12,6,0));
 
-        expectedAig.addComponent(new And(10, 5, 7));
-        expectedAig.addComponent(new Latch(8,11,0));
-        expectedAig.addComponent(new Latch(4,4,0));
-        expectedAig.addComponent(new Latch(6,6,0));
+        expectedAig.addComponent(new And(14,9,11));
+        expectedAig.addComponent(new Latch(12,15,0));
+        expectedAig.addComponent(new Input(16));
+        expectedAig.addComponent(new And(8,16,4));
+        expectedAig.addComponent(new Input(18));
+        expectedAig.addComponent(new And(10,18,4));
 
         AigerTransitionRelationTransformation tt = new AigerTransitionRelationTransformation(null);
         assertEquals(expectedAig, tt.convertRelation(sourceTR));
@@ -370,18 +427,25 @@ public class AigerTransitionRelationTransformationTests {
 
         // TODO: Calculate real expected result
         Aig expectedAig = new Aig();
-        expectedAig.addComponent(new And(10, 12, 15));
-        expectedAig.addComponent(new And(12, 17, 19));
-        expectedAig.addComponent(new And(16, 20, 8));
-        expectedAig.addComponent(new And(20, 4, 6));
-        expectedAig.addComponent(new And(18, 22, 7));
-        expectedAig.addComponent(new And(22, 2, 5));
-        expectedAig.addComponent(new And(14, 24, 8));
-        expectedAig.addComponent(new And(24, 2, 5));
-        expectedAig.addComponent(new Latch(2,11,1));
-        expectedAig.addComponent(new Latch(4,4,1));
-        expectedAig.addComponent(new Latch(6,6,1));
-        expectedAig.addComponent(new Latch(8,8,1));
+        expectedAig.addComponent(new Latch(10,10,1));
+        expectedAig.addComponent(new Latch(12,10,0));
+
+        expectedAig.addComponent(new And(14, 16, 19));
+        expectedAig.addComponent(new And(16, 21, 23));
+        expectedAig.addComponent(new And(20, 24, 8));
+        expectedAig.addComponent(new And(24, 4, 6));
+        expectedAig.addComponent(new And(22, 26, 7));
+        expectedAig.addComponent(new And(26, 2, 5));
+        expectedAig.addComponent(new And(18, 28, 8));
+        expectedAig.addComponent(new And(28, 2, 5));
+        expectedAig.addComponent(new Latch(2,15,1));
+
+        expectedAig.addComponent(new Input(30));
+        expectedAig.addComponent(new And(4,30,12));
+        expectedAig.addComponent(new Input(32));
+        expectedAig.addComponent(new And(6,32,12));
+        expectedAig.addComponent(new Input(34));
+        expectedAig.addComponent(new And(8,34,12));
 
         File input = new File("ladder_logic_examples/ExampleInputs.txt");
         InputStream in = new FileInputStream(input);

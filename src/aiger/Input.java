@@ -17,7 +17,7 @@ public class Input extends AigerComponent {
     @Override
     public String toString() {
         return "Input{" +
-                "id=" + id +
+                id +
                 '}';
     }
 

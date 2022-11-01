@@ -800,54 +800,54 @@ public class AigerLadderTransformationTests {
         assertEquals(expectedAig, tt.convertLadder(sourceL));
     }
 
-    @Test
-    public void test23A() throws FileNotFoundException {
-        String data = "fof(ax,axiom, vA <=> ((vA & ~vC) | (vA & vD) | (vA & vB) | (vB & vC & vD)))";
-
-        Ladder sourceL = new Ladder();
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vA"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vC"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Negation(new Proposition("gen_1")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_2")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Negation(new Proposition("gen_3")))));
-
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Proposition("vA"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Proposition("vD"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_7"),new Conjunction(new Proposition("gen_5"),new Proposition("gen_6")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_8"),new Negation(new Proposition("gen_7")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_9"),new Conjunction(new Proposition("gen_4"),new Proposition("gen_8")))));
-
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_10"),new Proposition("vA"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_11"),new Proposition("vB"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_12"),new Conjunction(new Proposition("gen_10"),new Proposition("gen_11")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_13"),new Negation(new Proposition("gen_12")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_14"),new Conjunction(new Proposition("gen_9"),new Proposition("gen_13")))));
-
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_15"),new Proposition("vB"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_16"),new Proposition("vC"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_17"),new Conjunction(new Proposition("gen_15"),new Proposition("gen_16")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_18"),new Proposition("vD"))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_19"),new Conjunction(new Proposition("gen_17"),new Proposition("gen_18")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_20"),new Negation(new Proposition("gen_19")))));
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_21"),new Conjunction(new Proposition("gen_14"),new Proposition("gen_20")))));
-
-        sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_21")))));
-
-        // TODO: Calculate real expected result
-        Aig expectedAig = new Aig();
-        expectedAig.addComponent(new Latch(2,4,1));
-        expectedAig.addComponent(new Latch(6,8,1));
-        expectedAig.addComponent(new And(10,2,6));
-
-        //expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_22")))));
-
-        File input = new File("ladder_logic_examples/Example3Inputs.txt");
-        InputStream in = new FileInputStream(input);
-        InputPropositions iv = new InputPropositions(in);
-
-        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
-        assertEquals(expectedAig, tt.convertLadder(sourceL));
-    }
+//    @Test
+//    public void test23A() throws FileNotFoundException {
+//        String data = "fof(ax,axiom, vA <=> ((vA & ~vC) | (vA & vD) | (vA & vB) | (vB & vC & vD)))";
+//
+//        Ladder sourceL = new Ladder();
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_0"),new Proposition("vA"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_1"),new Proposition("vC"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_2"),new Negation(new Proposition("gen_1")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_3"),new Conjunction(new Proposition("gen_0"),new Proposition("gen_2")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_4"),new Negation(new Proposition("gen_3")))));
+//
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_5"),new Proposition("vA"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_6"),new Proposition("vD"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_7"),new Conjunction(new Proposition("gen_5"),new Proposition("gen_6")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_8"),new Negation(new Proposition("gen_7")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_9"),new Conjunction(new Proposition("gen_4"),new Proposition("gen_8")))));
+//
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_10"),new Proposition("vA"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_11"),new Proposition("vB"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_12"),new Conjunction(new Proposition("gen_10"),new Proposition("gen_11")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_13"),new Negation(new Proposition("gen_12")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_14"),new Conjunction(new Proposition("gen_9"),new Proposition("gen_13")))));
+//
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_15"),new Proposition("vB"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_16"),new Proposition("vC"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_17"),new Conjunction(new Proposition("gen_15"),new Proposition("gen_16")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_18"),new Proposition("vD"))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_19"),new Conjunction(new Proposition("gen_17"),new Proposition("gen_18")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_20"),new Negation(new Proposition("gen_19")))));
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("gen_21"),new Conjunction(new Proposition("gen_14"),new Proposition("gen_20")))));
+//
+//        sourceL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_21")))));
+//
+//        // TODO: Calculate real expected result
+//        Aig expectedAig = new Aig();
+//        expectedAig.addComponent(new Latch(2,4,1));
+//        expectedAig.addComponent(new Latch(6,8,1));
+//        expectedAig.addComponent(new And(10,2,6));
+//
+//        //expectedL.addRung(new Rung(new Equivalence(new Proposition("vA"),new Negation(new Proposition("gen_22")))));
+//
+//        File input = new File("ladder_logic_examples/Example3Inputs.txt");
+//        InputStream in = new FileInputStream(input);
+//        InputPropositions iv = new InputPropositions(in);
+//
+//        AigerLadderTransformation tt = new AigerLadderTransformation(iv.getHashMap());
+//        assertEquals(expectedAig, tt.convertLadder(sourceL));
+//    }
 
     @Test
     public void test23B() throws FileNotFoundException {
