@@ -90,7 +90,7 @@ public class PrintAiger {
         return Objects.hash(aig, inputs, latches, output, ands);
     }
 
-    public void writeAiger(String folder, String filename) throws IOException {
+    public void writeAiger(String folder, String filename, String subfolder) throws IOException {
         String dir = System.getProperty("user.dir");
         if (dir.contains("\\src")){
             dir = dir.substring(0,dir.length()-4);
@@ -105,7 +105,17 @@ public class PrintAiger {
             pathAsFile.mkdir();
         }
 
-        File yourFile = new File(path + "\\" + filename);
+        File pathAsFile2 = new File(path + "\\" + subfolder);
+
+        if (!Files.exists(Paths.get(path + "\\" + subfolder))) {
+            pathAsFile2.mkdir();
+        }
+
+        if (filename.contains("_Mostyn10")){
+            filename = filename.replace("_Mostyn10", "");
+        }
+
+        File yourFile = new File(path + "\\" + subfolder + "\\" + filename);
 
         System.out.println(yourFile);
 
@@ -113,7 +123,7 @@ public class PrintAiger {
         FileOutputStream oFile = new FileOutputStream(yourFile, false);
 
         try {
-            java.io.FileWriter fileWriter = new java.io.FileWriter(path + "\\" + filename);
+            java.io.FileWriter fileWriter = new java.io.FileWriter(path + "\\" + subfolder + "\\" + filename);
 
             System.out.println("\n" + filename + "\n");
 
@@ -149,6 +159,12 @@ public class PrintAiger {
         for (Latch l : latches) {
             if (l.getId() > maxVar){
                 maxVar = l.getId();
+            }
+        }
+
+        for (Input i : inputs) {
+            if (i.getId() > maxVar){
+                maxVar = i.getId();
             }
         }
 

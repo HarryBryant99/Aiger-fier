@@ -54,7 +54,7 @@ public class main {
 
         PrintAiger printer = new PrintAiger(newAiger);
         printer.printAig();
-        printer.writeAiger("newAiger", "aiger.aag");
+        printer.writeAiger("newAiger", "aiger.aag", "folder");
 
         System.out.println("\nNumber of variables: " + aig.getNumberOfVariables());
     }
@@ -98,8 +98,9 @@ public class main {
             printer.printAig();
 
             String ladderFormatted = nameOfLadder(ladder);
+            String folderFormatted = nameOfFolder(args[2]);
 
-            printer.writeAiger(ladderFormatted, filename(ladderFormatted, p));
+            printer.writeAiger(ladderFormatted, filename(ladderFormatted, p), folderFormatted);
         }
     }
 
@@ -132,5 +133,18 @@ public class main {
         }
 
         return ladderFormatted;
+    }
+
+    private static String nameOfFolder(String folder){
+        String folderFormatted = "";
+
+        for (int i = folder.length()-1; i > 0; i--) {
+            if (folder.charAt(i) == '\\') {
+                folderFormatted = folder.substring(i+1, folder.length());
+                break;
+            }
+        }
+
+        return folderFormatted;
     }
 }
